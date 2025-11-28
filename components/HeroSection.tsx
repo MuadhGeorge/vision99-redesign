@@ -78,11 +78,11 @@ export default function HeroSection() {
             className="relative"
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              {/* Main Image - Courtyard View with Fountain */}
+              {/* Main Image - Front Entrance View */}
               <div className="aspect-[4/3] relative bg-gray-200">
                 <ImageWithFallback
-                  src="/images/render-courtyard.jpg"
-                  alt="Architectural rendering of the new RCM campus courtyard featuring a peaceful fountain, flowering trees, and the modern Islamic-inspired sanctuary with its distinctive open-frame minaret"
+                  src="/images/render-gardens.jpg"
+                  alt="Architectural rendering of the RCM Beyond Walls campus entrance featuring lush native gardens, flowering trees, and the modern sanctuary with its distinctive open-frame minaret rising against a clear blue sky"
                   fill
                   className="object-cover"
                   priority

@@ -2,6 +2,8 @@ import Navigation from '@/components/Navigation'
 import HeroSection from '@/components/HeroSection'
 import VisionSection from '@/components/VisionSection'
 import CampusSection from '@/components/CampusSection'
+import FeaturesSection from '@/components/FeaturesSection'
+import GallerySection from '@/components/GallerySection'
 import ImpactSection from '@/components/ImpactSection'
 import TimelineSection from '@/components/TimelineSection'
 import FAQSection from '@/components/FAQSection'
@@ -15,6 +17,8 @@ export default function Home() {
       <HeroSection />
       <VisionSection />
       <CampusSection />
+      <FeaturesSection />
+      <GallerySection />
       <ImpactSection />
       <TimelineSection />
       <FAQSection />
@@ -23,4 +27,3 @@ export default function Home() {
     </main>
   )
 }
-

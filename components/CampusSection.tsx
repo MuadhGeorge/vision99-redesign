@@ -102,8 +102,8 @@ export default function CampusSection() {
             <div className="relative rounded-2xl overflow-hidden shadow-xl">
               <div className="aspect-[4/3] relative bg-gray-200">
                 <ImageWithFallback
-                  src="/images/render-front.jpg"
-                  alt="Front entrance view of the RCM Beyond Walls campus showing the modern white stone facade with horizontal textures, warm wood accents, and the distinctive geometric mashrabiya screens on the entrance"
+                  src="/images/render-aerial.jpg"
+                  alt="Aerial view of the complete RCM Beyond Walls campus showing the sanctuary with solar panel arrays, landscaped grounds, multiple interconnected buildings, and ample parking surrounded by trees"
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -114,8 +114,8 @@ export default function CampusSection() {
             {/* Accent Image */}
             <div className="absolute -bottom-6 -left-6 w-40 h-40 rounded-xl overflow-hidden shadow-xl border-4 border-white hidden lg:block">
               <ImageWithFallback
-                src="/images/render-side.jpg"
-                alt="Side view of the campus from the landscaped gardens, showing the interconnected buildings and natural surroundings"
+                src="/images/render-courtyard.jpg"
+                alt="Courtyard view with peaceful fountain, flowering trees, and geometric paving leading to the main sanctuary entrance"
                 fill
                 className="object-cover"
                 sizes="160px"

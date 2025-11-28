@@ -1,20 +1,25 @@
 # Image Assets for Beyond Walls Website
 
-Place the following images in this directory:
+Place the architectural renders in this directory with the following names:
 
-## Required Images (from architectural renders):
+## Required Images:
 
-1. `render-courtyard.jpg` - Courtyard view with fountain, flowering trees, and main entrance
-2. `render-aerial.jpg` - Aerial/elevated view showing the full campus with solar panels
-3. `render-front.jpg` - Front entrance view with "Roswell Community Masjid - RCM" signage
-4. `render-side.jpg` - Side view from landscaped gardens
-5. `render-entrance.jpg` - Close-up of main entrance with geometric mashrabiya screens
-6. `render-overview.jpg` - Another aerial/overview angle of the complex
+| Filename | Description |
+|----------|-------------|
+| render-courtyard.jpg | Courtyard view with fountain, flowering trees, geometric paving |
+| render-aerial.jpg | Aerial view showing solar panels on rooftops |
+| render-front.jpg | Street view with "Roswell Community Masjid - RCM" sign |
+| render-side.jpg | Side view from landscaped area with trees framing |
+| render-gardens.jpg | Front entrance gardens with native plantings |
+| render-firepit.jpg | Fire pit gathering area under large oak tree |
+| render-pavilion.jpg | Timber frame pavilion/barn structure |
+| render-playground.jpg | Children's playground with colorful equipment |
+| render-overview.jpg | Wide aerial of complete campus with pavilion |
+| render-entrance.jpg | Close-up of main entrance with mashrabiya screens |
 
 ## Image Guidelines:
-- Recommended size: 1920x1080 or larger for hero images
-- Format: JPG or WebP preferred for photographs
+- Recommended size: 1920x1080 or larger
+- Format: JPG or WebP
 - Optimize for web (compress without quality loss)
 
-The site will display placeholder backgrounds if images are not found.
-
+The site shows graceful placeholders if images aren't found.
