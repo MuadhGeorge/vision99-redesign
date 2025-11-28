@@ -1,14 +1,24 @@
 import type { Metadata } from 'next'
+import { Inter, Outfit } from 'next/font/google'
 import './globals.css'
 
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+})
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  variable: '--font-outfit',
+})
+
 export const metadata: Metadata = {
-  title: 'Beyond Walls | Vision99 – The World\'s First Living Building Masjid',
-  description: 'Make history with Beyond Walls. A global vision for all - the world\'s first Living Building Masjid by Roswell Community Masjid.',
-  keywords: ['Beyond Walls', 'Vision99', 'Roswell Community Masjid', 'RCM', 'Living Building', 'Masjid', 'Islamic Center', 'North Fulton', 'Sustainable Mosque'],
-  authors: [{ name: 'Roswell Community Masjid' }],
+  title: 'Beyond Walls | Roswell Community Masjid',
+  description: 'Building the world\'s first faith-based Living Building certified campus. A sanctuary for generations, a beacon for the community.',
+  keywords: ['mosque', 'masjid', 'roswell', 'georgia', 'living building', 'sustainable', 'community', 'islamic center'],
   openGraph: {
-    title: 'Beyond Walls | Vision99 – The World\'s First Living Building Masjid',
-    description: 'Make history with Beyond Walls. A global vision for all.',
+    title: 'Beyond Walls | Roswell Community Masjid',
+    description: 'Building the world\'s first faith-based Living Building certified campus.',
     type: 'website',
   },
 }
@@ -19,10 +29,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className="antialiased">
+    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+      <body className="font-sans">
         {children}
       </body>
     </html>
   )
 }
+

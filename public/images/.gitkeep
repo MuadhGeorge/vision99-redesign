@@ -1,3 +1,20 @@
-# Placeholder for images
-# Add campus photos and renderings here
+# Image Assets for Beyond Walls Website
+
+Place the following images in this directory:
+
+## Required Images (from architectural renders):
+
+1. `render-courtyard.jpg` - Courtyard view with fountain, flowering trees, and main entrance
+2. `render-aerial.jpg` - Aerial/elevated view showing the full campus with solar panels
+3. `render-front.jpg` - Front entrance view with "Roswell Community Masjid - RCM" signage
+4. `render-side.jpg` - Side view from landscaped gardens
+5. `render-entrance.jpg` - Close-up of main entrance with geometric mashrabiya screens
+6. `render-overview.jpg` - Another aerial/overview angle of the complex
+
+## Image Guidelines:
+- Recommended size: 1920x1080 or larger for hero images
+- Format: JPG or WebP preferred for photographs
+- Optimize for web (compress without quality loss)
+
+The site will display placeholder backgrounds if images are not found.
 

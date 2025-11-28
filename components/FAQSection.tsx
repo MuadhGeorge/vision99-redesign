@@ -1,0 +1,128 @@
+'use client'
+
+import { motion } from 'framer-motion'
+import { useInView } from 'framer-motion'
+import { useRef, useState } from 'react'
+import { ChevronDown, Plus, Minus } from 'lucide-react'
+
+const faqs = [
+  {
+    question: 'What is the Living Building Challenge?',
+    answer: 'The Living Building Challenge is the world\'s most rigorous proven performance standard for buildings. It requires buildings to generate more energy than they use, capture and treat all water on-site, use only non-toxic materials, and create a net-positive impact on human and ecological health. RCM will be the first faith-based project to pursue this certification.',
+  },
+  {
+    question: 'Why is this project called "Beyond Walls"?',
+    answer: 'For decades, many Muslim communities focused on building walls—both literal and figurative—to protect ourselves. "Beyond Walls" represents our shift toward openness, sustainability, and integration. We\'re building a campus that welcomes all people, contributes positively to our environment, and serves as a model for communities worldwide.',
+  },
+  {
+    question: 'When will construction begin and end?',
+    answer: 'Groundbreaking is scheduled for December 6, 2025. Horizontal site work (clearing, utilities, parking infrastructure) will take approximately 8 months. Vertical construction follows, with our target grand opening in August 2027.',
+  },
+  {
+    question: 'How can I contribute to the project?',
+    answer: 'There are several ways to support Beyond Walls: Join the Founders Circle for major gifts and naming opportunities, make a one-time donation, set up a recurring monthly contribution, volunteer your skills and time, or help spread the word in your networks. Every contribution, regardless of size, helps build this legacy.',
+  },
+  {
+    question: 'What makes this campus different from a typical mosque?',
+    answer: 'Beyond Walls is designed as a complete community campus with three dedicated buildings: a sanctuary for worship, a youth center for the next generation, and a family hub for community programs. It\'s designed for sustainability, accessibility, and multi-generational use—not just a prayer space, but a complete ecosystem for Muslim life in America.',
+  },
+  {
+    question: 'Is my donation tax-deductible?',
+    answer: 'Yes. Roswell Community Masjid is a registered 501(c)(3) nonprofit organization. All donations are tax-deductible to the extent allowed by law. You will receive a receipt for your records.',
+  },
+  {
+    question: 'How will the campus achieve net-positive energy?',
+    answer: 'The campus will feature extensive solar panel arrays, high-performance building envelopes, energy-efficient HVAC systems, LED lighting throughout, and smart building management systems. Combined, these features will allow us to generate more energy than we consume annually.',
+  },
+  {
+    question: 'Can non-Muslims visit or use the campus?',
+    answer: 'Absolutely. A core value of Beyond Walls is radical hospitality. The campus is designed to welcome people of all faiths and backgrounds for interfaith dialogue, community events, educational programs, and social services. Our doors are open to all.',
+  },
+]
+
+export default function FAQSection() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+  return (
+    <section id="faq" className="section-padding bg-white" ref={ref}>
+      <div className="container-max">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <span className="section-label">Questions</span>
+          <h2 className="section-heading">Frequently Asked Questions</h2>
+          <p className="section-subheading mx-auto">
+            Have questions about Beyond Walls? Here are answers to some common inquiries.
+          </p>
+        </motion.div>
+
+        {/* FAQ Accordion */}
+        <div className="max-w-3xl mx-auto space-y-4">
+          {faqs.map((faq, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 10 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
+              className="border border-gray-200 rounded-xl overflow-hidden"
+            >
+              <button
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                className="w-full flex items-center justify-between p-5 text-left bg-white hover:bg-gray-50 transition-colors"
+                aria-expanded={openIndex === index}
+              >
+                <span className="font-semibold text-gray-900 pr-4">{faq.question}</span>
+                <span className="flex-shrink-0">
+                  {openIndex === index ? (
+                    <Minus className="w-5 h-5 text-rcm-green-600" />
+                  ) : (
+                    <Plus className="w-5 h-5 text-gray-400" />
+                  )}
+                </span>
+              </button>
+              
+              <motion.div
+                initial={false}
+                animate={{
+                  height: openIndex === index ? 'auto' : 0,
+                  opacity: openIndex === index ? 1 : 0,
+                }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <div className="px-5 pb-5 text-gray-600 leading-relaxed">
+                  {faq.answer}
+                </div>
+              </motion.div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Contact CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-12 text-center"
+        >
+          <p className="text-gray-600 mb-4">
+            Don&apos;t see your question? We&apos;re happy to help.
+          </p>
+          <a 
+            href="mailto:info@roswellmasjid.org" 
+            className="text-rcm-green-600 font-semibold hover:text-rcm-green-700 underline underline-offset-2"
+          >
+            Contact us at info@roswellmasjid.org
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
