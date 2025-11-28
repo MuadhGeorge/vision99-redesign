@@ -2,14 +2,13 @@
 
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { EffectComposer, Bloom, Vignette, ChromaticAberration, DepthOfField } from '@react-three/postprocessing'
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
 import * as THREE from 'three'
 
 interface PostProcessingProps {
   bloomIntensity?: number
   vignetteIntensity?: number
-  enableDOF?: boolean
 }
 
 /**
@@ -18,13 +17,10 @@ interface PostProcessingProps {
  * Adds:
  * - Bloom for glowing elements
  * - Vignette for cinematic framing
- * - Subtle chromatic aberration for film look
- * - Optional depth of field
  */
 export function PostProcessing({ 
   bloomIntensity = 0.8, 
   vignetteIntensity = 0.4,
-  enableDOF = false 
 }: PostProcessingProps) {
   return (
     <EffectComposer>
@@ -39,17 +35,6 @@ export function PostProcessing({
         darkness={vignetteIntensity}
         blendFunction={BlendFunction.NORMAL}
       />
-      <ChromaticAberration
-        offset={new THREE.Vector2(0.0005, 0.0005)}
-        blendFunction={BlendFunction.NORMAL}
-      />
-      {enableDOF && (
-        <DepthOfField
-          focusDistance={0.02}
-          focalLength={0.05}
-          bokehScale={3}
-        />
-      )}
     </EffectComposer>
   )
 }
@@ -89,4 +74,3 @@ export function SunRays() {
     />
   )
 }
-

@@ -2,37 +2,20 @@
 
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Sky, Cloud, Stars } from '@react-three/drei'
+import { Sky, Stars } from '@react-three/drei'
 import * as THREE from 'three'
 
 /**
  * Animated Sky Environment
  * 
- * Creates a living sky with:
- * - Animated sun position
- * - Moving clouds
- * - Subtle color shifts
+ * Creates a living sky with animated stars
  */
 export function AnimatedSky() {
-  const sunRef = useRef({ azimuth: 0.25, inclination: 0.6 })
-  const time = useRef(0)
-
-  useFrame((state, delta) => {
-    time.current += delta * 0.02
-    // Very subtle sun movement
-    sunRef.current.azimuth = 0.25 + Math.sin(time.current) * 0.02
-    sunRef.current.inclination = 0.6 + Math.sin(time.current * 0.5) * 0.02
-  })
-
   return (
     <>
       <Sky
         distance={450000}
-        sunPosition={[
-          Math.cos(sunRef.current.azimuth * Math.PI * 2) * Math.cos(sunRef.current.inclination * Math.PI),
-          Math.sin(sunRef.current.inclination * Math.PI),
-          Math.sin(sunRef.current.azimuth * Math.PI * 2) * Math.cos(sunRef.current.inclination * Math.PI)
-        ].map(v => v * 100) as [number, number, number]}
+        sunPosition={[10, 20, 10]}
         turbidity={8}
         rayleigh={0.5}
         mieCoefficient={0.005}
@@ -52,7 +35,7 @@ export function AnimatedSky() {
 }
 
 /**
- * Animated Clouds
+ * Animated Clouds - Simple mesh-based clouds
  */
 export function AnimatedClouds() {
   const cloudGroupRef = useRef<THREE.Group>(null)
@@ -68,36 +51,28 @@ export function AnimatedClouds() {
 
   return (
     <group ref={cloudGroupRef}>
-      <Cloud
-        position={[-20, 25, -30]}
-        speed={0.2}
-        opacity={0.3}
-        width={20}
-        depth={5}
-        segments={20}
-      />
-      <Cloud
-        position={[25, 30, -25]}
-        speed={0.15}
-        opacity={0.25}
-        width={15}
-        depth={4}
-        segments={15}
-      />
-      <Cloud
-        position={[0, 28, -35]}
-        speed={0.1}
-        opacity={0.2}
-        width={25}
-        depth={6}
-        segments={25}
-      />
+      {/* Simple cloud meshes */}
+      {[
+        { pos: [-20, 25, -30], scale: 8 },
+        { pos: [25, 30, -25], scale: 6 },
+        { pos: [0, 28, -35], scale: 10 },
+      ].map((cloud, i) => (
+        <mesh key={i} position={cloud.pos as [number, number, number]}>
+          <sphereGeometry args={[cloud.scale, 16, 16]} />
+          <meshStandardMaterial
+            color="#ffffff"
+            transparent
+            opacity={0.15}
+            depthWrite={false}
+          />
+        </mesh>
+      ))}
     </group>
   )
 }
 
 /**
- * Ground Plane with subtle grid
+ * Ground Plane with subtle color
  */
 export function GroundPlane() {
   return (
@@ -151,4 +126,3 @@ export function SceneLighting({ phase = 4 }: { phase?: number }) {
     </>
   )
 }
-

@@ -1,83 +1,130 @@
 'use client'
 
+import { useState, useEffect, useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import { SiteHeader, SiteFooter } from '@/components/layout'
-import {
-  HeroSection,
-  PartnersSection,
-  NarrativeSection,
-  CrossroadsSection,
-  PillarsSection,
-  LeadershipCallSection,
-} from '@/components/sections'
+import SiteHeader from '@/components/layout/SiteHeader'
+import SiteFooter from '@/components/layout/SiteFooter'
+import HeroSection from '@/components/sections/HeroSection'
+import PartnersSection from '@/components/sections/PartnersSection'
+import NarrativeSection from '@/components/sections/NarrativeSection'
+import CrossroadsSection from '@/components/sections/CrossroadsSection'
+import PillarsSection from '@/components/sections/PillarsSection'
+import TimelineSection from '@/components/sections/TimelineSection'
+import LeadershipCallSection from '@/components/sections/LeadershipCallSection'
 
-// Lazy load the Timeline3D component for better performance
-const Timeline3D = dynamic(() => import('@/components/3d/Timeline3D'), {
+// Lazy load the 3D scene for performance
+const ImmersiveScene = dynamic(() => import('@/components/3d/ImmersiveScene'), {
   ssr: false,
   loading: () => (
-    <div className="h-screen bg-gradient-to-br from-teal-800 to-teal-700 flex items-center justify-center">
-      <div className="text-center text-white">
-        <div className="spinner mx-auto mb-4" />
-        <p className="text-lg font-light">Loading Timeline Experience...</p>
+    <div className="fixed inset-0 bg-black flex items-center justify-center">
+      <div className="text-center">
+        <div className="spinner mx-auto mb-6" />
+        <p className="text-white/80 text-lg animate-pulse">Entering Beyond Walls...</p>
       </div>
     </div>
   ),
 })
 
 /**
- * Beyond Walls - Vision99 / Roswell Community Masjid Campus
+ * Beyond Walls - Cinematic 3D Experience
  * 
- * A modern, immersive 3D experience showcasing the Beyond Walls project -
- * The World's First Living Building Masjid.
+ * A scene-first architecture where the 3D environment is the primary layer
+ * and UI sections are overlaid on top with glassmorphism effects.
  * 
- * Page Structure:
- * 1. Hero Section - "Make History with Beyond Walls" with 3D masjid view
- * 2. Partners Strip - Scrolling partner logos
- * 3. Narrative Section - "A Milestone of Pride. A Legacy of Impact."
- * 4. Crossroads Section - "We Are at a Crossroads" + three highlight blocks
- * 5. Pillars Section - "Two Pillars. One Vision." (Sanctuary + Blueprint)
- * 6. Timeline Section - Scroll-based 3D construction timeline
- * 7. Leadership Call Section - Donor and community CTAs
- * 8. Footer - Contact, newsletter, links
+ * Features:
+ * - Immersive 3D masjid campus as persistent background
+ * - Scroll-driven camera movement along a cinematic path
+ * - Timeline section that "builds" the masjid in 3D
+ * - Heavy use of Framer Motion for smooth animations
+ * - Glassmorphism UI components throughout
+ * - Particle effects and post-processing
  * 
- * TODO: Replace placeholder content with final copy
- * TODO: Add actual V99 RCM logo at /public/images/v99-rcm-logo.png
- * TODO: Add partner logos at /public/images/partners/
- * TODO: Add actual GLB model at /public/models/vision99-campus.glb
- * TODO: Connect donation buttons to actual payment system
- * TODO: Connect newsletter form to actual email service
+ * TODO: Replace placeholder assets:
+ * - /public/images/v99-rcm-logo.png - V99 RCM logo
+ * - /public/models/vision99-campus.glb - 3D masjid model
+ * - /public/images/partners/*.png - Partner logos
+ * 
+ * TODO: Connect forms to backends:
+ * - Donation buttons to payment processor
+ * - Newsletter form to email service
+ * - Private briefing request to CRM
  */
 export default function HomePage() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [timelinePhase, setTimelinePhase] = useState(0)
+  const [isClient, setIsClient] = useState(false)
+
+  // Global scroll progress for camera movement
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  })
+
+  // Convert scroll progress to a value the camera can use
+  const scrollProgress = useTransform(scrollYProgress, [0, 1], [0, 1])
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  // Track scroll progress for camera
+  const [cameraProgress, setCameraProgress] = useState(0)
+  useEffect(() => {
+    const unsubscribe = scrollProgress.on('change', (v) => {
+      setCameraProgress(v)
+    })
+    return () => unsubscribe()
+  }, [scrollProgress])
+
   return (
-    <main className="relative">
-      {/* Navigation Header */}
-      <SiteHeader />
-      
-      {/* Hero Section - "Make History with Beyond Walls" */}
-      <HeroSection />
-      
-      {/* Partners Strip */}
-      <PartnersSection />
-      
-      {/* Narrative Section - "A Milestone of Pride. A Legacy of Impact." */}
-      <NarrativeSection />
-      
-      {/* Crossroads Section - "We Are at a Crossroads" */}
-      <CrossroadsSection />
-      
-      {/* Pillars Section - "Two Pillars. One Vision." */}
-      <PillarsSection />
-      
-      {/* Scroll-Based 3D Timeline - "The Path to Groundbreaking" */}
-      <div className="bg-sand-100">
-        <Timeline3D />
+    <div ref={containerRef} className="relative bg-black">
+      {/* Immersive 3D Background - Fixed, always visible */}
+      {isClient && (
+        <ImmersiveScene
+          scrollProgress={cameraProgress}
+          timelinePhase={timelinePhase}
+          className="!fixed inset-0 z-0"
+        />
+      )}
+
+      {/* UI Layer - Scrolls on top of 3D */}
+      <div className="relative z-10">
+        {/* Navigation */}
+        <SiteHeader />
+
+        {/* Content Sections */}
+        <main>
+          {/* Hero - Full viewport with 3D behind */}
+          <HeroSection />
+
+          {/* Partners Strip */}
+          <PartnersSection />
+
+          {/* Narrative - "A Milestone of Pride" */}
+          <NarrativeSection />
+
+          {/* Crossroads - "We Are at a Crossroads" */}
+          <CrossroadsSection />
+
+          {/* Two Pillars - Sanctuary + Blueprint */}
+          <PillarsSection />
+
+          {/* Timeline - Controls the 3D building animation */}
+          <TimelineSection onPhaseChange={setTimelinePhase} />
+
+          {/* Leadership Call - Donor CTAs */}
+          <LeadershipCallSection />
+
+          {/* Footer */}
+          <SiteFooter />
+        </main>
       </div>
-      
-      {/* Leadership Call - Donor & Community CTAs */}
-      <LeadershipCallSection />
-      
-      {/* Footer */}
-      <SiteFooter />
-    </main>
+
+      {/* Ambient gradient overlay for depth */}
+      <div className="fixed inset-0 pointer-events-none z-[5]">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50" />
+      </div>
+    </div>
   )
 }
