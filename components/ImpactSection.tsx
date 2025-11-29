@@ -149,7 +149,7 @@ export default function ImpactSection() {
 
         {/* Metrics Grid with Stagger */}
         <motion.div 
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5"
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5"
           variants={staggerContainer}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -165,16 +165,16 @@ export default function ImpactSection() {
                   scale: 1.02,
                   transition: { duration: 0.2 } 
                 }}
-                className="bg-gray-50 rounded-2xl p-5 md:p-6 text-center hover:bg-white hover:shadow-xl transition-all duration-300 border border-gray-100 group cursor-default"
+                className="bg-gray-50 rounded-xl sm:rounded-2xl p-3 sm:p-5 md:p-6 text-center hover:bg-white hover:shadow-xl transition-all duration-300 border border-gray-100 group cursor-default"
               >
                 <motion.div 
-                  className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${colors.bg} mb-4`}
+                  className={`inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl ${colors.bg} mb-2 sm:mb-4`}
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <metric.icon className={`w-6 h-6 ${colors.icon}`} />
+                  <metric.icon className={`w-5 h-5 sm:w-6 sm:h-6 ${colors.icon}`} />
                 </motion.div>
-                <p className={`text-2xl md:text-3xl lg:text-4xl font-bold ${colors.value} mb-1`}>
+                <p className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold ${colors.value} mb-0.5 sm:mb-1`}>
                   {metric.numericValue !== undefined ? (
                     <CountUpOnView 
                       target={metric.numericValue} 
@@ -185,10 +185,10 @@ export default function ImpactSection() {
                     <FadeInText text={metric.value} />
                   )}
                 </p>
-                <p className="font-semibold text-gray-900 text-sm mb-1">
+                <p className="font-semibold text-gray-900 text-xs sm:text-sm mb-0.5 sm:mb-1">
                   {metric.label}
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-[10px] sm:text-xs text-gray-500">
                   {metric.detail}
                 </p>
               </motion.div>
@@ -201,11 +201,11 @@ export default function ImpactSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-12"
+          className="mt-8 sm:mt-12"
         >
           <motion.div 
-            className="relative bg-gradient-to-br from-rcm-green-600 to-rcm-teal-600 rounded-2xl p-8 md:p-10 text-white overflow-hidden"
-            whileHover={{ scale: 1.01 }}
+            className="relative bg-gradient-to-br from-rcm-green-600 to-rcm-teal-600 rounded-xl sm:rounded-2xl p-5 sm:p-8 md:p-10 text-white overflow-hidden"
+            whileHover={{ scale: 1.005 }}
             transition={{ duration: 0.3 }}
           >
             {/* Background Pattern */}
@@ -215,23 +215,23 @@ export default function ImpactSection() {
               }} />
             </div>
             
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="flex items-center gap-5">
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5 text-center sm:text-left">
                 <motion.div 
-                  className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center flex-shrink-0"
+                  className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center flex-shrink-0"
                   whileHover={{ rotate: 5, scale: 1.05 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Leaf className="w-8 h-8 text-white" />
+                  <Leaf className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                 </motion.div>
                 <div>
-                  <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-semibold uppercase tracking-wider mb-2">
+                  <span className="inline-block px-2 sm:px-3 py-1 bg-white/20 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider mb-2">
                     First Faith-Based Project
                   </span>
-                  <h3 className="text-xl md:text-2xl font-bold">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold">
                     Pursuing Living Building Challenge Certification
                   </h3>
-                  <p className="text-rcm-green-100 mt-1 max-w-lg">
+                  <p className="text-rcm-green-100 mt-1 max-w-lg text-sm sm:text-base">
                     The world&apos;s most rigorous proven performance standard for buildings—requiring net-positive 
                     energy, water, and a regenerative impact on the environment.
                   </p>
@@ -239,8 +239,8 @@ export default function ImpactSection() {
               </div>
               <motion.a 
                 href="#vision" 
-                className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 bg-white text-rcm-green-700 font-semibold rounded-lg hover:bg-rcm-green-50 transition-colors shadow-lg"
-                whileHover={{ scale: 1.05, x: 4 }}
+                className="flex-shrink-0 w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 bg-white text-rcm-green-700 font-semibold rounded-lg hover:bg-rcm-green-50 transition-colors shadow-lg text-sm sm:text-base min-h-[44px]"
+                whileHover={{ scale: 1.03, x: 2 }}
                 whileTap={{ scale: 0.98 }}
               >
                 Learn More

@@ -36,8 +36,8 @@ export default function HeroSection() {
         />
       </div>
 
-      <div className="container-max section-padding pt-24 md:pt-32 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div className="container-max section-padding pt-20 sm:pt-24 md:pt-32 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -49,20 +49,20 @@ export default function HeroSection() {
               Roswell Community Masjid
             </span>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-[1.1] mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-[1.1] mb-4 sm:mb-6">
               <span className="text-rcm-green-700">Beyond Walls:</span>
               <br />
               <span className="text-gray-800">More Than a Building</span>
             </h1>
             
-            <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-lg">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-lg">
               After years of planning and perseverance, RCM&apos;s new campus is finally breaking ground. 
               This isn&apos;t just construction—it&apos;s the foundation for a{' '}
               <strong className="text-gray-800 font-semibold">vibrant, integrated Muslim community</strong> that 
               will serve generations to come.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-10">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-10">
               <a href="#donate" className="btn-primary group">
                 Support the Project
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -73,13 +73,13 @@ export default function HeroSection() {
             </div>
 
             {/* Quote Card - Refined */}
-            <div className="rounded-2xl border border-rcm-green-200 bg-gradient-to-br from-rcm-green-50/80 to-rcm-teal-50/60 p-5">
+            <div className="rounded-xl sm:rounded-2xl border border-rcm-green-200 bg-gradient-to-br from-rcm-green-50/80 to-rcm-teal-50/60 p-4 sm:p-5">
               <blockquote>
-                <p className="text-gray-700 italic leading-relaxed">
+                <p className="text-sm sm:text-base text-gray-700 italic leading-relaxed">
                   &ldquo;This is us returning to who we are — an ummah that builds with dignity, 
                   excellence, and conviction.&rdquo;
                 </p>
-                <footer className="mt-3 text-sm font-medium text-rcm-green-700">
+                <footer className="mt-2 sm:mt-3 text-xs sm:text-sm font-medium text-rcm-green-700">
                   — Imam Abdullah Jaber, Roswell Community Masjid
                 </footer>
               </blockquote>
@@ -108,21 +108,21 @@ export default function HeroSection() {
                 </div>
               </div>
               
-              {/* Floating Badge */}
+              {/* Floating Badge - Hidden on very small screens, repositioned on mobile */}
               <motion.div 
-                className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-xl p-4 border border-gray-100"
+                className="hidden sm:block absolute -bottom-3 sm:-bottom-4 left-2 sm:-left-4 bg-white rounded-lg sm:rounded-xl shadow-xl p-3 sm:p-4 border border-gray-100 max-w-[180px] sm:max-w-none"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-full bg-gradient-to-br from-rcm-green-500 to-rcm-teal-500 flex items-center justify-center">
-                    <Leaf className="w-5 h-5 text-white" />
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-rcm-green-500 to-rcm-teal-500 flex items-center justify-center flex-shrink-0">
+                    <Leaf className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-[10px] text-gray-500 uppercase tracking-wider font-medium">Pursuing</p>
-                    <p className="font-bold text-rcm-green-700 text-sm">Living Building</p>
-                    <p className="text-[10px] text-gray-500">Certification</p>
+                    <p className="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider font-medium">Pursuing</p>
+                    <p className="font-bold text-rcm-green-700 text-xs sm:text-sm">Living Building</p>
+                    <p className="text-[9px] sm:text-[10px] text-gray-500">Certification</p>
                   </div>
                 </div>
               </motion.div>
@@ -146,22 +146,22 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-16 md:mt-20"
+          className="mt-10 sm:mt-16 md:mt-20"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             {stats.map((stat, index) => (
               <motion.div 
                 key={index} 
-                className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+                className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-3 sm:p-5 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + index * 0.1 }}
               >
-                <div className={`inline-flex items-center justify-center w-11 h-11 rounded-xl ${stat.color.split(' ')[0]} mb-3`}>
-                  <stat.icon className={`w-5 h-5 ${stat.color.split(' ')[1]}`} />
+                <div className={`inline-flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl ${stat.color.split(' ')[0]} mb-2 sm:mb-3`}>
+                  <stat.icon className={`w-4 h-4 sm:w-5 sm:h-5 ${stat.color.split(' ')[1]}`} />
                 </div>
-                <p className="font-bold text-gray-900">{stat.value}</p>
-                <p className="text-sm text-gray-500">{stat.label}</p>
+                <p className="font-bold text-gray-900 text-sm sm:text-base">{stat.value}</p>
+                <p className="text-xs sm:text-sm text-gray-500">{stat.label}</p>
               </motion.div>
             ))}
           </div>

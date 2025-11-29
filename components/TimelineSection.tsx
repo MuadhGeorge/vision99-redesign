@@ -110,7 +110,7 @@ export default function TimelineSection() {
         {/* Timeline */}
         <div className="relative">
           {/* Timeline Line - Desktop */}
-          <div className="hidden md:block absolute top-24 left-0 right-0 h-1 bg-gray-200">
+          <div className="hidden lg:block absolute top-24 left-0 right-0 h-1 bg-gray-200">
             <motion.div
               initial={{ width: '0%' }}
               animate={isInView ? { width: '30%' } : {}}
@@ -119,8 +119,8 @@ export default function TimelineSection() {
             />
           </div>
 
-          {/* Timeline Items */}
-          <div className="grid md:grid-cols-5 gap-6 md:gap-4">
+          {/* Timeline Items - Stack on mobile/tablet, 5 cols on desktop */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5 lg:gap-4">
             {timelinePhases.map((phase, index) => {
               const styles = getStatusStyles(phase.status)
               const isCurrent = phase.status === 'current'
@@ -131,11 +131,11 @@ export default function TimelineSection() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                  className={`relative ${isCurrent ? 'md:-mt-2 md:mb-2' : ''}`}
+                  className={`relative ${isCurrent ? 'lg:-mt-2 lg:mb-2 sm:col-span-2 lg:col-span-1' : ''}`}
                 >
-                  {/* Current Phase Indicator - Mobile */}
+                  {/* Current Phase Indicator - Mobile & Tablet */}
                   {isCurrent && (
-                    <div className="md:hidden mb-3">
+                    <div className="lg:hidden mb-3">
                       <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rcm-green-600 text-white text-xs font-bold">
                         <Sparkles className="w-3 h-3" />
                         Current Phase
@@ -144,21 +144,21 @@ export default function TimelineSection() {
                   )}
                   
                   {/* Dot */}
-                  <div className="flex md:justify-center mb-4">
-                    <div className={`w-12 h-12 rounded-full ${styles.dot} flex items-center justify-center shadow-lg z-10 relative transition-all duration-300`}>
+                  <div className="flex lg:justify-center mb-3 sm:mb-4">
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full ${styles.dot} flex items-center justify-center shadow-lg z-10 relative transition-all duration-300`}>
                       {phase.status === 'completed' ? (
-                        <CheckCircle className="w-6 h-6" />
+                        <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6" />
                       ) : (
-                        <phase.icon className="w-6 h-6" />
+                        <phase.icon className="w-5 h-5 sm:w-6 sm:h-6" />
                       )}
                     </div>
                   </div>
 
                   {/* Card */}
-                  <div className={`rounded-xl border-2 p-4 ${styles.card} transition-all duration-300 ${isCurrent ? 'md:scale-105' : ''}`}>
+                  <div className={`rounded-xl border-2 p-3 sm:p-4 ${styles.card} transition-all duration-300 ${isCurrent ? 'lg:scale-105' : ''}`}>
                     {/* Current Phase Badge - Desktop */}
                     {isCurrent && (
-                      <div className="hidden md:flex justify-center -mt-7 mb-3">
+                      <div className="hidden lg:flex justify-center -mt-7 mb-3">
                         <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rcm-green-600 text-white text-xs font-bold shadow-lg">
                           <Sparkles className="w-3 h-3" />
                           Current Phase
@@ -167,24 +167,24 @@ export default function TimelineSection() {
                     )}
                     
                     <div className="flex items-center justify-between mb-2 gap-2 flex-wrap">
-                      <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${styles.badge}`}>
+                      <span className={`text-[10px] sm:text-xs font-semibold px-2 sm:px-2.5 py-1 rounded-full ${styles.badge}`}>
                         {phase.date}
                       </span>
                       {isCurrent && (
-                        <span className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-600/10 text-emerald-700 border border-emerald-200">
+                        <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-bold px-2 sm:px-2.5 py-1 rounded-full bg-emerald-600/10 text-emerald-700 border border-emerald-200">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                           We&apos;re here
                         </span>
                       )}
                     </div>
-                    <h3 className={`font-bold mb-2 ${isCurrent ? 'text-rcm-gold-700 text-lg' : 'text-gray-900'}`}>
+                    <h3 className={`font-bold mb-2 text-sm sm:text-base ${isCurrent ? 'text-rcm-gold-700 sm:text-lg' : 'text-gray-900'}`}>
                       {phase.title}
                     </h3>
-                    <p className="text-sm text-gray-600 mb-3">{phase.description}</p>
+                    <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3">{phase.description}</p>
                     <ul className="space-y-1">
                       {phase.highlights.map((highlight, hIndex) => (
-                        <li key={hIndex} className="flex items-center gap-2 text-xs text-gray-500">
-                          <div className={`w-1.5 h-1.5 rounded-full ${isCurrent ? 'bg-rcm-gold-500' : 'bg-rcm-green-400'}`} />
+                        <li key={hIndex} className="flex items-center gap-2 text-[10px] sm:text-xs text-gray-500">
+                          <div className={`w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full flex-shrink-0 ${isCurrent ? 'bg-rcm-gold-500' : 'bg-rcm-green-400'}`} />
                           {highlight}
                         </li>
                       ))}
@@ -201,14 +201,14 @@ export default function TimelineSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-16"
+          className="mt-10 sm:mt-16"
         >
-          <div className="bg-gradient-to-r from-rcm-gold-50 via-white to-rcm-gold-50 rounded-2xl border-2 border-rcm-gold-200 p-8 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-rcm-gold-100 rounded-full text-rcm-gold-700 text-sm font-semibold mb-4">
-              <Sparkles className="w-4 h-4" />
+          <div className="bg-gradient-to-r from-rcm-gold-50 via-white to-rcm-gold-50 rounded-xl sm:rounded-2xl border-2 border-rcm-gold-200 p-5 sm:p-8 text-center">
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-rcm-gold-100 rounded-full text-rcm-gold-700 text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
               Capital Campaign in Progress
             </div>
-            <p className="text-lg text-gray-700 mb-6 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-4 sm:mb-6 max-w-2xl mx-auto">
               We&apos;re in the <strong className="text-rcm-gold-600">Capital Campaign</strong> phase. 
               Your support today directly shapes what opens in 2027. Join our founding community.
             </p>

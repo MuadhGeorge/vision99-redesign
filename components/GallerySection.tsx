@@ -208,7 +208,7 @@ export default function GallerySection() {
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-2 mb-8"
+          className="flex flex-wrap justify-center gap-2 mb-6 sm:mb-8 px-1"
         >
           {categoryOrder.map((category) => (
             <button
@@ -217,7 +217,7 @@ export default function GallerySection() {
                 setActiveCategory(category)
                 setSelectedImage(null) // Reset lightbox when changing category
               }}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+              className={`px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 min-h-[40px] ${
                 activeCategory === category
                   ? 'bg-rcm-green-600 text-white shadow-md'
                   : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
@@ -229,7 +229,7 @@ export default function GallerySection() {
         </motion.div>
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
           {visibleImages.map((image, index) => (
             <motion.button
               key={image.src}
@@ -237,24 +237,24 @@ export default function GallerySection() {
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }}
               onClick={() => openLightbox(index)}
-              className={`relative group overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-rcm-green-500 focus-visible:ring-offset-2 ${
-                index === 0 ? 'md:col-span-2 md:row-span-2' : ''
+              className={`relative group overflow-hidden rounded-xl sm:rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-rcm-green-500 focus-visible:ring-offset-2 ${
+                index === 0 ? 'xs:col-span-2 md:col-span-2 md:row-span-2' : ''
               }`}
               aria-label={`View ${image.title}`}
             >
-              <div className={`relative ${index === 0 ? 'aspect-square md:aspect-[4/3]' : 'aspect-[4/3]'}`}>
+              <div className={`relative ${index === 0 ? 'aspect-[4/3]' : 'aspect-[4/3]'}`}>
                 <Image
                   src={image.src}
                   alt={image.alt}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes={index === 0 ? "(max-width: 768px) 100vw, 66vw" : "(max-width: 768px) 50vw, 33vw"}
+                  sizes={index === 0 ? "(max-width: 640px) 100vw, (max-width: 768px) 100vw, 66vw" : "(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"}
                 />
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
                 {/* Title always visible */}
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <p className="text-white text-sm md:text-base font-semibold drop-shadow-lg">
+                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
+                  <p className="text-white text-xs sm:text-sm md:text-base font-semibold drop-shadow-lg">
                     {image.title}
                   </p>
                 </div>
@@ -269,7 +269,7 @@ export default function GallerySection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-2 sm:p-4"
             onClick={closeLightbox}
             role="dialog"
             aria-modal="true"
@@ -278,31 +278,31 @@ export default function GallerySection() {
             {/* Close Button */}
             <button
               onClick={closeLightbox}
-              className="absolute top-4 right-4 p-2 text-white/80 hover:text-white transition-colors z-10"
+              className="absolute top-2 sm:top-4 right-2 sm:right-4 p-2 text-white/80 hover:text-white transition-colors z-10 min-h-[44px] min-w-[44px] flex items-center justify-center"
               aria-label="Close gallery (Escape)"
             >
-              <X className="w-8 h-8" />
+              <X className="w-6 h-6 sm:w-8 sm:h-8" />
             </button>
 
             {/* Navigation */}
             <button
               onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
-              className="absolute left-4 p-2 text-white/80 hover:text-white transition-colors z-10"
+              className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 p-2 text-white/80 hover:text-white transition-colors z-10 min-h-[44px] min-w-[44px] flex items-center justify-center"
               aria-label="Previous image (Left Arrow)"
             >
-              <ChevronLeft className="w-10 h-10" />
+              <ChevronLeft className="w-8 h-8 sm:w-10 sm:h-10" />
             </button>
             <button
               onClick={(e) => { e.stopPropagation(); goToNext(); }}
-              className="absolute right-4 p-2 text-white/80 hover:text-white transition-colors z-10"
+              className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 p-2 text-white/80 hover:text-white transition-colors z-10 min-h-[44px] min-w-[44px] flex items-center justify-center"
               aria-label="Next image (Right Arrow)"
             >
-              <ChevronRight className="w-10 h-10" />
+              <ChevronRight className="w-8 h-8 sm:w-10 sm:h-10" />
             </button>
 
             {/* Image */}
             <div 
-              className="relative max-w-6xl max-h-[85vh] w-full h-full"
+              className="relative max-w-6xl max-h-[80vh] sm:max-h-[85vh] w-full h-full mx-8 sm:mx-16"
               onClick={(e) => e.stopPropagation()}
             >
               <Image
@@ -313,26 +313,26 @@ export default function GallerySection() {
                 sizes="100vw"
                 priority
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6">
-                <p className="text-white text-xl font-semibold mb-1">
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3 sm:p-6">
+                <p className="text-white text-base sm:text-xl font-semibold mb-1">
                   {visibleImages[selectedImage].title}
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white/70 text-xs sm:text-sm hidden sm:block">
                   {visibleImages[selectedImage].alt}
                 </p>
-                <p className="text-white/50 text-xs mt-2">
-                  {selectedImage + 1} of {visibleImages.length} • Use arrow keys to navigate
+                <p className="text-white/50 text-xs mt-1 sm:mt-2">
+                  {selectedImage + 1} of {visibleImages.length} • <span className="hidden sm:inline">Use arrow keys to navigate</span><span className="sm:hidden">Swipe to navigate</span>
                 </p>
               </div>
             </div>
 
-            {/* Dots */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 max-w-md overflow-x-auto px-4">
+            {/* Dots - Hidden on small screens, shown on larger */}
+            <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 hidden sm:flex gap-2 max-w-md overflow-x-auto px-4">
               {visibleImages.map((_, index) => (
                 <button
                   key={index}
                   onClick={(e) => { e.stopPropagation(); setSelectedImage(index); }}
-                  className={`w-2 h-2 rounded-full transition-all flex-shrink-0 ${
+                  className={`w-2 h-2 rounded-full transition-all flex-shrink-0 min-h-[20px] min-w-[20px] flex items-center justify-center ${
                     index === selectedImage ? 'bg-white w-6' : 'bg-white/40 hover:bg-white/60'
                   }`}
                   aria-label={`Go to image ${index + 1}`}

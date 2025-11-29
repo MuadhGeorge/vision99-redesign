@@ -115,7 +115,7 @@ export default function VisionSection() {
 
         {/* Promise Cards Grid with Stagger */}
         <motion.div 
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
           variants={staggerContainer}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -127,23 +127,23 @@ export default function VisionSection() {
                 key={promise.title}
                 variants={staggerItem}
                 whileHover={{ 
-                  y: -6, 
-                  scale: 1.02,
+                  y: -4, 
+                  scale: 1.01,
                   transition: { duration: 0.2, ease: 'easeOut' } 
                 }}
-                className={`group bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 cursor-default ${colors.border}`}
+                className={`group bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 cursor-default ${colors.border}`}
               >
                 <motion.div 
-                  className={`w-14 h-14 rounded-xl ${colors.bg} ${colors.bgHover} flex items-center justify-center mb-4 transition-colors duration-300`}
+                  className={`w-11 h-11 sm:w-14 sm:h-14 rounded-lg sm:rounded-xl ${colors.bg} ${colors.bgHover} flex items-center justify-center mb-3 sm:mb-4 transition-colors duration-300`}
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <promise.icon className={`w-7 h-7 ${colors.icon}`} />
+                  <promise.icon className={`w-5 h-5 sm:w-7 sm:h-7 ${colors.icon}`} />
                 </motion.div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-rcm-green-700 transition-colors">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-2 group-hover:text-rcm-green-700 transition-colors">
                   {promise.title}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                   {promise.description}
                 </p>
               </motion.div>

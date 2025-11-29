@@ -65,7 +65,7 @@ export default function FAQSection() {
         {/* FAQ Container */}
         <div className="max-w-3xl mx-auto">
           <div 
-            className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden divide-y divide-gray-100" 
+            className="rounded-xl sm:rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden divide-y divide-gray-100" 
             role="region" 
             aria-label="Frequently Asked Questions"
           >
@@ -85,17 +85,17 @@ export default function FAQSection() {
                     <button
                       id={buttonId}
                       onClick={() => setOpenIndex(isOpen ? null : index)}
-                      className={`w-full flex items-center justify-between p-5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-rcm-green-500 focus-visible:ring-inset ${
+                      className={`w-full flex items-center justify-between p-4 sm:p-5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-rcm-green-500 focus-visible:ring-inset min-h-[44px] ${
                         isOpen ? 'bg-rcm-green-50/50' : 'hover:bg-gray-50'
                       }`}
                       aria-expanded={isOpen}
                       aria-controls={panelId}
                     >
-                      <span className={`font-medium pr-4 ${isOpen ? 'text-rcm-green-700' : 'text-gray-900'}`}>
+                      <span className={`font-medium pr-3 sm:pr-4 text-sm sm:text-base ${isOpen ? 'text-rcm-green-700' : 'text-gray-900'}`}>
                         {faq.question}
                       </span>
                       <span className={`flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
-                        <ChevronDown className={`w-5 h-5 ${isOpen ? 'text-rcm-green-600' : 'text-gray-400'}`} />
+                        <ChevronDown className={`w-4 h-4 sm:w-5 sm:h-5 ${isOpen ? 'text-rcm-green-600' : 'text-gray-400'}`} />
                       </span>
                     </button>
                   </h3>
@@ -112,7 +112,7 @@ export default function FAQSection() {
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                     className="overflow-hidden"
                   >
-                    <div className="px-5 pb-5 text-gray-600 leading-relaxed text-sm">
+                    <div className="px-4 sm:px-5 pb-4 sm:pb-5 text-gray-600 leading-relaxed text-xs sm:text-sm">
                       {faq.answer}
                     </div>
                   </motion.div>
@@ -127,11 +127,11 @@ export default function FAQSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-12 text-center"
+          className="mt-8 sm:mt-12 text-center"
         >
-          <div className="inline-flex items-center gap-3 rounded-full bg-slate-50 border border-slate-200 px-6 py-3">
-            <MessageCircle className="w-5 h-5 text-rcm-green-600" />
-            <span className="text-gray-600">
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-3 rounded-full bg-slate-50 border border-slate-200 px-4 sm:px-6 py-2.5 sm:py-3">
+            <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 text-rcm-green-600" />
+            <span className="text-xs sm:text-sm text-gray-600">
               Don&apos;t see your question?{' '}
               <a 
                 href="mailto:info@roswellmasjid.org" 
