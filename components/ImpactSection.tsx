@@ -15,11 +15,25 @@ import {
   Leaf,
   ArrowRight
 } from 'lucide-react'
+import { CountUpOnView, FadeInText } from './CountUpOnView'
+import { staggerContainer, staggerItem } from './animations'
 
-const metrics = [
+interface Metric {
+  icon: typeof Zap
+  value: string
+  numericValue?: number
+  suffix?: string
+  label: string
+  detail: string
+  color: string
+}
+
+const metrics: Metric[] = [
   {
     icon: Zap,
     value: '105%',
+    numericValue: 105,
+    suffix: '%',
     label: 'Energy Generated On-Site',
     detail: 'Targeted Net-Positive Energy',
     color: 'gold',
@@ -27,6 +41,8 @@ const metrics = [
   {
     icon: Sun,
     value: '70%',
+    numericValue: 70,
+    suffix: '%',
     label: 'Less Energy Use',
     detail: 'vs Conventional Building',
     color: 'green',
@@ -34,6 +50,7 @@ const metrics = [
   {
     icon: Droplets,
     value: '<1/3',
+    // Non-numeric, will use FadeInText
     label: 'Municipal Water Use',
     detail: 'vs Typical Building',
     color: 'teal',
@@ -41,6 +58,8 @@ const metrics = [
   {
     icon: Recycle,
     value: '80%',
+    numericValue: 80,
+    suffix: '%',
     label: 'Construction Waste',
     detail: 'Diverted from Landfills',
     color: 'green',
@@ -48,6 +67,8 @@ const metrics = [
   {
     icon: Users,
     value: '20%',
+    numericValue: 20,
+    suffix: '%',
     label: 'Diverse Contracts',
     detail: 'M/W/DBE Firms',
     color: 'gold',
@@ -55,6 +76,8 @@ const metrics = [
   {
     icon: Wind,
     value: '75%',
+    numericValue: 75,
+    suffix: '%',
     label: 'Natural Light Access',
     detail: 'In Occupied Spaces',
     color: 'teal',
@@ -62,6 +85,8 @@ const metrics = [
   {
     icon: TreePine,
     value: '100%',
+    numericValue: 100,
+    suffix: '%',
     label: 'Red List Free',
     detail: 'No Toxic Materials',
     color: 'green',
@@ -69,6 +94,8 @@ const metrics = [
   {
     icon: Heart,
     value: '24/7',
+    numericValue: 24,
+    suffix: '/7',
     label: 'Community Access',
     detail: 'Designed for All',
     color: 'gold',
@@ -120,23 +147,43 @@ export default function ImpactSection() {
           </p>
         </motion.div>
 
-        {/* Metrics Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
-          {metrics.map((metric, index) => {
+        {/* Metrics Grid with Stagger */}
+        <motion.div 
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5"
+          variants={staggerContainer}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          {metrics.map((metric) => {
             const colors = getColorClasses(metric.color)
             return (
               <motion.div
                 key={metric.label}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="bg-gray-50 rounded-2xl p-5 md:p-6 text-center hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-gray-100 group"
+                variants={staggerItem}
+                whileHover={{ 
+                  y: -4, 
+                  scale: 1.02,
+                  transition: { duration: 0.2 } 
+                }}
+                className="bg-gray-50 rounded-2xl p-5 md:p-6 text-center hover:bg-white hover:shadow-xl transition-all duration-300 border border-gray-100 group cursor-default"
               >
-                <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${colors.bg} mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                <motion.div 
+                  className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${colors.bg} mb-4`}
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <metric.icon className={`w-6 h-6 ${colors.icon}`} />
-                </div>
+                </motion.div>
                 <p className={`text-2xl md:text-3xl lg:text-4xl font-bold ${colors.value} mb-1`}>
-                  {metric.value}
+                  {metric.numericValue !== undefined ? (
+                    <CountUpOnView 
+                      target={metric.numericValue} 
+                      suffix={metric.suffix || ''} 
+                      duration={1.2}
+                    />
+                  ) : (
+                    <FadeInText text={metric.value} />
+                  )}
                 </p>
                 <p className="font-semibold text-gray-900 text-sm mb-1">
                   {metric.label}
@@ -147,7 +194,7 @@ export default function ImpactSection() {
               </motion.div>
             )
           })}
-        </div>
+        </motion.div>
 
         {/* Living Building Challenge Highlight */}
         <motion.div
@@ -156,7 +203,11 @@ export default function ImpactSection() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-12"
         >
-          <div className="relative bg-gradient-to-br from-rcm-green-600 to-rcm-teal-600 rounded-2xl p-8 md:p-10 text-white overflow-hidden">
+          <motion.div 
+            className="relative bg-gradient-to-br from-rcm-green-600 to-rcm-teal-600 rounded-2xl p-8 md:p-10 text-white overflow-hidden"
+            whileHover={{ scale: 1.01 }}
+            transition={{ duration: 0.3 }}
+          >
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">
               <div className="absolute inset-0" style={{
@@ -166,9 +217,13 @@ export default function ImpactSection() {
             
             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex items-center gap-5">
-                <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center flex-shrink-0">
+                <motion.div 
+                  className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center flex-shrink-0"
+                  whileHover={{ rotate: 5, scale: 1.05 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <Leaf className="w-8 h-8 text-white" />
-                </div>
+                </motion.div>
                 <div>
                   <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-semibold uppercase tracking-wider mb-2">
                     First Faith-Based Project
@@ -182,18 +237,19 @@ export default function ImpactSection() {
                   </p>
                 </div>
               </div>
-              <a 
+              <motion.a 
                 href="#vision" 
                 className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 bg-white text-rcm-green-700 font-semibold rounded-lg hover:bg-rcm-green-50 transition-colors shadow-lg"
+                whileHover={{ scale: 1.05, x: 4 }}
+                whileTap={{ scale: 0.98 }}
               >
                 Learn More
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </motion.a>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
   )
 }
-

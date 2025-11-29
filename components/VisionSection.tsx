@@ -11,6 +11,7 @@ import {
   Globe,
   Sparkles
 } from 'lucide-react'
+import { staggerContainer, staggerItem } from './animations'
 
 const promises = [
   {
@@ -56,18 +57,21 @@ const getColorClasses = (color: string) => {
     case 'rcm-gold':
       return {
         bg: 'bg-rcm-gold-100',
+        bgHover: 'group-hover:bg-rcm-gold-200',
         icon: 'text-rcm-gold-600',
         border: 'hover:border-rcm-gold-300',
       }
     case 'rcm-teal':
       return {
         bg: 'bg-rcm-teal-100',
+        bgHover: 'group-hover:bg-rcm-teal-200',
         icon: 'text-rcm-teal-600',
         border: 'hover:border-rcm-teal-300',
       }
     default:
       return {
         bg: 'bg-rcm-green-100',
+        bgHover: 'group-hover:bg-rcm-green-200',
         icon: 'text-rcm-green-600',
         border: 'hover:border-rcm-green-300',
       }
@@ -97,33 +101,46 @@ export default function VisionSection() {
           </p>
         </motion.div>
 
-        {/* Five Core Promises */}
-        <div className="mb-8">
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.2 }}
-            className="text-center text-sm font-semibold uppercase tracking-wider text-rcm-green-700 mb-8"
-          >
+        {/* Five Core Promises Label */}
+        <motion.div 
+          className="mb-8"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.2 }}
+        >
+          <p className="text-center text-sm font-semibold uppercase tracking-wider text-rcm-green-700 mb-8">
             The Five Core Promises
-          </motion.p>
-        </div>
+          </p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {promises.map((promise, index) => {
+        {/* Promise Cards Grid with Stagger */}
+        <motion.div 
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          variants={staggerContainer}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          {promises.map((promise) => {
             const colors = getColorClasses(promise.color)
             return (
               <motion.div
                 key={promise.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`card card-hover ${colors.border}`}
+                variants={staggerItem}
+                whileHover={{ 
+                  y: -6, 
+                  scale: 1.02,
+                  transition: { duration: 0.2, ease: 'easeOut' } 
+                }}
+                className={`group bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 cursor-default ${colors.border}`}
               >
-                <div className={`w-14 h-14 rounded-xl ${colors.bg} flex items-center justify-center mb-4`}>
+                <motion.div 
+                  className={`w-14 h-14 rounded-xl ${colors.bg} ${colors.bgHover} flex items-center justify-center mb-4 transition-colors duration-300`}
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <promise.icon className={`w-7 h-7 ${colors.icon}`} />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                </motion.div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-rcm-green-700 transition-colors">
                   {promise.title}
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -132,9 +149,8 @@ export default function VisionSection() {
               </motion.div>
             )
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
 }
-

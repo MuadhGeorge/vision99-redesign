@@ -9,6 +9,7 @@ import {
   Shield,
   CheckCircle
 } from 'lucide-react'
+import { staggerContainer, staggerItem } from './animations'
 
 const donationTiers = [
   {
@@ -69,24 +70,40 @@ export default function DonateSection() {
           </p>
         </motion.div>
 
-        {/* Donation Tiers */}
-        <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-16 items-stretch">
-          {donationTiers.map((tier, index) => (
+        {/* Donation Tiers with Stagger */}
+        <motion.div 
+          className="grid md:grid-cols-3 gap-6 md:gap-8 mb-16 items-stretch"
+          variants={staggerContainer}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          {donationTiers.map((tier) => (
             <motion.div
               key={tier.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-              className={`relative rounded-2xl p-6 md:p-8 flex flex-col ${
+              variants={staggerItem}
+              whileHover={tier.popular ? { 
+                scale: 1.03,
+                transition: { duration: 0.2 } 
+              } : { 
+                y: -8, 
+                scale: 1.02,
+                transition: { duration: 0.2 } 
+              }}
+              className={`relative rounded-2xl p-6 md:p-8 flex flex-col transition-shadow duration-300 ${
                 tier.popular
-                  ? 'bg-white text-gray-900 shadow-2xl md:scale-105 ring-2 ring-rcm-gold-400'
-                  : 'bg-rcm-green-800/50 backdrop-blur border border-rcm-green-700'
+                  ? 'bg-white text-gray-900 shadow-2xl md:scale-105 ring-2 ring-rcm-gold-400 hover:shadow-rcm-gold-500/20'
+                  : 'bg-rcm-green-800/50 backdrop-blur border border-rcm-green-700 hover:border-rcm-green-500 hover:shadow-xl hover:shadow-rcm-green-900/50'
               }`}
             >
               {tier.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-rcm-gold-500 to-rcm-gold-600 text-white text-xs font-bold px-5 py-1.5 rounded-full shadow-lg">
+                <motion.div 
+                  className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-rcm-gold-500 to-rcm-gold-600 text-white text-xs font-bold px-5 py-1.5 rounded-full shadow-lg"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                >
                   Most Popular
-                </div>
+                </motion.div>
               )}
               
               <div className="text-center mb-6">
@@ -103,27 +120,35 @@ export default function DonateSection() {
 
               <ul className="space-y-3 mb-6 flex-grow">
                 {tier.features.map((feature, fIndex) => (
-                  <li key={fIndex} className="flex items-center gap-3">
+                  <motion.li 
+                    key={fIndex} 
+                    className="flex items-center gap-3"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ delay: 0.4 + fIndex * 0.1 }}
+                  >
                     <CheckCircle className={`w-5 h-5 flex-shrink-0 ${tier.popular ? 'text-rcm-green-500' : 'text-rcm-gold-400'}`} />
                     <span className={`text-sm ${tier.popular ? 'text-gray-600' : 'text-rcm-green-200'}`}>
                       {feature}
                     </span>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
 
-              <button
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
                 className={`w-full py-3.5 px-4 rounded-xl font-semibold transition-all duration-300 ${
                   tier.popular
-                    ? 'bg-rcm-green-600 text-white hover:bg-rcm-green-700 shadow-lg hover:shadow-xl hover:-translate-y-0.5'
+                    ? 'bg-rcm-green-600 text-white hover:bg-rcm-green-700 shadow-lg hover:shadow-xl'
                     : 'bg-white/10 text-white hover:bg-white/20 border border-white/30 hover:border-white/50'
                 }`}
               >
                 {tier.cta}
-              </button>
+              </motion.button>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Other Ways to Give */}
         <motion.div
@@ -134,14 +159,18 @@ export default function DonateSection() {
         >
           <h3 className="text-xl font-bold mb-6">Other Ways to Give</h3>
           <div className="flex flex-wrap justify-center gap-3 text-sm">
-            {['Stock Donations', 'DAF Contributions', 'Planned Giving', 'Corporate Matching', 'Zakat Eligible'].map((method) => (
-              <span 
+            {['Stock Donations', 'DAF Contributions', 'Planned Giving', 'Corporate Matching', 'Zakat Eligible'].map((method, index) => (
+              <motion.span 
                 key={method}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ delay: 0.6 + index * 0.05 }}
+                whileHover={{ scale: 1.05, y: -2 }}
                 className="inline-flex items-center gap-2 bg-rcm-green-800/60 px-5 py-2.5 rounded-full border border-rcm-green-600/50 hover:bg-rcm-green-700/60 hover:border-rcm-green-500/50 transition-all duration-300 cursor-pointer"
               >
                 <Heart className="w-4 h-4 text-rcm-gold-400" />
                 {method}
-              </span>
+              </motion.span>
             ))}
           </div>
         </motion.div>
@@ -154,10 +183,14 @@ export default function DonateSection() {
           className="flex flex-wrap justify-center items-center gap-8 pt-8 border-t border-rcm-green-800"
         >
           {trustIndicators.map((indicator, index) => (
-            <div key={index} className="flex items-center gap-2 text-rcm-green-300">
+            <motion.div 
+              key={index} 
+              className="flex items-center gap-2 text-rcm-green-300"
+              whileHover={{ scale: 1.05, color: '#86efac' }}
+            >
               <indicator.icon className="w-5 h-5" />
               <span className="text-sm">{indicator.text}</span>
-            </div>
+            </motion.div>
           ))}
         </motion.div>
 
@@ -175,4 +208,3 @@ export default function DonateSection() {
     </section>
   )
 }
-
