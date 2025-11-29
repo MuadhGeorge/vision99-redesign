@@ -1,8 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { Leaf, Mail, Phone, MapPin, ArrowRight } from 'lucide-react'
-import Image from 'next/image'
 
 const quickLinks = [
   { name: 'Vision', href: '#vision' },
@@ -17,7 +15,6 @@ const socialLinks = [
   { name: 'Facebook', href: '#' },
   { name: 'Instagram', href: '#' },
   { name: 'YouTube', href: '#' },
-  { name: 'Twitter', href: '#' },
 ]
 
 export default function Footer() {
@@ -94,7 +91,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-gray-400 hover:text-rcm-green-400 transition-colors"
+                    className="text-gray-400 hover:text-rcm-green-400 hover:underline transition-colors"
                   >
                     {link.name}
                   </a>
@@ -115,13 +112,19 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-rcm-green-500 flex-shrink-0" />
-                <a href="mailto:info@roswellmasjid.org" className="text-gray-400 hover:text-rcm-green-400 transition-colors">
+                <a 
+                  href="mailto:info@roswellmasjid.org" 
+                  className="text-gray-400 hover:text-rcm-green-400 hover:underline transition-colors"
+                >
                   info@roswellmasjid.org
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-rcm-green-500 flex-shrink-0" />
-                <a href="tel:+17708178677" className="text-gray-400 hover:text-rcm-green-400 transition-colors">
+                <a 
+                  href="tel:+17708178677" 
+                  className="text-gray-400 hover:text-rcm-green-400 hover:underline transition-colors"
+                >
                   (770) 817-8677
                 </a>
               </li>
@@ -138,10 +141,10 @@ export default function Footer() {
               © {new Date().getFullYear()} Roswell Community Masjid. All rights reserved. 
               501(c)(3) Nonprofit Organization.
             </p>
-            <div className="flex gap-6">
-              <a href="#" className="hover:text-gray-300 transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-gray-300 transition-colors">Terms of Use</a>
-              <a href="#" className="hover:text-gray-300 transition-colors">Accessibility</a>
+            <div className="flex items-center gap-6">
+              <a href="#" className="hover:text-gray-300 hover:underline transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-gray-300 hover:underline transition-colors">Terms of Use</a>
+              <a href="#" className="hover:text-gray-300 hover:underline transition-colors">Accessibility</a>
             </div>
           </div>
         </div>
@@ -149,4 +152,3 @@ export default function Footer() {
     </footer>
   )
 }
-
