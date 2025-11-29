@@ -69,9 +69,9 @@ const getStatusStyles = (status: string) => {
     case 'current':
       return {
         line: 'bg-rcm-gold-500',
-        dot: 'bg-rcm-gold-500 text-white animate-pulse',
-        card: 'border-rcm-gold-300 bg-rcm-gold-50/50 shadow-lg',
-        badge: 'bg-rcm-gold-100 text-rcm-gold-700',
+        dot: 'bg-gradient-to-br from-rcm-gold-500 to-rcm-gold-600 text-white ring-4 ring-rcm-gold-200',
+        card: 'border-rcm-gold-400 bg-gradient-to-br from-rcm-gold-50 to-white shadow-xl',
+        badge: 'bg-rcm-gold-500 text-white',
       }
     default:
       return {
@@ -88,7 +88,7 @@ export default function TimelineSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section id="timeline" className="section-padding bg-gray-50" ref={ref}>
+    <section id="timeline" className="section-padding bg-gray-50 scroll-mt-20" ref={ref}>
       <div className="container-max">
         {/* Section Header */}
         <motion.div
@@ -141,10 +141,15 @@ export default function TimelineSection() {
 
                   {/* Card */}
                   <div className={`rounded-xl border-2 p-4 ${styles.card} transition-all duration-300`}>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className={`text-xs font-semibold px-2 py-1 rounded-full ${styles.badge}`}>
+                    <div className="flex items-center justify-between mb-2 gap-2 flex-wrap">
+                      <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${styles.badge}`}>
                         {phase.date}
                       </span>
+                      {phase.status === 'current' && (
+                        <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-rcm-green-600 text-white animate-pulse">
+                          We&apos;re Here
+                        </span>
+                      )}
                     </div>
                     <h3 className="font-bold text-gray-900 mb-2">{phase.title}</h3>
                     <p className="text-sm text-gray-600 mb-3">{phase.description}</p>

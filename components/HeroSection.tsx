@@ -58,16 +58,25 @@ export default function HeroSection() {
               </a>
             </div>
 
-            {/* Quote */}
-            <blockquote className="border-l-4 border-rcm-gold-500 pl-4 italic text-gray-600">
-              <p className="mb-2">
-                &ldquo;This is us returning to who we are — an ummah that builds with dignity, 
-                excellence, and conviction.&rdquo;
-              </p>
-              <cite className="text-sm font-medium text-rcm-green-700 not-italic">
-                — Imam Abdullah Jaber
-              </cite>
-            </blockquote>
+            {/* Quote Card */}
+            <div className="relative bg-gradient-to-br from-rcm-green-50 to-rcm-teal-50 rounded-2xl p-6 border border-rcm-green-100 shadow-sm">
+              <div className="absolute -top-3 -left-2 text-5xl text-rcm-gold-400 font-serif leading-none">&ldquo;</div>
+              <blockquote className="relative z-10">
+                <p className="text-gray-700 italic text-lg leading-relaxed mb-3">
+                  This is us returning to who we are — an ummah that builds with dignity, 
+                  excellence, and conviction.
+                </p>
+                <cite className="flex items-center gap-3 not-italic">
+                  <div className="w-10 h-10 rounded-full bg-rcm-green-600 flex items-center justify-center text-white font-bold text-sm">
+                    AJ
+                  </div>
+                  <div>
+                    <span className="block font-semibold text-gray-900">Imam Abdullah Jaber</span>
+                    <span className="text-sm text-gray-500">Roswell Community Masjid</span>
+                  </div>
+                </cite>
+              </blockquote>
+            </div>
           </motion.div>
 
           {/* Right Image */}

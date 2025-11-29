@@ -44,7 +44,7 @@ export default function CampusSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section id="campus" className="section-padding bg-gray-50" ref={ref}>
+    <section id="campus" className="section-padding bg-gray-50 scroll-mt-20" ref={ref}>
       <div className="container-max">
         {/* Section Header */}
         <motion.div
@@ -76,20 +76,20 @@ export default function CampusSection() {
               worship can be.
             </p>
 
-            <ul className="space-y-4">
+            <div className="flex flex-wrap gap-3">
               {campusFeatures.map((feature, index) => (
-                <motion.li
+                <motion.span
                   key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                  className="flex items-start gap-3"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-rcm-green-200 shadow-sm text-sm font-medium text-gray-700 hover:border-rcm-green-400 hover:shadow-md transition-all duration-300"
                 >
-                  <CheckCircle className="w-5 h-5 text-rcm-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">{feature}</span>
-                </motion.li>
+                  <CheckCircle className="w-4 h-4 text-rcm-green-600 flex-shrink-0" />
+                  {feature}
+                </motion.span>
               ))}
-            </ul>
+            </div>
           </motion.div>
 
           {/* Right: Image */}

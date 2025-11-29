@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Leaf } from 'lucide-react'
-import Image from 'next/image'
 
 const navLinks = [
   { name: 'Vision', href: '#vision' },
@@ -55,21 +54,21 @@ export default function Navigation() {
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-rcm-green-600 ${
+                className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-rcm-green-50 hover:text-rcm-green-700 ${
                   scrolled ? 'text-gray-700' : 'text-gray-700'
-                }`}
+                } focus:outline-none focus-visible:ring-2 focus-visible:ring-rcm-green-500 focus-visible:ring-offset-2`}
               >
                 {link.name}
               </a>
             ))}
             <a
               href="#donate"
-              className="btn-primary !py-2.5 !px-5 text-sm"
+              className="ml-4 btn-primary !py-2.5 !px-6 text-sm"
             >
               Donate
             </a>

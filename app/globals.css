@@ -79,6 +79,17 @@
   .bg-gradient-radial {
     background: radial-gradient(ellipse at center, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 70%);
   }
+  
+  /* Smooth transitions for interactive elements */
+  .transition-smooth {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  /* Card grid with equal heights */
+  .card-grid-equal {
+    @apply grid gap-6;
+    grid-auto-rows: 1fr;
+  }
 }
 
 /* Custom scrollbar */

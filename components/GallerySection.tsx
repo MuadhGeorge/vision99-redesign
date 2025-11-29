@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import ImageWithFallback from './ImageWithFallback'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 
@@ -67,20 +67,50 @@ export default function GallerySection() {
   const openLightbox = (index: number) => setSelectedImage(index)
   const closeLightbox = () => setSelectedImage(null)
   
-  const goToPrevious = () => {
-    if (selectedImage !== null) {
-      setSelectedImage(selectedImage === 0 ? galleryImages.length - 1 : selectedImage - 1)
-    }
-  }
-  
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     if (selectedImage !== null) {
       setSelectedImage(selectedImage === galleryImages.length - 1 ? 0 : selectedImage + 1)
     }
-  }
+  }, [selectedImage])
+
+  const goToPrevious = useCallback(() => {
+    if (selectedImage !== null) {
+      setSelectedImage(selectedImage === 0 ? galleryImages.length - 1 : selectedImage - 1)
+    }
+  }, [selectedImage])
+
+  // Keyboard navigation for lightbox
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedImage === null) return
+      
+      switch (e.key) {
+        case 'Escape':
+          closeLightbox()
+          break
+        case 'ArrowLeft':
+          goToPrevious()
+          break
+        case 'ArrowRight':
+          goToNext()
+          break
+      }
+    }
+
+    if (selectedImage !== null) {
+      document.addEventListener('keydown', handleKeyDown)
+      // Prevent body scroll when lightbox is open
+      document.body.style.overflow = 'hidden'
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = ''
+    }
+  }, [selectedImage, goToNext, goToPrevious])
 
   return (
-    <section id="gallery" className="section-padding bg-gray-50" ref={ref}>
+    <section id="gallery" className="section-padding bg-gray-50 scroll-mt-20" ref={ref}>
       <div className="container-max">
         {/* Section Header */}
         <motion.div

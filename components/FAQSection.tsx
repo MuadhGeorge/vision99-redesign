@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { ChevronDown, Plus, Minus } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 
 const faqs = [
   {
@@ -46,7 +46,7 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
-    <section id="faq" className="section-padding bg-white" ref={ref}>
+    <section id="faq" className="section-padding bg-white scroll-mt-20" ref={ref}>
       <div className="container-max">
         {/* Section Header */}
         <motion.div
@@ -63,45 +63,54 @@ export default function FAQSection() {
         </motion.div>
 
         {/* FAQ Accordion */}
-        <div className="max-w-3xl mx-auto space-y-4">
-          {faqs.map((faq, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 10 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="border border-gray-200 rounded-xl overflow-hidden"
-            >
-              <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full flex items-center justify-between p-5 text-left bg-white hover:bg-gray-50 transition-colors"
-                aria-expanded={openIndex === index}
-              >
-                <span className="font-semibold text-gray-900 pr-4">{faq.question}</span>
-                <span className="flex-shrink-0">
-                  {openIndex === index ? (
-                    <Minus className="w-5 h-5 text-rcm-green-600" />
-                  ) : (
-                    <Plus className="w-5 h-5 text-gray-400" />
-                  )}
-                </span>
-              </button>
-              
+        <div className="max-w-3xl mx-auto space-y-4" role="region" aria-label="Frequently Asked Questions">
+          {faqs.map((faq, index) => {
+            const isOpen = openIndex === index
+            const panelId = `faq-panel-${index}`
+            const buttonId = `faq-button-${index}`
+            
+            return (
               <motion.div
-                initial={false}
-                animate={{
-                  height: openIndex === index ? 'auto' : 0,
-                  opacity: openIndex === index ? 1 : 0,
-                }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden"
+                key={index}
+                initial={{ opacity: 0, y: 10 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                className="border border-gray-200 rounded-xl overflow-hidden bg-white hover:border-gray-300 transition-colors"
               >
-                <div className="px-5 pb-5 text-gray-600 leading-relaxed">
-                  {faq.answer}
-                </div>
+                <h3>
+                  <button
+                    id={buttonId}
+                    onClick={() => setOpenIndex(isOpen ? null : index)}
+                    className="w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-rcm-green-500 focus-visible:ring-inset"
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                  >
+                    <span className="font-semibold text-gray-900 pr-4">{faq.question}</span>
+                    <span className={`flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+                      <ChevronDown className={`w-5 h-5 ${isOpen ? 'text-rcm-green-600' : 'text-gray-400'}`} />
+                    </span>
+                  </button>
+                </h3>
+                
+                <motion.div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={buttonId}
+                  initial={false}
+                  animate={{
+                    height: isOpen ? 'auto' : 0,
+                    opacity: isOpen ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-5 pb-5 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+                    {faq.answer}
+                  </div>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          ))}
+            )
+          })}
         </div>
 
         {/* Contact CTA */}

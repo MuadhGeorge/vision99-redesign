@@ -79,7 +79,7 @@ export default function VisionSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section id="vision" className="section-padding bg-white" ref={ref}>
+    <section id="vision" className="section-padding bg-white scroll-mt-20" ref={ref}>
       <div className="container-max">
         {/* Section Header */}
         <motion.div
