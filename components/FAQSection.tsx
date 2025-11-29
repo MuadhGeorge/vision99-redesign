@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, MessageCircle } from 'lucide-react'
 
 const faqs = [
   {
@@ -53,7 +53,7 @@ export default function FAQSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <span className="section-label">Questions</span>
           <h2 className="section-heading">Frequently Asked Questions</h2>
@@ -62,76 +62,87 @@ export default function FAQSection() {
           </p>
         </motion.div>
 
-        {/* FAQ Accordion */}
-        <div className="max-w-3xl mx-auto space-y-4" role="region" aria-label="Frequently Asked Questions">
-          {faqs.map((faq, index) => {
-            const isOpen = openIndex === index
-            const panelId = `faq-panel-${index}`
-            const buttonId = `faq-button-${index}`
-            
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 10 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="border border-gray-200 rounded-xl overflow-hidden bg-white hover:border-gray-300 transition-colors"
-              >
-                <h3>
-                  <button
-                    id={buttonId}
-                    onClick={() => setOpenIndex(isOpen ? null : index)}
-                    className="w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-rcm-green-500 focus-visible:ring-inset"
-                    aria-expanded={isOpen}
-                    aria-controls={panelId}
-                  >
-                    <span className="font-semibold text-gray-900 pr-4">{faq.question}</span>
-                    <span className={`flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
-                      <ChevronDown className={`w-5 h-5 ${isOpen ? 'text-rcm-green-600' : 'text-gray-400'}`} />
-                    </span>
-                  </button>
-                </h3>
-                
+        {/* FAQ Container */}
+        <div className="max-w-3xl mx-auto">
+          <div 
+            className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden divide-y divide-gray-100" 
+            role="region" 
+            aria-label="Frequently Asked Questions"
+          >
+            {faqs.map((faq, index) => {
+              const isOpen = openIndex === index
+              const panelId = `faq-panel-${index}`
+              const buttonId = `faq-button-${index}`
+              
+              return (
                 <motion.div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={buttonId}
-                  initial={false}
-                  animate={{
-                    height: isOpen ? 'auto' : 0,
-                    opacity: isOpen ? 1 : 0,
-                  }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
-                  className="overflow-hidden"
+                  key={index}
+                  initial={{ opacity: 0 }}
+                  animate={isInView ? { opacity: 1 } : {}}
+                  transition={{ duration: 0.4, delay: index * 0.03 }}
                 >
-                  <div className="px-5 pb-5 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                    {faq.answer}
-                  </div>
+                  <h3>
+                    <button
+                      id={buttonId}
+                      onClick={() => setOpenIndex(isOpen ? null : index)}
+                      className={`w-full flex items-center justify-between p-5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-rcm-green-500 focus-visible:ring-inset ${
+                        isOpen ? 'bg-rcm-green-50/50' : 'hover:bg-gray-50'
+                      }`}
+                      aria-expanded={isOpen}
+                      aria-controls={panelId}
+                    >
+                      <span className={`font-medium pr-4 ${isOpen ? 'text-rcm-green-700' : 'text-gray-900'}`}>
+                        {faq.question}
+                      </span>
+                      <span className={`flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+                        <ChevronDown className={`w-5 h-5 ${isOpen ? 'text-rcm-green-600' : 'text-gray-400'}`} />
+                      </span>
+                    </button>
+                  </h3>
+                  
+                  <motion.div
+                    id={panelId}
+                    role="region"
+                    aria-labelledby={buttonId}
+                    initial={false}
+                    animate={{
+                      height: isOpen ? 'auto' : 0,
+                      opacity: isOpen ? 1 : 0,
+                    }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-5 pb-5 text-gray-600 leading-relaxed text-sm">
+                      {faq.answer}
+                    </div>
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
 
         {/* Contact CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-12 text-center"
         >
-          <p className="text-gray-600 mb-4">
-            Don&apos;t see your question? We&apos;re happy to help.
-          </p>
-          <a 
-            href="mailto:info@roswellmasjid.org" 
-            className="text-rcm-green-600 font-semibold hover:text-rcm-green-700 underline underline-offset-2"
-          >
-            Contact us at info@roswellmasjid.org
-          </a>
+          <div className="inline-flex items-center gap-3 rounded-full bg-slate-50 border border-slate-200 px-6 py-3">
+            <MessageCircle className="w-5 h-5 text-rcm-green-600" />
+            <span className="text-gray-600">
+              Don&apos;t see your question?{' '}
+              <a 
+                href="mailto:info@roswellmasjid.org" 
+                className="text-rcm-green-600 font-semibold hover:text-rcm-green-700 underline underline-offset-2"
+              >
+                Contact us
+              </a>
+            </span>
+          </div>
         </motion.div>
       </div>
     </section>
   )
 }
-
