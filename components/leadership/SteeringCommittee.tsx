@@ -7,33 +7,48 @@ import { useRef } from 'react'
 const committee = [
   {
     name: 'Sam Evans',
-    role: 'Campaign Chair',
-    description: 'Former Fortune 500 executive with 30+ years in strategic leadership and capital campaigns.',
+    role: 'Co-Lead, Fundraising',
+    description: 'Leading fundraising efforts to secure transformational gifts for the Beyond Walls capital campaign.',
   },
   {
     name: 'Saad Dar',
-    role: 'Project Director',
-    description: 'Civil engineer and community leader with expertise in sustainable infrastructure development.',
+    role: 'Co-Lead, Marketing',
+    description: 'Driving the strategic marketing and communications for the Vision 99 initiative.',
   },
   {
-    name: 'Dr. Amina Hassan',
-    role: 'Community Liaison',
-    description: 'Pediatrician and longtime RCM member, bridging professional and community perspectives.',
+    name: 'Kamran Siddiq',
+    role: 'Project Development Lead',
+    description: 'Overseeing the design, development, and execution of the Beyond Walls campus project.',
   },
   {
-    name: 'Khalid Rahman',
-    role: 'Finance Chair',
-    description: 'CPA with expertise in nonprofit financial management and capital project oversight.',
+    name: 'Renee Alnoubani',
+    role: 'Green Team Lead',
+    description: 'Ensuring adherence to Living Building Challenge standards and sustainability goals.',
   },
   {
-    name: 'Sarah Ahmed',
-    role: 'Development Director',
-    description: 'Nonprofit development professional with track record of successful major gift campaigns.',
+    name: 'Altaf S.',
+    role: 'Fundraising Advisor',
+    description: 'Providing strategic counsel on major gift cultivation and donor engagement.',
   },
   {
-    name: 'Omar Malik',
-    role: 'Construction Liaison',
-    description: 'Commercial construction manager ensuring project quality and timeline adherence.',
+    name: 'Munawar',
+    role: 'Fundraising Advisor',
+    description: 'Supporting fundraising strategy and community donor relations.',
+  },
+  {
+    name: 'Maher Budeir',
+    role: 'RCM Board Liaison',
+    description: 'Connecting the Vision 99 team with RCM Board governance and oversight.',
+  },
+  {
+    name: 'Tanvir Sarmast',
+    role: 'RCM Board Liaison',
+    description: 'Ensuring alignment between project execution and board-level strategy.',
+  },
+  {
+    name: 'Hina Mahmood',
+    role: 'Accounting & Finance',
+    description: 'Managing financial operations, reporting, and fiscal accountability for the campaign.',
   },
 ]
 

@@ -5,12 +5,18 @@ import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 
 const trustees = [
-  { name: 'Dr. Ahmed Khan', role: 'Board Chair' },
-  { name: 'Fatima Ali', role: 'Vice Chair' },
-  { name: 'Mohammed Rashid', role: 'Treasurer' },
-  { name: 'Aisha Patel', role: 'Secretary' },
-  { name: 'Ibrahim Hassan', role: 'Member' },
-  { name: 'Nadia Mahmoud', role: 'Member' },
+  { name: 'Maher Budeir', role: 'Board Member' },
+  { name: 'Tanvir Sarmast', role: 'Board Member' },
+  { name: 'Saad Dar', role: 'Board Member' },
+  { name: 'Omar Ahmed', role: 'Board Member' },
+  { name: 'Nipa Shaik', role: 'Board Member' },
+  { name: 'Ayesha Haddad', role: 'Treasurer' },
+]
+
+const executiveCommittee = [
+  { name: 'Nadia Siddiq', role: 'Social Services' },
+  { name: 'Jahanzeb Jabbar', role: 'Property Management' },
+  { name: 'Mustafizur Rahman', role: 'Executive Committee' },
 ]
 
 export default function Governance() {
@@ -30,7 +36,7 @@ export default function Governance() {
             <span className="section-label">Governance</span>
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">Board of Trustees</h2>
             
-            <div className="space-y-3">
+            <div className="space-y-3 mb-6">
               {trustees.map((trustee) => (
                 <div
                   key={trustee.name}
@@ -38,6 +44,19 @@ export default function Governance() {
                 >
                   <span className="font-medium text-gray-900">{trustee.name}</span>
                   <span className="text-sm text-brand-green-600">{trustee.role}</span>
+                </div>
+              ))}
+            </div>
+            
+            <h3 className="text-lg font-semibold text-gray-800 mb-3">Executive Committee</h3>
+            <div className="space-y-2">
+              {executiveCommittee.map((member) => (
+                <div
+                  key={member.name}
+                  className="flex items-center justify-between p-3 bg-brand-green-50 rounded-lg"
+                >
+                  <span className="font-medium text-gray-800 text-sm">{member.name}</span>
+                  <span className="text-xs text-brand-green-700">{member.role}</span>
                 </div>
               ))}
             </div>

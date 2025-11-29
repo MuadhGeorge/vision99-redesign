@@ -28,15 +28,16 @@ const standards = [
   },
 ]
 
+// Deduplicated partner/supporter list
 const partners = [
   'Islamic Relief USA',
   'CAIR Georgia',
-  'Kendeda Building',
-  'Living Future Institute',
+  'Subha Saliha',
+  'The Kendeda Building',
+  'International Living Future Institute',
   'ISNA',
-  'ICNA',
+  'ICNA Relief',
   'Muslim Advocates',
-  'Emory University',
 ]
 
 export default function Credibility() {

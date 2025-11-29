@@ -27,19 +27,55 @@ export default function TheAsk() {
   return (
     <section ref={ref} className="section-padding bg-white">
       <div className="container-max">
-        {/* Header */}
+        {/* A Call to Bold Leadership - Main Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12 sm:mb-16"
+          className="text-center mb-10"
         >
           <span className="section-label">Join Us</span>
-          <h2 className="section-heading">Two Ways to Build This Legacy</h2>
-          <p className="section-subheading mx-auto">
-            Whether through transformational partnership or community contribution, 
-            your role in this historic project awaits.
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-gray-900 mb-4">
+            A Call to Bold Leadership
+          </h2>
+          <p className="mx-auto max-w-2xl text-sm sm:text-base text-gray-600 leading-relaxed">
+            The vision is set. The blueprints are ready. The only missing piece is the people
+            willing to lead this moment for the Ummah and for humanity.
           </p>
+        </motion.div>
+
+        {/* Goal / Progress Visual */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="max-w-md mx-auto mb-10"
+        >
+          <div className="space-y-2">
+            <div className="flex items-baseline justify-between text-sm text-gray-700">
+              <span className="font-semibold text-gray-900">Capital Campaign Goal</span>
+              <span className="font-bold text-brand-green-700">$20M</span>
+            </div>
+            {/* Placeholder progress bar – static for now */}
+            <div className="h-2.5 w-full overflow-hidden rounded-full bg-gray-200">
+              <div className="h-full w-1/3 rounded-full bg-gradient-to-r from-brand-green-500 to-brand-green-600" />
+            </div>
+            <p className="text-xs text-gray-500 text-center">
+              Progress bar is illustrative. Live campaign totals will be added later.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Two Ways Subheading */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="text-center mb-8"
+        >
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-800">
+            Two Ways to Build This Legacy
+          </h3>
         </motion.div>
 
         {/* Two Cards */}

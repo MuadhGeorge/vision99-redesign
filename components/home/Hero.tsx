@@ -71,14 +71,19 @@ export default function Hero() {
               Faith in action. Innovation by design.
             </p>
             
-            {/* Key dates */}
-            <div className="flex flex-wrap gap-4 sm:gap-6 mb-8 text-sm">
-              <div className="flex items-center gap-2 text-gray-600">
-                <Calendar className="w-4 h-4 text-brand-green-600" />
+            {/* Campaign goal and key dates */}
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-8 text-sm text-gray-700">
+              <div className="flex items-baseline gap-1.5">
+                <span className="font-semibold text-gray-900">Goal:</span>
+                <span className="text-brand-green-700 font-medium">$20M Capital Campaign</span>
+              </div>
+              <div className="hidden sm:block h-4 w-px bg-gray-300" />
+              <div className="flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-brand-green-600" />
                 <span><strong>Groundbreaking:</strong> Dec 6, 2025</span>
               </div>
-              <div className="flex items-center gap-2 text-gray-600">
-                <Calendar className="w-4 h-4 text-brand-green-600" />
+              <div className="flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-brand-green-600" />
                 <span><strong>Construction:</strong> Jan 2026</span>
               </div>
             </div>
