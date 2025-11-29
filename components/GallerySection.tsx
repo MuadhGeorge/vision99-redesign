@@ -3,61 +3,46 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState, useEffect, useCallback } from 'react'
-import ImageWithFallback from './ImageWithFallback'
+import Image from 'next/image'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
+import { galleryPhotos, getAltText, Photo } from '@/lib/imageMap'
 
-const galleryImages = [
-  {
-    src: '/images/render-courtyard.jpg',
-    alt: 'Peaceful courtyard with fountain, flowering trees, and geometric paving patterns leading to the main sanctuary entrance',
-    caption: 'Central Courtyard & Sanctuary Entrance',
-  },
-  {
-    src: '/images/render-aerial.jpg',
-    alt: 'Aerial view of the complete RCM campus showing solar panel arrays on rooftops, landscaped grounds, and interconnected buildings',
-    caption: 'Campus Aerial with Solar Arrays',
-  },
-  {
-    src: '/images/render-front.jpg',
-    alt: 'Street-level view of the main building featuring the RCM logo, modern white stone facade with horizontal textures, and warm wood accents',
-    caption: 'Main Building Street View',
-  },
-  {
-    src: '/images/render-side.jpg',
-    alt: 'Side perspective of the campus from landscaped gardens, showing the modern minaret tower and connected building wings',
-    caption: 'Campus Side View',
-  },
-  {
-    src: '/images/render-gardens.jpg',
-    alt: 'Lush entrance gardens with native plantings, pampas grass, and mature trees framing views of the sanctuary',
-    caption: 'Entrance Gardens & Landscaping',
-  },
-  {
-    src: '/images/render-firepit.jpg',
-    alt: 'Community gathering space featuring a circular stone fire pit under a majestic oak tree, perfect for evening programs and conversations',
-    caption: 'Fire Pit Gathering Space',
-  },
-  {
-    src: '/images/render-pavilion.jpg',
-    alt: 'Rustic timber pavilion with metal roof, designed for outdoor prayers, community events, and youth activities',
-    caption: 'Outdoor Timber Pavilion',
-  },
-  {
-    src: '/images/render-playground.jpg',
-    alt: 'Colorful children\'s playground with slides and climbing structures, surrounded by native landscaping and shade trees',
-    caption: 'Children\'s Playground',
-  },
-  {
-    src: '/images/render-overview.jpg',
-    alt: 'Bird\'s eye view of the complete Beyond Walls campus showing the sanctuary, youth center, family hub, pavilion, and ample parking',
-    caption: 'Complete Campus Overview',
-  },
-  {
-    src: '/images/render-entrance.jpg',
-    alt: 'Close-up of the main entrance featuring intricate geometric mashrabiya screens, arched doorways, and warm wood framing',
-    caption: 'Main Entrance Detail',
-  },
-]
+/**
+ * Image assignments for Gallery Section:
+ * - Uses ALL photos from /public/Photos (28 total)
+ * - Exterior photos (10): EXT-01 through EXT-14
+ * - Interior photos (18): CAFE, GYM, PRAYER HALL, YOUTH CENTER, etc.
+ */
+
+// Generate gallery items with proper captions from the image map
+const galleryImages = galleryPhotos.map((photo: Photo) => {
+  // Create human-readable captions based on photo metadata
+  let caption = 'Campus Rendering'
+  
+  if (photo.category === 'exterior') {
+    caption = `Exterior View - ${photo.name}`
+  } else if (photo.subCategory) {
+    const subCategoryNames: Record<string, string> = {
+      'cafe': 'Community Cafe',
+      'gym': 'Recreation & Gymnasium',
+      'prayer-hall': 'Prayer Hall Sanctuary',
+      'youth': 'Youth Center',
+      'event-hall': 'Multi-Purpose Event Hall',
+      'toddler': 'Family & Toddler Space',
+      'main-hall': 'Main Entrance Hall',
+      'wudu': 'Wudu Facilities',
+      'shoe-hall': 'Entry & Shoe Hall',
+      'office': 'Administrative Offices',
+    }
+    caption = subCategoryNames[photo.subCategory] || 'Interior View'
+  }
+  
+  return {
+    src: photo.src,
+    alt: getAltText.gallery(photo),
+    caption,
+  }
+})
 
 export default function GallerySection() {
   const ref = useRef(null)
@@ -134,15 +119,15 @@ export default function GallerySection() {
               key={index}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
+              transition={{ duration: 0.4, delay: Math.min(index * 0.03, 0.5) }}
               onClick={() => openLightbox(index)}
-              className={`relative group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-300 ${
-                index === 0 || index === 4 ? 'md:col-span-2 md:row-span-2' : ''
+              className={`relative group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-rcm-green-500 ${
+                index === 0 || index === 10 ? 'md:col-span-2 md:row-span-2' : ''
               }`}
               aria-label={`View ${image.caption}`}
             >
-              <div className={`relative ${index === 0 || index === 4 ? 'aspect-square' : 'aspect-[4/3]'}`}>
-                <ImageWithFallback
+              <div className={`relative ${index === 0 || index === 10 ? 'aspect-square' : 'aspect-[4/3]'}`}>
+                <Image
                   src={image.src}
                   alt={image.alt}
                   fill
@@ -167,12 +152,15 @@ export default function GallerySection() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
             onClick={closeLightbox}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Image gallery lightbox"
           >
             {/* Close Button */}
             <button
               onClick={closeLightbox}
               className="absolute top-4 right-4 p-2 text-white/80 hover:text-white transition-colors z-10"
-              aria-label="Close gallery"
+              aria-label="Close gallery (Escape)"
             >
               <X className="w-8 h-8" />
             </button>
@@ -181,14 +169,14 @@ export default function GallerySection() {
             <button
               onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
               className="absolute left-4 p-2 text-white/80 hover:text-white transition-colors z-10"
-              aria-label="Previous image"
+              aria-label="Previous image (Left Arrow)"
             >
               <ChevronLeft className="w-10 h-10" />
             </button>
             <button
               onClick={(e) => { e.stopPropagation(); goToNext(); }}
               className="absolute right-4 p-2 text-white/80 hover:text-white transition-colors z-10"
-              aria-label="Next image"
+              aria-label="Next image (Right Arrow)"
             >
               <ChevronRight className="w-10 h-10" />
             </button>
@@ -198,31 +186,32 @@ export default function GallerySection() {
               className="relative max-w-6xl max-h-[85vh] w-full h-full"
               onClick={(e) => e.stopPropagation()}
             >
-              <ImageWithFallback
+              <Image
                 src={galleryImages[selectedImage].src}
                 alt={galleryImages[selectedImage].alt}
                 fill
                 className="object-contain"
                 sizes="100vw"
+                priority
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
                 <p className="text-white text-lg font-semibold">
                   {galleryImages[selectedImage].caption}
                 </p>
                 <p className="text-white/70 text-sm mt-1">
-                  {galleryImages[selectedImage].alt}
+                  {selectedImage + 1} of {galleryImages.length}
                 </p>
               </div>
             </div>
 
-            {/* Dots */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+            {/* Dots - show subset for many images */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 max-w-md overflow-x-auto px-4">
               {galleryImages.map((_, index) => (
                 <button
                   key={index}
                   onClick={(e) => { e.stopPropagation(); setSelectedImage(index); }}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    index === selectedImage ? 'bg-white w-6' : 'bg-white/40 hover:bg-white/60'
+                  className={`w-2 h-2 rounded-full transition-all flex-shrink-0 ${
+                    index === selectedImage ? 'bg-white w-4' : 'bg-white/40 hover:bg-white/60'
                   }`}
                   aria-label={`Go to image ${index + 1}`}
                 />
@@ -234,4 +223,3 @@ export default function GallerySection() {
     </section>
   )
 }
-

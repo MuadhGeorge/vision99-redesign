@@ -3,13 +3,21 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
-import ImageWithFallback from './ImageWithFallback'
+import Image from 'next/image'
 import { 
   Home, 
   GraduationCap, 
   Users,
   CheckCircle
 } from 'lucide-react'
+import { sectionImages, exteriorPhotos, getAltText } from '@/lib/imageMap'
+
+/**
+ * Image assignments for Campus Section:
+ * - Main campus image: EXT-02 (second exterior shot)
+ * - Secondary accent image: EXT-04 (fourth exterior shot)
+ * - Building cards use icons only (no images)
+ */
 
 const buildings = [
   {
@@ -38,6 +46,10 @@ const campusFeatures = [
   'First faith-based project pursuing Living Building Challenge',
   'Designed for accessibility and multigenerational use',
 ]
+
+// Get campus images from the image map
+const mainCampusImage = sectionImages.campus.main
+const secondaryCampusImage = exteriorPhotos[3] ?? sectionImages.campus.secondary
 
 export default function CampusSection() {
   const ref = useRef(null)
@@ -101,9 +113,9 @@ export default function CampusSection() {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-xl">
               <div className="aspect-[4/3] relative bg-gray-200">
-                <ImageWithFallback
-                  src="/images/render-aerial.jpg"
-                  alt="Aerial view of the complete RCM Beyond Walls campus showing the sanctuary with solar panel arrays, landscaped grounds, multiple interconnected buildings, and ample parking surrounded by trees"
+                <Image
+                  src={mainCampusImage.src}
+                  alt={getAltText.exterior(mainCampusImage.name)}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -113,9 +125,9 @@ export default function CampusSection() {
             
             {/* Accent Image */}
             <div className="absolute -bottom-6 -left-6 w-40 h-40 rounded-xl overflow-hidden shadow-xl border-4 border-white hidden lg:block">
-              <ImageWithFallback
-                src="/images/render-courtyard.jpg"
-                alt="Courtyard view with peaceful fountain, flowering trees, and geometric paving leading to the main sanctuary entrance"
+              <Image
+                src={secondaryCampusImage.src}
+                alt={getAltText.exterior(secondaryCampusImage.name)}
                 fill
                 className="object-cover"
                 sizes="160px"
@@ -169,4 +181,3 @@ export default function CampusSection() {
     </section>
   )
 }
-

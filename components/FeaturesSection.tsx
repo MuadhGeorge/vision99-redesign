@@ -3,26 +3,39 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
-import ImageWithFallback from './ImageWithFallback'
+import Image from 'next/image'
+import { sectionImages, getAltText } from '@/lib/imageMap'
+
+/**
+ * Image assignments for Campus Life / Features Section:
+ * - Youth & Family Spaces: INT-YOUTH-CENTER-19 (Youth Center)
+ * - Community Gathering: INT-CAFE-07 (Cafe space)
+ * - Outdoor Pavilion: INT-MAIN-HALL-02 (Main Hall)
+ */
+
+// Get images from the image map for each feature card
+const youthImage = sectionImages.campusLife.youth
+const communityImage = sectionImages.campusLife.community
+const pavilionImage = sectionImages.campusLife.pavilion
 
 const features = [
   {
-    image: '/images/render-playground.jpg',
-    alt: 'Colorful children\'s playground surrounded by native landscaping, designed for safe outdoor play and family gatherings',
+    image: youthImage.src,
+    alt: getAltText.interior(youthImage.subCategory),
     title: 'Youth & Family Spaces',
     description: 'Dedicated areas for children to play, learn, and grow—including playgrounds, youth centers, and family-friendly gathering spaces.',
   },
   {
-    image: '/images/render-firepit.jpg',
-    alt: 'Circular stone fire pit under a majestic oak tree, creating an intimate gathering space for community conversations',
+    image: communityImage.src,
+    alt: getAltText.interior(communityImage.subCategory),
     title: 'Community Gathering',
-    description: 'Thoughtfully designed outdoor spaces for community bonding—from the fire pit circle to shaded seating areas under mature trees.',
+    description: 'Thoughtfully designed spaces for community bonding—from the cafe to shaded seating areas and social gathering spots.',
   },
   {
-    image: '/images/render-pavilion.jpg',
-    alt: 'Rustic timber pavilion with exposed beams and metal roof, perfect for outdoor prayers and community events',
-    title: 'Outdoor Pavilion',
-    description: 'A beautiful timber-frame pavilion for overflow prayers, outdoor events, and connecting with nature during worship.',
+    image: pavilionImage.src,
+    alt: getAltText.interior(pavilionImage.subCategory),
+    title: 'Multi-Purpose Spaces',
+    description: 'Beautiful multi-purpose halls for overflow prayers, community events, and connecting with neighbors during special occasions.',
   },
 ]
 
@@ -59,7 +72,7 @@ export default function FeaturesSection() {
               className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 border border-gray-100"
             >
               <div className="relative aspect-[4/3] overflow-hidden">
-                <ImageWithFallback
+                <Image
                   src={feature.image}
                   alt={feature.alt}
                   fill
@@ -83,4 +96,3 @@ export default function FeaturesSection() {
     </section>
   )
 }
-

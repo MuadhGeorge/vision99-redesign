@@ -1,8 +1,15 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import ImageWithFallback from './ImageWithFallback'
+import Image from 'next/image'
 import { ArrowRight, Building2, Leaf, Sun, Droplets } from 'lucide-react'
+import { sectionImages, exteriorPhotos, getAltText } from '@/lib/imageMap'
+
+/**
+ * Image assignments for Hero Section:
+ * - Main hero image: EXT-01 (first exterior shot)
+ * - Secondary peek image: EXT-02 (second exterior shot)
+ */
 
 const stats = [
   { icon: Building2, value: '3 Buildings', label: 'on 5 Acres' },
@@ -10,6 +17,10 @@ const stats = [
   { icon: Sun, value: 'Net-Positive', label: 'Energy & Water' },
   { icon: Droplets, value: '2027', label: 'Target Opening' },
 ]
+
+// Get hero images from the image map
+const heroImage = sectionImages.hero
+const secondaryImage = exteriorPhotos[1] ?? exteriorPhotos[0]
 
 export default function HeroSection() {
   return (
@@ -87,11 +98,11 @@ export default function HeroSection() {
             className="relative"
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              {/* Main Image - Front Entrance View */}
+              {/* Main Image - Exterior View */}
               <div className="aspect-[4/3] relative bg-gray-200">
-                <ImageWithFallback
-                  src="/images/render-gardens.jpg"
-                  alt="Architectural rendering of the RCM Beyond Walls campus entrance featuring lush native gardens, flowering trees, and the modern sanctuary with its distinctive open-frame minaret rising against a clear blue sky"
+                <Image
+                  src={heroImage.src}
+                  alt={getAltText.exterior(heroImage.name)}
                   fill
                   className="object-cover"
                   priority
@@ -116,9 +127,9 @@ export default function HeroSection() {
 
             {/* Secondary Image Peek */}
             <div className="absolute -top-6 -right-6 w-32 h-32 md:w-40 md:h-40 rounded-xl overflow-hidden shadow-xl hidden lg:block border-4 border-white">
-              <ImageWithFallback
-                src="/images/render-aerial.jpg"
-                alt="Aerial view of the complete RCM Beyond Walls campus showing solar panels, landscaped grounds, and the interconnected building complex"
+              <Image
+                src={secondaryImage.src}
+                alt={getAltText.exterior(secondaryImage.name)}
                 fill
                 className="object-cover"
                 sizes="160px"
@@ -171,4 +182,3 @@ export default function HeroSection() {
     </section>
   )
 }
-
