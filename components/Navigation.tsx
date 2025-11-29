@@ -3,13 +3,15 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Leaf } from 'lucide-react'
+import Link from 'next/link'
 
 const navLinks = [
-  { name: 'Vision', href: '#vision' },
-  { name: 'Campus', href: '#campus' },
-  { name: 'Gallery', href: '#gallery' },
-  { name: 'Timeline', href: '#timeline' },
-  { name: 'FAQ', href: '#faq' },
+  { name: 'Home', href: '/' },
+  { name: 'LBC Blueprint', href: '/lbc' },
+  { name: 'Leadership & Team', href: '/leadership' },
+  { name: 'Capital Campaign', href: '/campaign' },
+  { name: 'Media & News', href: '/media' },
+  { name: 'Contact', href: '/contact' },
 ]
 
 export default function Navigation() {
@@ -24,60 +26,84 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Close mobile menu on route change or resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setIsOpen(false)
+      }
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-white/95 backdrop-blur-md shadow-sm'
-          : 'bg-transparent'
+          : 'bg-white/80 backdrop-blur-sm'
       }`}
     >
-      <nav className="container-max section-padding !py-4" aria-label="Main navigation">
+      <nav className="container-max py-3 sm:py-4" aria-label="Main navigation">
         <div className="flex items-center justify-between">
-          {/* Logo - Always show full brand on all screen sizes */}
-          <a
-            href="#"
+          {/* Logo - Always show full brand */}
+          <Link
+            href="/"
             className="flex items-center gap-2 sm:gap-3 group"
-            aria-label="Roswell Community Masjid - Home"
+            aria-label="RCM Beyond Walls - Home"
           >
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-rcm-teal-500 to-rcm-green-600 flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow flex-shrink-0">
-              <Leaf className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-rcm-teal-500 to-brand-green-600 flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow flex-shrink-0">
+              <Leaf className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
             <div className="flex flex-col leading-tight">
               <span className="font-display font-bold text-base sm:text-lg text-gray-900">
                 RCM
               </span>
-              <span className="text-[10px] sm:text-xs text-rcm-green-700 font-medium -mt-0.5">
+              <span className="text-[10px] sm:text-xs text-brand-green-700 font-medium -mt-0.5">
                 Beyond Walls
               </span>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
                 href={link.href}
-                className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-rcm-green-50 hover:text-rcm-green-700 ${
-                  scrolled ? 'text-gray-700' : 'text-gray-700'
-                } focus:outline-none focus-visible:ring-2 focus-visible:ring-rcm-green-500 focus-visible:ring-offset-2`}
+                className="relative px-3 xl:px-4 py-2 text-sm font-medium text-gray-700 
+                         hover:text-brand-green-700 transition-colors rounded-lg 
+                         hover:bg-brand-green-50
+                         focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-green-500"
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
-            <a
-              href="#donate"
-              className="ml-4 btn-primary !py-2.5 !px-6 text-sm"
+            <Link
+              href="/campaign#donate"
+              className="ml-3 btn-primary !py-2.5 !px-5 text-sm"
             >
               Donate
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
             aria-label={isOpen ? 'Close menu' : 'Open menu'}
@@ -90,38 +116,58 @@ export default function Navigation() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Full Screen Overlay */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
               id="mobile-menu"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="md:hidden overflow-hidden"
+              className="lg:hidden fixed inset-0 top-[60px] sm:top-[68px] bg-white z-40"
             >
-              <div className="pt-4 pb-2 space-y-1">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2, delay: 0.1 }}
+                className="h-full overflow-y-auto px-4 py-6"
+              >
+                <div className="space-y-1">
+                  {navLinks.map((link, index) => (
+                    <motion.div
+                      key={link.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 + index * 0.05 }}
+                    >
+                      <Link
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className="block py-3 px-4 text-lg text-gray-800 hover:bg-brand-green-50 
+                                 hover:text-brand-green-700 rounded-xl transition-colors font-medium"
+                      >
+                        {link.name}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="mt-8 px-4"
+                >
+                  <Link
+                    href="/campaign#donate"
                     onClick={() => setIsOpen(false)}
-                    className="block py-3 px-4 text-gray-700 hover:bg-rcm-green-50 hover:text-rcm-green-700 rounded-lg transition-colors font-medium"
-                  >
-                    {link.name}
-                  </a>
-                ))}
-                <div className="pt-2">
-                  <a
-                    href="#donate"
-                    onClick={() => setIsOpen(false)}
-                    className="btn-primary w-full text-center"
+                    className="btn-primary w-full text-center justify-center"
                   >
                     Donate Now
-                  </a>
-                </div>
-              </div>
+                  </Link>
+                </motion.div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -129,4 +175,3 @@ export default function Navigation() {
     </header>
   )
 }
-
