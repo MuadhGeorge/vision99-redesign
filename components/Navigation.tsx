@@ -34,20 +34,20 @@ export default function Navigation() {
     >
       <nav className="container-max section-padding !py-4" aria-label="Main navigation">
         <div className="flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo - Always show full brand on all screen sizes */}
           <a
             href="#"
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-2 sm:gap-3 group"
             aria-label="Roswell Community Masjid - Home"
           >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-rcm-teal-500 to-rcm-green-600 flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
-              <Leaf className="w-5 h-5 text-white" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-rcm-teal-500 to-rcm-green-600 flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow flex-shrink-0">
+              <Leaf className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
-            <div className="hidden sm:block">
-              <span className={`font-display font-bold text-lg ${scrolled ? 'text-gray-900' : 'text-gray-900'}`}>
+            <div className="flex flex-col leading-tight">
+              <span className="font-display font-bold text-base sm:text-lg text-gray-900">
                 RCM
               </span>
-              <span className={`block text-xs ${scrolled ? 'text-rcm-green-700' : 'text-rcm-green-700'} font-medium -mt-0.5`}>
+              <span className="text-[10px] sm:text-xs text-rcm-green-700 font-medium -mt-0.5">
                 Beyond Walls
               </span>
             </div>
