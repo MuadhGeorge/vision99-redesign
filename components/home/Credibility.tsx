@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
+import Image from 'next/image'
 import { Leaf, Zap, Droplets, Scale } from 'lucide-react'
 
 const standards = [
@@ -28,16 +29,16 @@ const standards = [
   },
 ]
 
-// Deduplicated partner/supporter list
-const partners = [
-  'Islamic Relief USA',
-  'CAIR Georgia',
-  'Subha Saliha',
-  'The Kendeda Building',
-  'International Living Future Institute',
-  'ISNA',
-  'ICNA Relief',
-  'Muslim Advocates',
+// Partners with logos where available
+const partners: { name: string; logo?: string }[] = [
+  { name: 'Islamic Relief USA', logo: '/partners/2022-IRUSA-Logo_Blue_IRUSA-stacked.png' },
+  { name: 'CAIR Georgia' },
+  { name: 'Subha Saliha' },
+  { name: 'The Kendeda Building' },
+  { name: 'International Living Future Institute', logo: '/partners/living-future.webp' },
+  { name: 'ISNA', logo: '/partners/ISNAlogo.png' },
+  { name: 'ICNA Relief', logo: '/partners/icnalogo.png' },
+  { name: 'Muslim Advocates' },
 ]
 
 export default function Credibility() {
@@ -99,27 +100,47 @@ export default function Credibility() {
             <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
             
             {/* Ticker */}
-            <div className="flex animate-ticker">
+            <div className="flex animate-ticker items-center">
               {/* First set */}
               {partners.map((partner) => (
                 <div
-                  key={partner}
-                  className="flex-shrink-0 mx-6 sm:mx-8"
+                  key={partner.name}
+                  className="flex-shrink-0 mx-6 sm:mx-10 flex items-center justify-center h-12"
                 >
-                  <span className="text-gray-400 font-medium text-sm sm:text-base whitespace-nowrap">
-                    {partner}
-                  </span>
+                  {partner.logo ? (
+                    <Image
+                      src={partner.logo}
+                      alt={partner.name}
+                      width={120}
+                      height={48}
+                      className="h-10 sm:h-12 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                    />
+                  ) : (
+                    <span className="text-gray-400 font-medium text-sm sm:text-base whitespace-nowrap">
+                      {partner.name}
+                    </span>
+                  )}
                 </div>
               ))}
               {/* Duplicate for seamless loop */}
               {partners.map((partner) => (
                 <div
-                  key={`${partner}-dup`}
-                  className="flex-shrink-0 mx-6 sm:mx-8"
+                  key={`${partner.name}-dup`}
+                  className="flex-shrink-0 mx-6 sm:mx-10 flex items-center justify-center h-12"
                 >
-                  <span className="text-gray-400 font-medium text-sm sm:text-base whitespace-nowrap">
-                    {partner}
-                  </span>
+                  {partner.logo ? (
+                    <Image
+                      src={partner.logo}
+                      alt={partner.name}
+                      width={120}
+                      height={48}
+                      className="h-10 sm:h-12 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                    />
+                  ) : (
+                    <span className="text-gray-400 font-medium text-sm sm:text-base whitespace-nowrap">
+                      {partner.name}
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
