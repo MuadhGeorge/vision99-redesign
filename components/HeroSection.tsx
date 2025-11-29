@@ -38,11 +38,12 @@ export default function HeroSection() {
 
       <div className="container-max section-padding pt-20 sm:pt-24 md:pt-32 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
-          {/* Left Content */}
+          {/* Text Content - Shows second on mobile, first on desktop */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="order-2 lg:order-1"
           >
             <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-rcm-gold-600 mb-4">
               <span className="w-8 h-px bg-rcm-gold-400" />
@@ -86,12 +87,12 @@ export default function HeroSection() {
             </div>
           </motion.div>
 
-          {/* Right Image */}
+          {/* Image - Shows first on mobile, second on desktop */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
-            className="relative"
+            className="relative order-1 lg:order-2"
           >
             <div className="relative">
               {/* Main Image */}
