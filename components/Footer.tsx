@@ -11,11 +11,6 @@ const quickLinks = [
   { name: 'Donate', href: '#donate' },
 ]
 
-const socialLinks = [
-  { name: 'Facebook', href: '#' },
-  { name: 'Instagram', href: '#' },
-  { name: 'YouTube', href: '#' },
-]
 
 export default function Footer() {
   return (
@@ -65,22 +60,10 @@ export default function Footer() {
                 </span>
               </div>
             </div>
-            <p className="text-sm sm:text-base text-gray-400 mb-5 sm:mb-6 max-w-md">
+            <p className="text-sm sm:text-base text-gray-400 max-w-md">
               Building the world&apos;s first faith-based Living Building certified campus. 
               A sanctuary for generations, a beacon for the community, and a model for the world.
             </p>
-            <div className="flex gap-3 sm:gap-4">
-              {socialLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-rcm-green-600 transition-colors min-h-[44px] min-w-[44px]"
-                  aria-label={link.name}
-                >
-                  <span className="text-xs font-bold">{link.name.charAt(0)}</span>
-                </a>
-              ))}
-            </div>
           </div>
 
           {/* Quick Links */}
