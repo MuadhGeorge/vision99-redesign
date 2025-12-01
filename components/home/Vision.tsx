@@ -25,7 +25,8 @@ const visionBoxes = [
     icon: Leaf,
     title: 'For Our Planet',
     description: 'Prophetic stewardship in action. Net-positive energy, net-zero water, zero toxins.',
-    image: '/Photos/Copy of P2874-RCC-EXT-07_05.png',
+    // Replaced EXT-07 (26MB) with EXT-04 (20MB) to meet Cloudflare Pages 25MB limit
+    image: '/Photos/Copy of P2874-RCC-EXT-04_05.png',
     dark: true,
   },
   {

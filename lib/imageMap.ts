@@ -23,7 +23,8 @@ export const allPhotos: Photo[] = [
   { src: "/Photos/Copy of P2874-RCC-EXT-01_05.png", name: "EXT-01", category: "exterior" },
   { src: "/Photos/Copy of P2874-RCC-EXT-02_05.png", name: "EXT-02", category: "exterior" },
   { src: "/Photos/Copy of P2874-RCC-EXT-04_05.png", name: "EXT-04", category: "exterior" },
-  { src: "/Photos/Copy of P2874-RCC-EXT-07_05.png", name: "EXT-07", category: "exterior" },
+  // Removed EXT-07 (26MB, exceeds Cloudflare Pages 25MB limit) - replaced with EXT-04 in components
+  // { src: "/Photos/Copy of P2874-RCC-EXT-07_05.png", name: "EXT-07", category: "exterior" },
   { src: "/Photos/Copy of P2874-RCC-EXT-08_05.png", name: "EXT-08", category: "exterior" },
   { src: "/Photos/Copy of P2874-RCC-EXT-09_05.png", name: "EXT-09", category: "exterior" },
   { src: "/Photos/Copy of P2874-RCC-EXT-10_05.png", name: "EXT-10", category: "exterior" },

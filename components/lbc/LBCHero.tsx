@@ -8,8 +8,9 @@ export default function LBCHero() {
     <section className="relative pt-24 sm:pt-28 pb-16 sm:pb-20 overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
+        {/* Replaced EXT-07 (26MB) with EXT-04 (20MB) to meet Cloudflare Pages 25MB limit */}
         <Image
-          src="/Photos/Copy of P2874-RCC-EXT-07_05.png"
+          src="/Photos/Copy of P2874-RCC-EXT-04_05.png"
           alt="Aerial view of the Beyond Walls campus"
           fill
           className="object-cover"
