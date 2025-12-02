@@ -51,13 +51,18 @@ export default function Navigation() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      // Mobile nav: fixed, notch-safe header that always stays above page content
+      // Added safe-area padding and subtle border to keep the brand + menu clearly visible on small screens.
+      className={`fixed top-0 left-0 right-0 z-50 pt-[env(safe-area-inset-top)] transition-all duration-300 border-b border-gray-100 ${
         scrolled
           ? 'bg-white/95 backdrop-blur-md shadow-sm'
           : 'bg-white/80 backdrop-blur-sm'
       }`}
     >
-      <nav className="container-max py-3 sm:py-4" aria-label="Main navigation">
+      <nav
+        className="container-max py-3 sm:py-4 min-h-[60px] sm:min-h-[68px]"
+        aria-label="Main navigation"
+      >
         <div className="flex items-center justify-between">
           {/* Logo - Always show full brand */}
           <Link
@@ -116,7 +121,9 @@ export default function Navigation() {
           </button>
         </div>
 
-        {/* Mobile Menu - Full Screen Overlay */}
+        {/* Mobile Menu - Full Screen Overlay
+            - Positioned just below the fixed header (60px / 68px) so the logo + hamburger stay visible.
+            - z-index kept below the header but above page content to avoid hero/image overlap on mobile. */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -125,7 +132,7 @@ export default function Navigation() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="lg:hidden fixed inset-0 top-[60px] sm:top-[68px] bg-white z-40"
+              className="lg:hidden fixed inset-x-0 top-[60px] sm:top-[68px] bottom-0 bg-white z-40"
             >
               <motion.div 
                 initial={{ opacity: 0, y: -10 }}
