@@ -21,6 +21,10 @@ export const metadata: Metadata = {
     description: 'Building the world\'s first faith-based Living Building certified campus.',
     type: 'website',
   },
+  // Use RCM Beyond Walls logo as the default browser tab icon (favicon)
+  icons: {
+    icon: '/Photos/rcm-logo.png',
+  },
 }
 
 export default function RootLayout({

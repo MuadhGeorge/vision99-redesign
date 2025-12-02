@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Leaf } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -37,17 +38,8 @@ export default function Navigation() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Prevent body scroll when mobile menu is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [isOpen])
+  // Fix mobile nav: allow normal page scroll while menu is open to avoid a tiny scrollable strip.
+  // We no longer lock the body scroll here; the mobile overlay handles its own scrolling.
 
   return (
     <header
@@ -64,15 +56,20 @@ export default function Navigation() {
         aria-label="Main navigation"
       >
         <div className="flex items-center justify-between">
-          {/* Logo - Always show full brand */}
+          {/* Logo - Use actual RCM Beyond Walls logo from public/Photos */}
           <Link
             href="/"
             className="flex items-center gap-2 sm:gap-3 group"
             aria-label="RCM Beyond Walls - Home"
           >
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-rcm-teal-500 to-brand-green-600 flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow flex-shrink-0">
-              <Leaf className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-            </div>
+            <Image
+              src="/Photos/rcm-logo.png"
+              alt="RCM Beyond Walls logo"
+              width={44}
+              height={44}
+              priority
+              className="h-10 w-10 sm:h-11 sm:w-11 object-contain flex-shrink-0"
+            />
             <div className="flex flex-col leading-tight">
               <span className="font-display font-bold text-base sm:text-lg text-gray-900">
                 RCM
@@ -121,9 +118,8 @@ export default function Navigation() {
           </button>
         </div>
 
-        {/* Mobile Menu - Full Screen Overlay
-            - Positioned just below the fixed header (60px / 68px) so the logo + hamburger stay visible.
-            - z-index kept below the header but above page content to avoid hero/image overlap on mobile. */}
+        {/* Mobile Menu - Dropdown panel that contains ONLY the nav links
+            Fix mobile nav: full-width overlay panel below the header instead of mixing with hero content. */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -132,16 +128,17 @@ export default function Navigation() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="lg:hidden fixed inset-x-0 top-[60px] sm:top-[68px] bottom-0 bg-white z-40"
+              className="lg:hidden fixed inset-x-0 top-[60px] sm:top-[72px] z-40 bg-white shadow-md
+                         max-h-[calc(100vh-60px)] sm:max-h-[calc(100vh-72px)] overflow-y-auto"
             >
-              <motion.div 
+              <motion.nav
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2, delay: 0.1 }}
-                className="h-full overflow-y-auto px-4 py-6"
+                className="flex flex-col gap-2 px-4 py-4"
               >
-                <div className="space-y-1">
+                <div className="flex flex-col gap-1">
                   {navLinks.map((link, index) => (
                     <motion.div
                       key={link.name}
@@ -160,7 +157,7 @@ export default function Navigation() {
                     </motion.div>
                   ))}
                 </div>
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
@@ -174,7 +171,7 @@ export default function Navigation() {
                     Donate Now
                   </Link>
                 </motion.div>
-              </motion.div>
+              </motion.nav>
             </motion.div>
           )}
         </AnimatePresence>

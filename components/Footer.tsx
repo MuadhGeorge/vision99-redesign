@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { Leaf, Mail, Phone, MapPin } from 'lucide-react'
+import Image from 'next/image'
+import { Mail, Phone, MapPin } from 'lucide-react'
 
 const quickLinks = [
   { name: 'Home', href: '/' },
@@ -27,9 +28,13 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" className="flex items-center gap-3 mb-4 group">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-rcm-teal-500 to-brand-green-600 flex items-center justify-center flex-shrink-0 group-hover:shadow-lg transition-shadow">
-                <Leaf className="w-5 h-5 text-white" />
-              </div>
+              <Image
+                src="/Photos/rcm-logo.png"
+                alt="RCM Beyond Walls logo"
+                width={40}
+                height={40}
+                className="h-10 w-10 object-contain flex-shrink-0"
+              />
               <div>
                 <span className="font-display font-bold text-lg text-white">
                   RCM
