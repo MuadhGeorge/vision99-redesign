@@ -14,7 +14,7 @@ const quickLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer id="contact" className="bg-gray-900 text-gray-300 scroll-mt-20">
       {/* Newsletter Section */}
       <div className="border-b border-gray-800">
         <div className="container-max section-padding !py-8 sm:!py-12">

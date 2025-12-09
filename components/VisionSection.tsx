@@ -15,16 +15,10 @@ import { staggerContainer, staggerItem } from './animations'
 
 const promises = [
   {
-    icon: Sparkles,
-    title: 'Generational Legacy',
-    description: 'A next-generation incubator with youth spaces, mentorship programs, and innovation labs to secure our children\'s whole identity.',
+    icon: Users,
+    title: 'Community-First Design',
+    description: 'Every space designed with input from families, youth, and elders to serve real community needs.',
     color: 'rcm-gold',
-  },
-  {
-    icon: Shield,
-    title: 'Institutional Resilience',
-    description: 'A permanent home built to last centuries—financially sustainable, structurally sound, and spiritually anchored.',
-    color: 'rcm-green',
   },
   {
     icon: Heart,
@@ -33,10 +27,10 @@ const promises = [
     color: 'rcm-teal',
   },
   {
-    icon: Leaf,
-    title: 'Stewardship in Action',
-    description: 'A campus designed to be net-positive for energy and water, honoring the Islamic mandate of environmental stewardship.',
-    color: 'rcm-green',
+    icon: Sparkles,
+    title: 'Generational Legacy',
+    description: 'A next-generation incubator with youth spaces, mentorship programs, and innovation labs to secure our children\'s whole identity.',
+    color: 'rcm-gold',
   },
   {
     icon: Globe,
@@ -45,10 +39,16 @@ const promises = [
     color: 'rcm-teal',
   },
   {
-    icon: Users,
-    title: 'Community-First Design',
-    description: 'Every space designed with input from families, youth, and elders to serve real community needs.',
-    color: 'rcm-gold',
+    icon: Shield,
+    title: 'Institutional Resilience',
+    description: 'A permanent home built to last centuries—financially sustainable, structurally sound, and spiritually anchored.',
+    color: 'rcm-green',
+  },
+  {
+    icon: Leaf,
+    title: 'Stewardship in Action',
+    description: 'A campus designed to be net-positive for energy and water, honoring the Islamic mandate of environmental stewardship.',
+    color: 'rcm-green',
   },
 ]
 
@@ -95,13 +95,12 @@ export default function VisionSection() {
           <span className="section-label">Our Vision</span>
           <h2 className="section-heading">Why &ldquo;Beyond Walls&rdquo;?</h2>
           <p className="section-subheading mx-auto">
-            This project isn&apos;t just a building—it&apos;s a long-term institution designed to address 
-            the real challenges facing American Muslim communities: youth identity crises, mental health stigma, 
-            social isolation, and the need for belonging.
+            Beyond Walls is more than a building—it&apos;s a global movement. A campus that influences 
+            our local community, inspires the global Ummah, and honors our planet.
           </p>
         </motion.div>
 
-        {/* Five Core Promises Label */}
+        {/* Six Core Promises Label */}
         <motion.div 
           className="mb-8"
           initial={{ opacity: 0 }}
@@ -109,7 +108,7 @@ export default function VisionSection() {
           transition={{ delay: 0.2 }}
         >
           <p className="text-center text-sm font-semibold uppercase tracking-wider text-rcm-green-700 mb-8">
-            The Five Core Promises
+            The Six Core Promises
           </p>
         </motion.div>
 

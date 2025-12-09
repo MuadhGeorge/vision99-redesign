@@ -5,11 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Leaf } from 'lucide-react'
 
 const navLinks = [
-  { name: 'Vision', href: '#vision' },
-  { name: 'Campus', href: '#campus' },
-  { name: 'Gallery', href: '#gallery' },
-  { name: 'Timeline', href: '#timeline' },
-  { name: 'FAQ', href: '#faq' },
+  { name: 'Home', href: '#' },
+  { name: 'Contact', href: '#contact' },
 ]
 
 export default function Navigation() {

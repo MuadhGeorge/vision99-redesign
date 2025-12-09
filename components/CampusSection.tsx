@@ -27,7 +27,16 @@ const buildings = [
     badgeColor: 'bg-rcm-green-100 text-rcm-green-700',
     cardBg: 'bg-gradient-to-br from-rcm-green-50/50 to-white',
     description: 'A serene space for daily prayers, Friday gatherings, and spiritual reflection. Designed with natural light, acoustic excellence, and accessibility for all.',
-    features: ['Prayer halls for men & women', 'Wudu facilities', 'Imam offices'],
+    features: [
+      'Prayer halls for men & women (connected to parents room)',
+      'Wudu facilities',
+      'Classrooms and flex spaces for events',
+      'Gymnasium & workout room',
+      'Pavilion & fire pit for gatherings',
+      'Outdoor plaza for casual conversation',
+      'Playground for kids',
+      'Café and private events spaces'
+    ],
   },
   {
     icon: GraduationCap,
@@ -36,7 +45,13 @@ const buildings = [
     badgeColor: 'bg-rcm-teal-100 text-rcm-teal-700',
     cardBg: 'bg-gradient-to-br from-rcm-teal-50/50 to-white',
     description: 'A dedicated space where young Muslims can grow, learn, and connect. Mentorship programs, study spaces, and activities that speak to their reality.',
-    features: ['Tech & innovation lab', 'Sports & recreation', 'Mentorship programs'],
+    features: [
+      'Full gymnasium and flex spaces',
+      'Youth lounge – hang-out and study',
+      'Café',
+      'Classrooms',
+      'Outdoor spaces (fireplace, walking paths)'
+    ],
   },
   {
     icon: Users,
@@ -45,15 +60,13 @@ const buildings = [
     badgeColor: 'bg-rcm-gold-100 text-rcm-gold-700',
     cardBg: 'bg-gradient-to-br from-rcm-gold-50/50 to-white',
     description: 'Multi-purpose spaces for community gatherings, educational programs, mental health support, and celebrations that bring families together.',
-    features: ['Community kitchen', 'Event spaces', 'Counseling rooms'],
+    features: [
+      'A family-friendly café',
+      'Park-like green space and playground',
+      'Parents room for men and women',
+      'Classrooms and flex spaces for events'
+    ],
   },
-]
-
-const campusFeatures = [
-  '~5-acre site with integrated landscaping',
-  '8+ months of horizontal site work',
-  'First faith-based Living Building project',
-  'Designed for accessibility',
 ]
 
 const mainCampusImage = sectionImages.campus.main
@@ -85,32 +98,15 @@ export default function CampusSection() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <p className="text-base sm:text-lg text-gray-600 mb-4 sm:mb-6 leading-relaxed max-w-lg">
-              Our new campus spans approximately <strong className="text-gray-800">5 acres</strong> with 
+            <p className="text-base sm:text-lg text-gray-600 mb-4 sm:mb-6 leading-relaxed">
+              Our new campus spans approximately <strong className="text-gray-800">5.5 acres</strong> with 
               <strong className="text-gray-800"> three dedicated buildings</strong> designed to serve every 
               member of our community—from our youngest children to our honored elders.
             </p>
-            <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-lg">
-              This is the <strong className="text-gray-800">first faith-based project</strong> in the country 
-              pursuing Living Building Challenge certification, setting a new standard for what a house of 
-              worship can be.
+            <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+              This is the <strong className="text-gray-800">first ever faith-based project in the world</strong> pursuing 
+              Living Building Challenge certification, setting a new standard for what a house of worship can be.
             </p>
-
-            {/* Feature List - Proper bullets */}
-            <ul className="space-y-2.5 sm:space-y-3">
-              {campusFeatures.map((feature, index) => (
-                <motion.li
-                  key={index}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                  className="flex items-center gap-2.5 sm:gap-3"
-                >
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-rcm-green-600 flex-shrink-0" />
-                  <span className="text-sm sm:text-base text-gray-700">{feature}</span>
-                </motion.li>
-              ))}
-            </ul>
           </motion.div>
 
           {/* Right: Images */}
@@ -153,7 +149,7 @@ export default function CampusSection() {
           className="text-center mb-6 sm:mb-10"
         >
           <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
-            Three Buildings, One Community
+            Three Buildings, For All
           </h3>
           <p className="mt-1.5 sm:mt-2 text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
             Each building serves a unique purpose, together creating a complete community ecosystem.

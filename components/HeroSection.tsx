@@ -8,13 +8,18 @@ import { sectionImages, exteriorPhotos, getAltText } from '@/lib/imageMap'
 /**
  * Hero Section - Main campaign landing
  * Images: EXT-01 (main), EXT-02 (secondary peek)
+ * 
+ * ALTERNATE LAYOUT OPTION (not currently active):
+ * For a background image variant, the architectural render could be set as the full background
+ * with the hero text block positioned as a foreground card with semi-transparent backdrop.
+ * To implement: Set heroImage as section background-image, add backdrop-blur to text container,
+ * and adjust text container to be a card overlay with bg-white/90 or similar.
  */
 
 const stats = [
-  { icon: Building2, value: '3 Buildings', label: 'on 5 Acres', color: 'bg-rcm-green-100 text-rcm-green-600' },
-  { icon: Leaf, value: 'Living Building', label: 'Certification', color: 'bg-rcm-teal-100 text-rcm-teal-600' },
+  { icon: Building2, value: '3 Buildings', label: 'on 5.5 Acres', color: 'bg-rcm-green-100 text-rcm-green-600' },
   { icon: Sun, value: 'Net-Positive', label: 'Energy & Water', color: 'bg-rcm-gold-100 text-rcm-gold-600' },
-  { icon: Calendar, value: '2027', label: 'Target Opening', color: 'bg-rcm-green-100 text-rcm-green-600' },
+  { icon: Leaf, value: '1st LBC', label: 'House of Worship', color: 'bg-rcm-teal-100 text-rcm-teal-600' },
 ]
 
 const heroImage = sectionImages.hero
@@ -22,7 +27,7 @@ const secondaryImage = exteriorPhotos[1] ?? exteriorPhotos[0]
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section className="relative min-h-[85vh] lg:min-h-[80vh] flex items-center overflow-hidden pb-4 sm:pb-6 md:pb-8">
       {/* Subtle Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-rcm-green-50/60 via-white to-rcm-teal-50/40" />
       
@@ -36,7 +41,7 @@ export default function HeroSection() {
         />
       </div>
 
-      <div className="container-max section-padding pt-20 sm:pt-24 md:pt-32 relative z-10">
+      <div className="container-max section-padding pt-20 sm:pt-24 md:pt-32 pb-0 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
           {/* Text Content - Shows second on mobile, first on desktop */}
           <motion.div
@@ -53,14 +58,11 @@ export default function HeroSection() {
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-[1.1] mb-4 sm:mb-6">
               <span className="text-rcm-green-700">Beyond Walls:</span>
               <br />
-              <span className="text-gray-800">More Than a Building</span>
+              <span className="text-gray-800">Building the World&apos;s First Living Building Challenge Masjid</span>
             </h1>
             
-            <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-lg">
-              After years of planning and perseverance, RCM&apos;s new campus is finally breaking ground. 
-              This isn&apos;t just construction—it&apos;s the foundation for a{' '}
-              <strong className="text-gray-800 font-semibold">vibrant, integrated Muslim community</strong> that 
-              will serve generations to come.
+            <p className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-700 mb-6 sm:mb-8 italic">
+              Faith in action. Innovation by design.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-10">
@@ -147,9 +149,9 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-10 sm:mt-16 md:mt-20"
+          className="mt-10 sm:mt-12 md:mt-16"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
             {stats.map((stat, index) => (
               <motion.div 
                 key={index} 
