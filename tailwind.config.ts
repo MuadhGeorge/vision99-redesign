@@ -17,18 +17,18 @@ const config: Config = {
     },
     extend: {
       colors: {
-        // Brand greens
+        // Brand greens - Darker, more premium palette (forest/hunter green)
         'rcm-green': {
           50: '#f0fdf4',
-          100: '#dcfce7',
-          200: '#bbf7d0',
-          300: '#86efac',
-          400: '#4ade80',
-          500: '#22c55e',
-          600: '#16a34a',
-          700: '#15803d',
-          800: '#166534',
-          900: '#14532d',
+          100: '#d1f4e0',
+          200: '#a7e9c5',
+          300: '#6dd6a1',
+          400: '#3db87a',
+          500: '#1a9960',  // Darker, more elegant base
+          600: '#137a4d',  // Primary brand color - rich forest green
+          700: '#0f5c3a',  // Deeper, premium feel
+          800: '#0d4d30',  // Very dark, sophisticated
+          900: '#0a3d26',  // Almost black-green
           950: '#052e16',
         },
         // Warm gold/bronze accents
