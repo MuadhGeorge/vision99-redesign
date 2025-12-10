@@ -33,6 +33,24 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Disable scroll restoration and ensure page starts at top on initial load
+              if (typeof window !== 'undefined') {
+                if ('scrollRestoration' in window.history) {
+                  window.history.scrollRestoration = 'manual';
+                }
+                // Remove any hash from URL on initial load
+                if (window.location.hash) {
+                  window.history.replaceState(null, '', window.location.pathname);
+                }
+                // Force scroll to top immediately
+                window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+              }
+            `,
+          }}
+        />
       </head>
       <body className="font-sans overflow-x-hidden">
         <ToastProvider>

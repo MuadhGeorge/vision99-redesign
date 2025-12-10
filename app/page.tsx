@@ -44,6 +44,9 @@
  * Image categorization logic is in /lib/imageMap.ts
  */
 
+'use client'
+
+import { useEffect } from 'react'
 import Navigation from '@/components/Navigation'
 import HeroSection from '@/components/HeroSection'
 import VisionSection from '@/components/VisionSection'
@@ -55,12 +58,22 @@ import TimelineSection from '@/components/TimelineSection'
 import FAQSection from '@/components/FAQSection'
 import DonateSection from '@/components/DonateSection'
 import Footer from '@/components/Footer'
-import ScrollToTop from '@/components/ScrollToTop'
 
 export default function Home() {
+  // Ensure page starts at top on initial mount only (not on navigation)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Remove any hash from URL
+      if (window.location.hash) {
+        window.history.replaceState(null, '', window.location.pathname)
+      }
+      // Force scroll to top with instant behavior
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
+  }, []) // Empty deps - only runs on initial mount
+
   return (
     <main className="min-h-screen">
-      <ScrollToTop />
       <Navigation />
       <HeroSection />
       <VisionSection />
