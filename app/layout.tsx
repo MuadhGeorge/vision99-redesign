@@ -17,6 +17,11 @@ export const metadata: Metadata = {
   title: 'Beyond Walls | Roswell Community Masjid',
   description: 'Building the world\'s first faith-based Living Building certified campus. A sanctuary for generations, a beacon for the community.',
   keywords: ['mosque', 'masjid', 'roswell', 'georgia', 'living building', 'sustainable', 'community', 'islamic center'],
+  icons: {
+    icon: '/icon.png',
+    shortcut: '/icon.png',
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
     title: 'Beyond Walls | Roswell Community Masjid',
     description: 'Building the world\'s first faith-based Living Building certified campus.',
