@@ -5,8 +5,6 @@ interface ContactFormData {
   fullName: string
   email: string
   phone?: string
-  subject?: string
-  reason?: string
   message: string
 }
 
@@ -46,19 +44,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Build email content
-    const reasonLabels: Record<string, string> = {
-      general: 'General Inquiry',
-      campaign: 'Capital Campaign',
-      partnership: 'Partnership',
-      media: 'Media',
-      volunteer: 'Volunteer',
-      other: 'Other',
-    }
-
     const emailContent = {
       to: config.contactEmail,
       from: body.email,
-      subject: body.subject || `Contact Form: ${reasonLabels[body.reason || ''] || 'New Message'} from ${body.fullName}`,
+      subject: `Contact Form: New Message from ${body.fullName}`,
       text: `
 New Contact Form Submission
 ============================
@@ -66,8 +55,6 @@ New Contact Form Submission
 Name: ${body.fullName}
 Email: ${body.email}
 Phone: ${body.phone || 'Not provided'}
-Reason: ${reasonLabels[body.reason || ''] || 'Not specified'}
-Subject: ${body.subject || 'Not provided'}
 
 Message:
 ${body.message}
@@ -102,14 +89,6 @@ This message was sent from the Beyond Walls website contact form.
       <tr>
         <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb; font-weight: bold;">Phone:</td>
         <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">${body.phone || 'Not provided'}</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb; font-weight: bold;">Reason:</td>
-        <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">${reasonLabels[body.reason || ''] || 'Not specified'}</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb; font-weight: bold;">Subject:</td>
-        <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">${body.subject || 'Not provided'}</td>
       </tr>
     </table>
     

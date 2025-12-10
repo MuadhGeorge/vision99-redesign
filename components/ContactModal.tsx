@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Send, CheckCircle, Mail, User, Phone, MessageSquare, ChevronDown, AlertCircle } from 'lucide-react'
+import { X, Send, CheckCircle, Mail, User, Phone, MessageSquare, AlertCircle } from 'lucide-react'
 import { useToast } from './ui/Toast'
 
 interface ContactModalProps {
@@ -15,8 +15,6 @@ interface FormData {
   fullName: string
   email: string
   phone: string
-  subject: string
-  reason: string
   message: string
 }
 
@@ -24,20 +22,8 @@ const initialFormData: FormData = {
   fullName: '',
   email: '',
   phone: '',
-  subject: '',
-  reason: '',
   message: '',
 }
-
-const reasonOptions = [
-  { value: '', label: 'Select a reason (optional)' },
-  { value: 'general', label: 'General Inquiry' },
-  { value: 'campaign', label: 'Capital Campaign' },
-  { value: 'partnership', label: 'Partnership' },
-  { value: 'media', label: 'Media' },
-  { value: 'volunteer', label: 'Volunteer' },
-  { value: 'other', label: 'Other' },
-]
 
 export default function ContactModal({ isOpen, onClose, triggerRef }: ContactModalProps) {
   const [formData, setFormData] = useState<FormData>(initialFormData)
@@ -376,51 +362,6 @@ export default function ContactModal({ isOpen, onClose, triggerRef }: ContactMod
                             className={`${inputClasses(false)} pl-10`}
                           />
                         </div>
-                      </div>
-
-                      {/* Reason for Contacting (Optional) */}
-                      <div>
-                        <label
-                          htmlFor="reason"
-                          className="block text-sm font-medium text-gray-700 mb-1.5"
-                        >
-                          Reason for Contacting
-                        </label>
-                        <div className="relative">
-                          <select
-                            id="reason"
-                            name="reason"
-                            value={formData.reason}
-                            onChange={handleChange}
-                            className={`${inputClasses(false)} appearance-none cursor-pointer pr-10`}
-                          >
-                            {reasonOptions.map(option => (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
-                            ))}
-                          </select>
-                          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                        </div>
-                      </div>
-
-                      {/* Subject (Optional) */}
-                      <div>
-                        <label
-                          htmlFor="subject"
-                          className="block text-sm font-medium text-gray-700 mb-1.5"
-                        >
-                          Subject <span className="text-gray-400 font-normal">(optional)</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="subject"
-                          name="subject"
-                          value={formData.subject}
-                          onChange={handleChange}
-                          placeholder="Brief subject line"
-                          className={inputClasses(false)}
-                        />
                       </div>
 
                       {/* Message */}
