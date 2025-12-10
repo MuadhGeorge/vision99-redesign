@@ -21,7 +21,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer id="contact" className="bg-gray-900 text-gray-300 scroll-mt-20">
+      <footer className="bg-gray-900 text-gray-300">
         {/* Newsletter Section */}
         <div className="border-b border-gray-800">
           <div className="px-4 xs:px-5 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12 max-w-7xl mx-auto">

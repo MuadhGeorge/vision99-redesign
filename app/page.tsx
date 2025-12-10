@@ -55,10 +55,12 @@ import TimelineSection from '@/components/TimelineSection'
 import FAQSection from '@/components/FAQSection'
 import DonateSection from '@/components/DonateSection'
 import Footer from '@/components/Footer'
+import ScrollToTop from '@/components/ScrollToTop'
 
 export default function Home() {
   return (
     <main className="min-h-screen">
+      <ScrollToTop />
       <Navigation />
       <HeroSection />
       <VisionSection />
