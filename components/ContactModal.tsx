@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Send, CheckCircle, Mail, User, Phone, MessageSquare, ChevronDown } from 'lucide-react'
+import { X, Send, CheckCircle, Mail, User, Phone, MessageSquare, ChevronDown, AlertCircle } from 'lucide-react'
+import { useToast } from './ui/Toast'
 
 interface ContactModalProps {
   isOpen: boolean
@@ -43,10 +44,13 @@ export default function ContactModal({ isOpen, onClose, triggerRef }: ContactMod
   const [errors, setErrors] = useState<Partial<FormData>>({})
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   
   const modalRef = useRef<HTMLDivElement>(null)
   const firstFocusableRef = useRef<HTMLButtonElement>(null)
   const lastFocusableRef = useRef<HTMLButtonElement>(null)
+  
+  const { showToast } = useToast()
 
   // Handle escape key
   useEffect(() => {
@@ -135,21 +139,39 @@ export default function ContactModal({ isOpen, onClose, triggerRef }: ContactMod
     if (!validateForm()) return
     
     setIsSubmitting(true)
+    setSubmitError(null)
     
-    // Simulate API call - replace with actual submission logic later
-    console.log('Contact Form Submission:', formData)
-    
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    setIsSubmitting(false)
-    setIsSubmitted(true)
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+      
+      const data = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message')
+      }
+      
+      // Success - close modal and show toast
+      setIsSubmitting(false)
+      handleClose()
+      showToast('Thank you — your message has been sent!', 'success', 6000)
+      
+    } catch (error) {
+      setIsSubmitting(false)
+      setSubmitError(error instanceof Error ? error.message : 'Something went wrong. Please try again.')
+    }
   }
 
   const handleClose = () => {
     setFormData(initialFormData)
     setErrors({})
     setIsSubmitted(false)
+    setSubmitError(null)
     onClose()
   }
 
@@ -250,6 +272,29 @@ export default function ContactModal({ isOpen, onClose, triggerRef }: ContactMod
                         Have a question or want to get involved? We&apos;d love to hear from you.
                       </p>
                     </div>
+                    
+                    {/* Error Banner */}
+                    {submitError && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3"
+                        role="alert"
+                      >
+                        <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-sm font-medium text-red-800">Failed to send message</p>
+                          <p className="text-sm text-red-600">{submitError}</p>
+                        </div>
+                        <button
+                          onClick={() => setSubmitError(null)}
+                          className="ml-auto p-1 hover:bg-red-100 rounded transition-colors"
+                          aria-label="Dismiss error"
+                        >
+                          <X className="w-4 h-4 text-red-500" />
+                        </button>
+                      </motion.div>
+                    )}
 
                     {/* Form */}
                     <form onSubmit={handleSubmit} className="space-y-4">
@@ -437,4 +482,6 @@ export default function ContactModal({ isOpen, onClose, triggerRef }: ContactMod
     </AnimatePresence>
   )
 }
+
+
 

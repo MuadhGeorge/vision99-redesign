@@ -44,15 +44,22 @@
 }
 
 @layer components {
+  /* Section padding - consistent 16-24px horizontal on mobile, scales up */
   .section-padding {
-    @apply px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-24;
+    @apply px-4 xs:px-5 sm:px-6 lg:px-8 py-10 sm:py-12 md:py-16 lg:py-20;
   }
   
+  /* Main content container with safe area support */
   .container-max {
+    @apply max-w-7xl mx-auto w-full px-4 xs:px-5 sm:px-6 lg:px-8;
+    /* Add safe area insets for notched devices */
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  
+  /* Container without horizontal padding (for sections that handle their own) */
+  .container-max-np {
     @apply max-w-7xl mx-auto w-full;
-    /* Prevent content from touching edges on mobile */
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
   }
   
   .btn-primary {
