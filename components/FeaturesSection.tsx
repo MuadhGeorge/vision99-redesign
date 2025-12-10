@@ -75,7 +75,7 @@ export default function FeaturesSection() {
 
   return (
     <section id="features" className="section-padding bg-white scroll-mt-20" ref={ref}>
-      <div className="container-max-np px-4 xs:px-5 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="container-max">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -91,7 +91,7 @@ export default function FeaturesSection() {
         </motion.div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-7">
           {features.map((feature, index) => {
             const Icon = feature.icon
             return (
@@ -122,7 +122,7 @@ export default function FeaturesSection() {
                 </div>
                 
                 {/* Content */}
-                <div className="p-4 sm:p-5 lg:p-6">
+                <div className="p-6 sm:p-7 lg:p-8">
                   <div className="flex items-center gap-2 mb-2">
                     <Icon className="w-5 h-5 text-rcm-green-600" />
                     <h3 className="text-lg sm:text-xl font-bold text-gray-900 group-hover:text-rcm-green-700 transition-colors">

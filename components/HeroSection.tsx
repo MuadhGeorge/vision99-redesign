@@ -42,7 +42,7 @@ export default function HeroSection() {
       </div>
 
       <div className="container-max section-padding pt-20 sm:pt-24 md:pt-32 pb-0 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center">
           {/* Text Content - Shows second on mobile, first on desktop */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -76,7 +76,7 @@ export default function HeroSection() {
             </div>
 
             {/* Quote Card - Refined */}
-            <div className="rounded-xl sm:rounded-2xl border border-rcm-green-200 bg-gradient-to-br from-rcm-green-50/80 to-rcm-teal-50/60 p-4 sm:p-5">
+            <div className="rounded-xl sm:rounded-2xl border border-rcm-green-200 bg-gradient-to-br from-rcm-green-50/80 to-rcm-teal-50/60 p-5 sm:p-6">
               <blockquote>
                 <p className="text-sm sm:text-base text-gray-700 italic leading-relaxed">
                   &ldquo;This is us returning to who we are — an ummah that builds with dignity, 
@@ -151,11 +151,11 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-10 sm:mt-12 md:mt-16"
         >
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
             {stats.map((stat, index) => (
               <motion.div 
                 key={index} 
-                className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-3 sm:p-5 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+                className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + index * 0.1 }}

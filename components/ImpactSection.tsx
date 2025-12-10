@@ -165,7 +165,7 @@ export default function ImpactSection() {
                   scale: 1.02,
                   transition: { duration: 0.2 } 
                 }}
-                className="bg-gray-50 rounded-xl sm:rounded-2xl p-3 sm:p-5 md:p-6 text-center hover:bg-white hover:shadow-xl transition-all duration-300 border border-gray-100 group cursor-default"
+                className="bg-gray-50 rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-7 text-center hover:bg-white hover:shadow-xl transition-all duration-300 border border-gray-100 group cursor-default"
               >
                 <motion.div 
                   className={`inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl ${colors.bg} mb-2 sm:mb-4`}

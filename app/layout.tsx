@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Outfit } from 'next/font/google'
-import { ToastProvider } from '@/components/ui/Toast'
+import { Providers } from '@/components/Providers'
 import './globals.css'
 
 const inter = Inter({
@@ -53,9 +53,9 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans overflow-x-hidden">
-        <ToastProvider>
+        <Providers>
           {children}
-        </ToastProvider>
+        </Providers>
       </body>
     </html>
   )

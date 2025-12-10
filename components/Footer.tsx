@@ -1,9 +1,8 @@
 'use client'
 
-import { useState, useRef } from 'react'
 import { Mail, Phone, MapPin, ArrowRight, MessageCircle } from 'lucide-react'
 import Image from 'next/image'
-import ContactModal from './ContactModal'
+import { useContact } from './ContactContext'
 
 const quickLinks = [
   { name: 'Vision', href: '#vision' },
@@ -16,15 +15,13 @@ const quickLinks = [
 
 
 export default function Footer() {
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false)
-  const contactButtonRef = useRef<HTMLButtonElement>(null)
+  const { openContactModal } = useContact()
 
   return (
-    <>
-      <footer className="bg-gray-900 text-gray-300">
+    <footer className="bg-gray-900 text-gray-300">
         {/* Newsletter Section */}
         <div className="border-b border-gray-800">
-          <div className="px-4 xs:px-5 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12 max-w-7xl mx-auto">
+          <div className="px-5 sm:px-6 md:px-8 lg:px-10 py-10 sm:py-12 lg:py-14 max-w-7xl mx-auto">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8">
               <div className="text-center lg:text-left flex-shrink-0">
                 <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">Stay Updated</h3>
@@ -56,7 +53,7 @@ export default function Footer() {
         </div>
 
         {/* Main Footer */}
-        <div className="px-4 xs:px-5 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-14 max-w-7xl mx-auto">
+        <div className="px-5 sm:px-6 md:px-8 lg:px-10 py-12 sm:py-14 lg:py-16 max-w-7xl mx-auto">
           {/* 2-column layout on tablet+, single column on mobile */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 lg:gap-16">
             {/* Column 1: Brand + Description + Contact Button */}
@@ -86,8 +83,7 @@ export default function Footer() {
               </p>
               {/* Contact Us Button */}
               <button
-                ref={contactButtonRef}
-                onClick={() => setIsContactModalOpen(true)}
+                onClick={openContactModal}
                 className="inline-flex items-center gap-2 px-5 py-3 bg-rcm-green-600 text-white font-semibold rounded-lg hover:bg-rcm-green-700 transition-colors text-sm min-h-[48px] shadow-md hover:shadow-lg"
               >
                 <MessageCircle className="w-4 h-4" />
@@ -150,7 +146,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-800">
-          <div className="px-4 xs:px-5 sm:px-6 lg:px-8 py-5 sm:py-6 max-w-7xl mx-auto">
+          <div className="px-5 sm:px-6 md:px-8 lg:px-10 py-6 sm:py-7 max-w-7xl mx-auto">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-gray-500">
               <p className="text-center sm:text-left">
                 © {new Date().getFullYear()} Roswell Community Masjid. All rights reserved. 
@@ -165,13 +161,5 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-
-      {/* Contact Modal */}
-      <ContactModal
-        isOpen={isContactModalOpen}
-        onClose={() => setIsContactModalOpen(false)}
-        triggerRef={contactButtonRef}
-      />
-    </>
   )
 }

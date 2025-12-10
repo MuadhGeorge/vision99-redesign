@@ -1,10 +1,10 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
-import ContactModal from './ContactModal'
+import { useContact } from './ContactContext'
 
 const navLinks = [
   { name: 'Home', href: '#', isContact: false },
@@ -14,10 +14,7 @@ const navLinks = [
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false)
-  
-  const contactButtonRef = useRef<HTMLButtonElement>(null)
-  const mobileContactButtonRef = useRef<HTMLButtonElement>(null)
+  const { openContactModal } = useContact()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,11 +27,7 @@ export default function Navigation() {
   const handleContactClick = (e: React.MouseEvent) => {
     e.preventDefault()
     setIsOpen(false) // Close mobile menu if open
-    setIsContactModalOpen(true)
-  }
-
-  const handleCloseContactModal = () => {
-    setIsContactModalOpen(false)
+    openContactModal()
   }
 
   return (
@@ -43,7 +36,7 @@ export default function Navigation() {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
             ? 'bg-white/95 backdrop-blur-md shadow-sm'
-            : 'bg-transparent'
+            : 'bg-white/95 backdrop-blur-md md:bg-transparent md:backdrop-blur-none'
         }`}
       >
         <nav className="container-max section-padding !py-4" aria-label="Main navigation">
@@ -79,7 +72,6 @@ export default function Navigation() {
                 link.isContact ? (
                   <button
                     key={link.name}
-                    ref={contactButtonRef}
                     onClick={handleContactClick}
                     className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-rcm-green-50 hover:text-rcm-green-700 ${
                       scrolled ? 'text-gray-700' : 'text-gray-700'
@@ -139,7 +131,6 @@ export default function Navigation() {
                     link.isContact ? (
                       <button
                         key={link.name}
-                        ref={mobileContactButtonRef}
                         onClick={handleContactClick}
                         className="block w-full text-left py-3 px-4 text-gray-700 hover:bg-rcm-green-50 hover:text-rcm-green-700 rounded-lg transition-colors font-medium"
                       >
@@ -171,13 +162,6 @@ export default function Navigation() {
           </AnimatePresence>
         </nav>
       </header>
-
-      {/* Contact Modal */}
-      <ContactModal
-        isOpen={isContactModalOpen}
-        onClose={handleCloseContactModal}
-        triggerRef={contactButtonRef}
-      />
     </>
   )
 }

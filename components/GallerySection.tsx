@@ -7,13 +7,14 @@ import Image from 'next/image'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 
 /**
- * Curated Gallery for Vision Section
+ * Gallery Section with Horizontal Swipeable Slider
  * 
- * Categories:
- * - exterior: Campus & exterior views
- * - sanctuary: Prayer hall & sanctuary
- * - youth-community: Youth center, cafe, gym, event spaces
- * - support: Entry, wudu, offices
+ * Features:
+ * - Native scroll + CSS scroll-snap for smooth swiping
+ * - Touch-friendly on mobile
+ * - Arrow buttons on desktop
+ * - Category filtering
+ * - Lightbox for full view
  */
 
 type GalleryCategory = 'exterior' | 'sanctuary' | 'youth-community' | 'support'
@@ -25,7 +26,7 @@ interface GalleryImage {
   category: GalleryCategory
 }
 
-// Curated gallery with human-readable labels (using existing image paths)
+// Curated gallery with human-readable labels
 const galleryImages: GalleryImage[] = [
   // EXTERIOR & CAMPUS (4 images)
   {
@@ -132,9 +133,12 @@ const categoryOrder: (GalleryCategory | 'all')[] = ['all', 'exterior', 'sanctuar
 
 export default function GallerySection() {
   const ref = useRef(null)
+  const sliderRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
   const [activeCategory, setActiveCategory] = useState<GalleryCategory | 'all'>('all')
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
 
   // Filter images by category
   const visibleImages = activeCategory === 'all' 
@@ -185,15 +189,45 @@ export default function GallerySection() {
     }
   }, [selectedImage, goToNext, goToPrevious])
 
+  // Update scroll button states
+  const updateScrollButtons = useCallback(() => {
+    if (!sliderRef.current) return
+    const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current
+    setCanScrollLeft(scrollLeft > 0)
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10)
+  }, [])
+
+  useEffect(() => {
+    const slider = sliderRef.current
+    if (!slider) return
+
+    updateScrollButtons()
+    slider.addEventListener('scroll', updateScrollButtons)
+    window.addEventListener('resize', updateScrollButtons)
+
+    return () => {
+      slider.removeEventListener('scroll', updateScrollButtons)
+      window.removeEventListener('resize', updateScrollButtons)
+    }
+  }, [updateScrollButtons, visibleImages])
+
+  // Scroll slider by one card width
+  const scrollSlider = (direction: 'left' | 'right') => {
+    if (!sliderRef.current) return
+    const cardWidth = sliderRef.current.querySelector('.gallery-card')?.clientWidth || 300
+    const scrollAmount = direction === 'left' ? -cardWidth : cardWidth
+    sliderRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' })
+  }
+
   return (
     <section id="gallery" className="section-padding bg-gray-50 scroll-mt-20" ref={ref}>
-      <div className="container-max">
+      <div className="max-w-[100vw] overflow-hidden">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10"
+          className="text-center mb-10 px-5 sm:px-6 md:px-8 lg:px-10"
         >
           <span className="section-label">Vision Gallery</span>
           <h2 className="section-heading">See the Vision Come to Life</h2>
@@ -208,16 +242,20 @@ export default function GallerySection() {
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-2 mb-6 sm:mb-8 px-1"
+          className="flex flex-wrap justify-center gap-2 mb-6 sm:mb-8 px-5 sm:px-6 md:px-8 lg:px-10"
         >
           {categoryOrder.map((category) => (
             <button
               key={category}
               onClick={() => {
                 setActiveCategory(category)
-                setSelectedImage(null) // Reset lightbox when changing category
+                setSelectedImage(null)
+                // Reset scroll position when changing category
+                if (sliderRef.current) {
+                  sliderRef.current.scrollLeft = 0
+                }
               }}
-              className={`px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 min-h-[40px] ${
+              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 min-h-[40px] ${
                 activeCategory === category
                   ? 'bg-rcm-green-600 text-white shadow-md'
                   : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
@@ -228,39 +266,80 @@ export default function GallerySection() {
           ))}
         </motion.div>
 
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
-          {visibleImages.map((image, index) => (
-            <motion.button
-              key={image.src}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }}
-              onClick={() => openLightbox(index)}
-              className={`relative group overflow-hidden rounded-xl sm:rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-rcm-green-500 focus-visible:ring-offset-2 ${
-                index === 0 ? 'xs:col-span-2 md:col-span-2 md:row-span-2' : ''
-              }`}
-              aria-label={`View ${image.title}`}
-            >
-              <div className={`relative ${index === 0 ? 'aspect-[4/3]' : 'aspect-[4/3]'}`}>
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes={index === 0 ? "(max-width: 640px) 100vw, (max-width: 768px) 100vw, 66vw" : "(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"}
-                />
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
-                {/* Title always visible */}
-                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
-                  <p className="text-white text-xs sm:text-sm md:text-base font-semibold drop-shadow-lg">
-                    {image.title}
-                  </p>
+        {/* Horizontal Scrollable Gallery with Navigation */}
+        <div className="relative group">
+          {/* Left Arrow - Desktop */}
+          <button
+            onClick={() => scrollSlider('left')}
+            disabled={!canScrollLeft}
+            className={`hidden md:flex absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm shadow-xl transition-all duration-300 ${
+              canScrollLeft 
+                ? 'opacity-0 group-hover:opacity-100 hover:bg-white hover:scale-110' 
+                : 'opacity-0 pointer-events-none'
+            } focus:outline-none focus-visible:ring-2 focus-visible:ring-rcm-green-500`}
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-700" />
+          </button>
+
+          {/* Right Arrow - Desktop */}
+          <button
+            onClick={() => scrollSlider('right')}
+            disabled={!canScrollRight}
+            className={`hidden md:flex absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm shadow-xl transition-all duration-300 ${
+              canScrollRight 
+                ? 'opacity-0 group-hover:opacity-100 hover:bg-white hover:scale-110' 
+                : 'opacity-0 pointer-events-none'
+            } focus:outline-none focus-visible:ring-2 focus-visible:ring-rcm-green-500`}
+            aria-label="Next image"
+          >
+            <ChevronRight className="w-6 h-6 text-gray-700" />
+          </button>
+
+          {/* Horizontal Slider */}
+          <div
+            ref={sliderRef}
+            className="flex gap-4 sm:gap-5 md:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide px-5 sm:px-6 md:px-8 lg:px-10 pb-4"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          >
+            {visibleImages.map((image, index) => (
+              <motion.button
+                key={image.src}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }}
+                onClick={() => openLightbox(index)}
+                className="gallery-card group relative flex-shrink-0 w-[85vw] xs:w-[75vw] sm:w-[60vw] md:w-[45vw] lg:w-[32vw] snap-start overflow-hidden rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-rcm-green-500 focus-visible:ring-offset-2"
+                aria-label={`View ${image.title}`}
+              >
+                <div className="relative aspect-[4/3] w-full">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 640px) 85vw, (max-width: 768px) 60vw, (max-width: 1024px) 45vw, 32vw"
+                  />
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+                  {/* Title */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
+                    <p className="text-white text-sm sm:text-base font-semibold drop-shadow-lg">
+                      {image.title}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </motion.button>
-          ))}
+              </motion.button>
+            ))}
+          </div>
+        </div>
+
+        {/* Scroll Hint - Mobile */}
+        <div className="md:hidden text-center mt-4 px-5">
+          <p className="text-xs text-gray-500">← Swipe to explore more →</p>
         </div>
 
         {/* Lightbox */}
@@ -278,7 +357,7 @@ export default function GallerySection() {
             {/* Close Button */}
             <button
               onClick={closeLightbox}
-              className="absolute top-2 sm:top-4 right-2 sm:right-4 p-2 text-white/80 hover:text-white transition-colors z-10 min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="absolute top-2 sm:top-4 right-2 sm:right-4 p-2 text-white/80 hover:text-white transition-colors z-10 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-white/10"
               aria-label="Close gallery (Escape)"
             >
               <X className="w-6 h-6 sm:w-8 sm:h-8" />
@@ -287,14 +366,14 @@ export default function GallerySection() {
             {/* Navigation */}
             <button
               onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
-              className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 p-2 text-white/80 hover:text-white transition-colors z-10 min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 p-2 text-white/80 hover:text-white transition-colors z-10 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-white/10"
               aria-label="Previous image (Left Arrow)"
             >
               <ChevronLeft className="w-8 h-8 sm:w-10 sm:h-10" />
             </button>
             <button
               onClick={(e) => { e.stopPropagation(); goToNext(); }}
-              className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 p-2 text-white/80 hover:text-white transition-colors z-10 min-h-[44px] min-w-[44px] flex items-center justify-center"
+              className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 p-2 text-white/80 hover:text-white transition-colors z-10 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-white/10"
               aria-label="Next image (Right Arrow)"
             >
               <ChevronRight className="w-8 h-8 sm:w-10 sm:h-10" />
@@ -325,23 +404,19 @@ export default function GallerySection() {
                 </p>
               </div>
             </div>
-
-            {/* Dots - Hidden on small screens, shown on larger */}
-            <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 hidden sm:flex gap-2 max-w-md overflow-x-auto px-4">
-              {visibleImages.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={(e) => { e.stopPropagation(); setSelectedImage(index); }}
-                  className={`w-2 h-2 rounded-full transition-all flex-shrink-0 min-h-[20px] min-w-[20px] flex items-center justify-center ${
-                    index === selectedImage ? 'bg-white w-6' : 'bg-white/40 hover:bg-white/60'
-                  }`}
-                  aria-label={`Go to image ${index + 1}`}
-                />
-              ))}
-            </div>
           </motion.div>
         )}
       </div>
+
+      <style jsx global>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </section>
   )
 }

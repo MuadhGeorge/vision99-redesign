@@ -24,7 +24,7 @@ export default function CampusSection() {
 
   return (
     <section id="campus" className="section-padding bg-slate-50 scroll-mt-20" ref={ref}>
-      <div className="container-max-np px-4 xs:px-5 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="container-max">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

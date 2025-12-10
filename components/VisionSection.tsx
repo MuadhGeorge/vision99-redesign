@@ -130,7 +130,7 @@ export default function VisionSection() {
                   scale: 1.01,
                   transition: { duration: 0.2, ease: 'easeOut' } 
                 }}
-                className={`group bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 cursor-default ${colors.border}`}
+                className={`group bg-white rounded-xl sm:rounded-2xl p-6 sm:p-7 md:p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 cursor-default ${colors.border}`}
               >
                 <motion.div 
                   className={`w-11 h-11 sm:w-14 sm:h-14 rounded-lg sm:rounded-xl ${colors.bg} ${colors.bgHover} flex items-center justify-center mb-3 sm:mb-4 transition-colors duration-300`}

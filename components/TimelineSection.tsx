@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useMemo } from 'react'
 import { 
   FileText, 
   Users, 
@@ -14,50 +14,118 @@ import {
   Sparkles
 } from 'lucide-react'
 
+/**
+ * Timeline data with parseable dates for automatic status calculation
+ * 
+ * Date formats:
+ * - Range: "2021-01-01 to 2025-03-01" (uses end date for comparison)
+ * - Single: "2025-12-06" (exact date)
+ * - Month: "2026-01-01" (first of month)
+ * - Approximate: "2027-12-01" (end of year)
+ */
 const timelinePhases = [
   {
     icon: FileText,
     title: 'Vision & Design',
-    status: 'completed',
-    date: '2021 – 2025',
+    displayDate: '2021 – 2025',
+    // End date for this phase
+    targetDate: new Date('2025-03-01'),
     description: 'Architectural blueprints finalized. Living Building Challenge feasibility confirmed.',
     highlights: ['Master plan approved', 'LBC pathway defined', 'Community input gathered'],
   },
   {
     icon: Users,
     title: 'Capital Campaign',
-    status: 'current',
-    date: 'Now – Dec 2025',
+    displayDate: 'Now – Dec 2025',
+    // End of campaign phase
+    targetDate: new Date('2025-12-05'),
     description: 'Securing the Founders Circle. Building the financial foundation for construction.',
     highlights: ['Founders Circle forming', 'Community pledges growing', 'Major gifts secured'],
   },
   {
     icon: Shovel,
     title: 'Groundbreaking',
-    status: 'upcoming',
-    date: 'December 6, 2025',
+    displayDate: 'December 6, 2025',
+    targetDate: new Date('2025-12-06'),
     description: 'The ceremonial beginning of construction. Breaking ground on our shared vision.',
     highlights: ['Site preparation', 'Community celebration', 'Construction begins'],
   },
   {
     icon: HardHat,
     title: 'Construction',
-    status: 'upcoming',
-    date: 'January 2026',
+    displayDate: 'January 2026',
+    // Start of construction
+    targetDate: new Date('2026-01-01'),
     description: 'Breaking ground on the future. Transforming vision into reality.',
     highlights: ['Horizontal work', 'Vertical construction', 'Systems installation'],
   },
   {
     icon: PartyPopper,
     title: 'Grand Opening',
-    status: 'upcoming',
-    date: 'End of 2027, in shaa Allah',
+    displayDate: 'End of 2027, in shaa Allah',
+    targetDate: new Date('2027-12-01'),
     description: 'Opening our doors to the community and the world.',
     highlights: ['Final inspections', 'Community move-in', 'LBC certification pursuit'],
   },
 ]
 
-const getStatusStyles = (status: string) => {
+type PhaseStatus = 'completed' | 'current' | 'upcoming'
+
+/**
+ * Calculate the status of each timeline phase based on current date
+ * 
+ * Logic:
+ * - Current step = latest step whose date <= today
+ * - Steps before current = completed
+ * - Steps after current = upcoming
+ * 
+ * Edge cases:
+ * - If all steps are in the future, first step is current
+ * - If all steps are in the past, last step is current
+ */
+function calculatePhaseStatuses(): PhaseStatus[] {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0) // Normalize to start of day
+  
+  // Find the index of the latest step whose date is <= today
+  let currentIndex = -1
+  
+  for (let i = 0; i < timelinePhases.length; i++) {
+    const targetDate = new Date(timelinePhases[i].targetDate)
+    targetDate.setHours(0, 0, 0, 0)
+    
+    if (targetDate <= today) {
+      currentIndex = i // Keep updating to get the LATEST step <= today
+    } else {
+      break // Once we hit a future date, stop (dates are in chronological order)
+    }
+  }
+  
+  // Edge cases
+  if (currentIndex === -1) {
+    // All dates are in the future → first step is current
+    currentIndex = 0
+  } else if (currentIndex === timelinePhases.length - 1) {
+    // All dates are in the past, but we still want to show the last one as current
+    // (already set correctly)
+  }
+  
+  // Build the status array
+  const statuses: PhaseStatus[] = []
+  for (let i = 0; i < timelinePhases.length; i++) {
+    if (i < currentIndex) {
+      statuses.push('completed')
+    } else if (i === currentIndex) {
+      statuses.push('current')
+    } else {
+      statuses.push('upcoming')
+    }
+  }
+  
+  return statuses
+}
+
+const getStatusStyles = (status: PhaseStatus) => {
   switch (status) {
     case 'completed':
       return {
@@ -89,6 +157,20 @@ const getStatusStyles = (status: string) => {
 export default function TimelineSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
+  
+  // Calculate statuses based on current date (memoized)
+  const phaseStatuses = useMemo(() => calculatePhaseStatuses(), [])
+  
+  // Calculate progress percentage for the timeline line
+  const completedCount = phaseStatuses.filter(s => s === 'completed').length
+  const currentIndex = phaseStatuses.findIndex(s => s === 'current')
+  const progressPercent = useMemo(() => {
+    if (currentIndex === -1 && completedCount === timelinePhases.length) {
+      return 100
+    }
+    // Progress to middle of current phase
+    return ((completedCount + 0.5) / timelinePhases.length) * 100
+  }, [completedCount, currentIndex])
 
   return (
     <section id="timeline" className="section-padding bg-gray-50 scroll-mt-20" ref={ref}>
@@ -98,7 +180,7 @@ export default function TimelineSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
           <span className="section-label">The Journey</span>
           <h2 className="section-heading">Path to Groundbreaking</h2>
@@ -113,17 +195,18 @@ export default function TimelineSection() {
           <div className="hidden lg:block absolute top-24 left-0 right-0 h-1 bg-gray-200">
             <motion.div
               initial={{ width: '0%' }}
-              animate={isInView ? { width: '30%' } : {}}
+              animate={isInView ? { width: `${progressPercent}%` } : {}}
               transition={{ duration: 1, delay: 0.5 }}
               className="h-full bg-rcm-green-500"
             />
           </div>
 
           {/* Timeline Items - Stack on mobile/tablet, 5 cols on desktop */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5 lg:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 sm:gap-6 lg:gap-4">
             {timelinePhases.map((phase, index) => {
-              const styles = getStatusStyles(phase.status)
-              const isCurrent = phase.status === 'current'
+              const status = phaseStatuses[index]
+              const styles = getStatusStyles(status)
+              const isCurrent = status === 'current'
               
               return (
                 <motion.div
@@ -133,20 +216,10 @@ export default function TimelineSection() {
                   transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
                   className={`relative ${isCurrent ? 'lg:-mt-2 lg:mb-2 sm:col-span-2 lg:col-span-1' : ''}`}
                 >
-                  {/* Current Phase Indicator - Mobile & Tablet */}
-                  {isCurrent && (
-                    <div className="lg:hidden mb-3">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rcm-green-600 text-white text-xs font-bold">
-                        <Sparkles className="w-3 h-3" />
-                        Current Phase
-                      </span>
-                    </div>
-                  )}
-                  
                   {/* Dot */}
-                  <div className="flex lg:justify-center mb-3 sm:mb-4">
-                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full ${styles.dot} flex items-center justify-center shadow-lg z-10 relative transition-all duration-300`}>
-                      {phase.status === 'completed' ? (
+                  <div className="flex lg:justify-center mb-4">
+                    <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full ${styles.dot} flex items-center justify-center shadow-lg z-10 relative transition-all duration-300`}>
+                      {status === 'completed' ? (
                         <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6" />
                       ) : (
                         <phase.icon className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -155,36 +228,27 @@ export default function TimelineSection() {
                   </div>
 
                   {/* Card */}
-                  <div className={`rounded-xl border-2 p-3 sm:p-4 ${styles.card} transition-all duration-300 ${isCurrent ? 'lg:scale-105' : ''}`}>
-                    {/* Current Phase Badge - Desktop */}
-                    {isCurrent && (
-                      <div className="hidden lg:flex justify-center -mt-7 mb-3">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rcm-green-600 text-white text-xs font-bold shadow-lg">
-                          <Sparkles className="w-3 h-3" />
-                          Current Phase
-                        </span>
-                      </div>
-                    )}
-                    
-                    <div className="flex items-center justify-between mb-2 gap-2 flex-wrap">
-                      <span className={`text-[10px] sm:text-xs font-semibold px-2 sm:px-2.5 py-1 rounded-full ${styles.badge}`}>
-                        {phase.date}
+                  <div className={`rounded-xl border-2 p-5 sm:p-6 ${styles.card} transition-all duration-300 ${isCurrent ? 'lg:scale-105' : ''}`}>
+                    <div className="flex items-center justify-between mb-3 gap-2 flex-wrap">
+                      <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${styles.badge}`}>
+                        {phase.displayDate}
                       </span>
+                      {/* "We're here" indicator - only shown for current phase */}
                       {isCurrent && (
-                        <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-bold px-2 sm:px-2.5 py-1 rounded-full bg-emerald-600/10 text-emerald-700 border border-emerald-200">
+                        <span className="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-600/10 text-emerald-700 border border-emerald-200">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                           We&apos;re here
                         </span>
                       )}
                     </div>
-                    <h3 className={`font-bold mb-2 text-sm sm:text-base ${isCurrent ? 'text-rcm-gold-700 sm:text-lg' : 'text-gray-900'}`}>
+                    <h3 className={`font-bold mb-2 text-base sm:text-lg ${isCurrent ? 'text-rcm-gold-700' : 'text-gray-900'}`}>
                       {phase.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3">{phase.description}</p>
-                    <ul className="space-y-1">
+                    <p className="text-sm text-gray-600 mb-3">{phase.description}</p>
+                    <ul className="space-y-1.5">
                       {phase.highlights.map((highlight, hIndex) => (
-                        <li key={hIndex} className="flex items-center gap-2 text-[10px] sm:text-xs text-gray-500">
-                          <div className={`w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full flex-shrink-0 ${isCurrent ? 'bg-rcm-gold-500' : 'bg-rcm-green-400'}`} />
+                        <li key={hIndex} className="flex items-center gap-2 text-xs text-gray-500">
+                          <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${isCurrent ? 'bg-rcm-gold-500' : status === 'completed' ? 'bg-rcm-green-500' : 'bg-gray-300'}`} />
                           {highlight}
                         </li>
                       ))}
@@ -196,19 +260,19 @@ export default function TimelineSection() {
           </div>
         </div>
 
-        {/* CTA - Linked to Current Phase */}
+        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-10 sm:mt-16"
+          className="mt-12 sm:mt-16"
         >
-          <div className="bg-gradient-to-r from-rcm-gold-50 via-white to-rcm-gold-50 rounded-xl sm:rounded-2xl border-2 border-rcm-gold-200 p-5 sm:p-8 text-center">
-            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-rcm-gold-100 rounded-full text-rcm-gold-700 text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
-              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
+          <div className="bg-gradient-to-r from-rcm-gold-50 via-white to-rcm-gold-50 rounded-xl sm:rounded-2xl border-2 border-rcm-gold-200 p-6 sm:p-8 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-rcm-gold-100 rounded-full text-rcm-gold-700 text-sm font-semibold mb-4">
+              <Sparkles className="w-4 h-4" />
               Capital Campaign in Progress
             </div>
-            <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-4 sm:mb-6 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-gray-700 mb-6 max-w-2xl mx-auto">
               We&apos;re in the <strong className="text-rcm-gold-600">Capital Campaign</strong> phase. 
               Your support today directly shapes what opens in 2027. Join our founding community.
             </p>

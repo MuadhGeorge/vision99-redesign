@@ -8,6 +8,7 @@ import {
   CheckCircle
 } from 'lucide-react'
 import { staggerContainer, staggerItem } from './animations'
+import { useContact } from './ContactContext'
 
 const donationTiers = [
   {
@@ -33,6 +34,7 @@ const donationTiers = [
 export default function DonateSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const { openContactModal } = useContact()
 
   return (
     <section id="donate" className="section-padding bg-gradient-to-b from-rcm-green-900 to-rcm-green-950 text-white scroll-mt-20" ref={ref}>
@@ -110,6 +112,7 @@ export default function DonateSection() {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                onClick={openContactModal}
                 className={`w-full py-3 sm:py-4 px-4 rounded-lg sm:rounded-xl font-semibold transition-all duration-300 text-sm sm:text-base min-h-[44px] ${
                   tier.isFounders
                     ? 'bg-rcm-gold-500 text-gray-900 hover:bg-rcm-gold-400 shadow-lg hover:shadow-xl'
