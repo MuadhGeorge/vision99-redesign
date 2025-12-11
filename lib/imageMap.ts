@@ -1,8 +1,8 @@
 /**
  * Curated Image Map for Beyond Walls Site
  * 
- * This module defines the canonical images and their descriptive text
- * for use across all sections of the homepage.
+ * This module defines the canonical images with semantic filenames
+ * and their descriptive text for use across all sections.
  */
 
 export type Photo = {
@@ -15,131 +15,131 @@ export type Photo = {
 
 /**
  * CURATED IMAGE SET
- * Organized by theme with canonical titles and alt text
+ * All images renamed to semantic filenames matching their purpose
  */
 
-// EXTERIOR & CAMPUS
+// EXTERIOR & CAMPUS (5 images)
 export const exteriorPhotos: Photo[] = [
   {
-    src: "/Photos/Copy of P2874-RCC-EXT-01_05.png",
-    name: "EXT-01",
+    src: "/Photos/campus-aerial-entry-plaza.png",
+    name: "campus-aerial",
     category: "exterior",
     title: "Campus Aerial & Entry Plaza",
     alt: "Aerial view of the new Roswell Community Masjid campus showing entry plaza and landscaping",
   },
   {
-    src: "/Photos/Copy of P2874-RCC-EXT-02_05.png",
-    name: "EXT-02",
+    src: "/Photos/sanctuary-exterior-courtyard.png",
+    name: "sanctuary-exterior",
     category: "exterior",
-    title: "Exterior view of the sanctuary building with central courtyard",
+    title: "Sanctuary Exterior with Courtyard",
     alt: "Exterior view of the sanctuary building with central courtyard",
   },
   {
-    src: "/Photos/Copy of P2874-RCC-EXT-07_05.png",
-    name: "EXT-07",
+    src: "/Photos/sanctuary-courtyard-detail.png",
+    name: "sanctuary-courtyard",
     category: "exterior",
     title: "Sanctuary & Courtyard",
     alt: "Sanctuary building exterior showing courtyard and architectural details",
   },
   {
-    src: "/Photos/Copy of P2874-RCC-EXT-09_05.png",
-    name: "EXT-09",
+    src: "/Photos/campus-street-approach.png",
+    name: "campus-street",
     category: "exterior",
     title: "Campus from Street Approach",
     alt: "Street-level view of the new RCM campus as visitors approach",
   },
   {
-    src: "/Photos/Copy of P2874-RCC-EXT-12_05.png",
-    name: "EXT-12",
+    src: "/Photos/campus-evening-view.png",
+    name: "campus-evening",
     category: "exterior",
     title: "Evening View of Full Campus",
     alt: "Evening rendering showing the full campus with warm lighting",
   },
 ];
 
-// SANCTUARY & PRAYER
+// SANCTUARY & PRAYER (3 images)
 export const sanctuaryPhotos: Photo[] = [
   {
-    src: "/Photos/Copy of P2874-RCC-INT-PRAYER HALL-05_03.png",
-    name: "INT-PRAYER-HALL-05",
+    src: "/Photos/main-prayer-hall-daylight.png",
+    name: "prayer-hall-daylight",
     category: "sanctuary",
     title: "Main Prayer Hall – Daylight",
     alt: "Prayer hall sanctuary flooded with natural daylight through geometric windows",
   },
   {
-    src: "/Photos/Copy of P2874-RCC-INT-PRAYER HALL-13_03.png",
-    name: "INT-PRAYER-HALL-13",
+    src: "/Photos/prayer-hall-rear-view.png",
+    name: "prayer-hall-rear",
     category: "sanctuary",
     title: "Prayer Hall – View from Rear",
     alt: "Prayer hall sanctuary viewed from the rear showing full space and mihrab",
   },
   {
-    src: "/Photos/Copy of P2874-RCC-INT-PRAYER HALL-06_03.png",
-    name: "INT-PRAYER-HALL-06",
+    src: "/Photos/prayer-hall-side-view.png",
+    name: "prayer-hall-side",
     category: "sanctuary",
     title: "Prayer Hall – Side View",
     alt: "Prayer hall sanctuary side perspective with natural lighting",
   },
 ];
 
-// YOUTH & COMMUNITY
+// YOUTH & COMMUNITY (5 images)
 export const youthCommunityPhotos: Photo[] = [
   {
-    src: "/Photos/Copy of P2874-RCC-INT-YOUTH CENTER-19_03.png",
-    name: "INT-YOUTH-CENTER-19",
+    src: "/Photos/youth-center-lounge.png",
+    name: "youth-center",
     category: "youth-community",
     title: "Youth Center & Lounge",
     alt: "Modern youth center lounge designed for teens and young adults",
   },
   {
-    src: "/Photos/Copy of P2874-RCC-INT-CAFE-07_02.png",
-    name: "INT-CAFE-07",
+    src: "/Photos/community-cafe-social-space.png",
+    name: "community-cafe",
     category: "youth-community",
     title: "Community Cafe & Social Space",
     alt: "Community cafe with comfortable seating for gathering and conversation",
   },
   {
-    src: "/Photos/Copy of P2874-RCC-INT-EVENT HALL-10_03.png",
-    name: "INT-EVENT-HALL-10",
+    src: "/Photos/multipurpose-hall-events.png",
+    name: "multipurpose-hall",
     category: "youth-community",
     title: "Multi-Purpose Hall & Events",
     alt: "Flexible multi-purpose event hall for community gatherings and celebrations",
   },
   {
-    src: "/Photos/Copy of P2874-RCC-INT-GYM-01_03.png",
-    name: "INT-GYM-01",
+    src: "/Photos/recreation-gymnasium.png",
+    name: "gymnasium",
     category: "youth-community",
     title: "Recreation & Gymnasium",
     alt: "Full-size gymnasium for basketball, sports, and recreational activities",
   },
   {
-    src: "/Photos/Copy of P2874-RCC-INT-TODDLER MOMMY-20_03.png",
-    name: "INT-TODDLER-MOMMY-20",
+    src: "/Photos/family-toddler-lounge.png",
+    name: "family-lounge",
     category: "youth-community",
     title: "Family & Toddler Lounge",
     alt: "Welcoming space designed for mothers and young children",
   },
 ];
 
-// SUPPORT SPACES
+// SUPPORT SPACES (3 images)
 export const supportPhotos: Photo[] = [
   {
-    src: "/Photos/Copy of P2874-RCC-INT-MAIN HALL-02_03.png",
-    name: "INT-MAIN-HALL-02",
+    src: "/Photos/entry-welcome-hall.png",
+    name: "entry-hall",
     category: "support",
     title: "Entry & Welcome Hall",
     alt: "Grand entrance hall welcoming visitors to the new campus",
   },
   {
-    src: "/Photos/Copy of P2874-RCC-INT-WADU-11_03.png",
-    name: "INT-WADU-11",
+    src: "/Photos/wudu-preparation-area.png",
+    name: "wudu-area",
     category: "support",
     title: "Wudu & Preparation Area",
     alt: "Modern wudu facilities with natural materials and good lighting",
   },
   {
-    src: "/Photos/Copy of P2874-RCC-INT-OFFICE-16_03.png",
-    name: "INT-OFFICE-16",
+    src: "/Photos/administrative-offices.png",
+    name: "admin-offices",
     category: "support",
     title: "Administrative Offices",
     alt: "Professional administrative offices for campus management",
