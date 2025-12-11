@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { ArrowRight, Building2, Leaf, Sun, Calendar } from 'lucide-react'
-import { sectionImages, exteriorPhotos, getAltText } from '@/lib/imageMap'
+import { sectionImages } from '@/lib/imageMap'
 
 /**
  * Hero Section - Main campaign landing
@@ -23,7 +23,7 @@ const stats = [
 ]
 
 const heroImage = sectionImages.hero
-const secondaryImage = exteriorPhotos[1] ?? exteriorPhotos[0]
+const secondaryImage = sectionImages.heroSecondary
 
 export default function HeroSection() {
   return (
@@ -102,7 +102,7 @@ export default function HeroSection() {
                 <div className="aspect-[4/3] relative bg-gray-100">
                   <Image
                     src={heroImage.src}
-                    alt={getAltText.exterior(heroImage.name)}
+                    alt={heroImage.alt}
                     fill
                     className="object-cover"
                     priority
@@ -134,7 +134,7 @@ export default function HeroSection() {
               <div className="absolute -top-4 -right-4 w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-xl hidden lg:block border-4 border-white">
                 <Image
                   src={secondaryImage.src}
-                  alt={getAltText.exterior(secondaryImage.name)}
+                  alt={secondaryImage.alt}
                   fill
                   className="object-cover"
                   sizes="144px"

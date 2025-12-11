@@ -5,84 +5,17 @@ import { useInView } from 'framer-motion'
 import { useRef, useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { X, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react'
+import { galleryImages, type Photo } from '@/lib/imageMap'
 
 /**
  * Ramp-Style Gallery Section
  * 
  * Large, hero-like cards in a horizontal slider
  * Swipeable on mobile, arrow navigation on desktop
- * Full-width, visually prominent section
+ * Uses curated images from imageMap with proper categories and descriptions
  */
 
 type GalleryCategory = 'exterior' | 'sanctuary' | 'youth-community' | 'support'
-
-interface GalleryImage {
-  src: string
-  title: string
-  subtitle: string
-  alt: string
-  category: GalleryCategory
-}
-
-// Curated featured gallery images
-const galleryImages: GalleryImage[] = [
-  {
-    src: '/Photos/Copy of P2874-RCC-EXT-01_05.png',
-    title: 'Campus Aerial & Entry Plaza',
-    subtitle: 'A welcoming gateway to the new Roswell Community Masjid',
-    alt: 'Aerial view of the new RCM campus showing entry plaza and landscaping',
-    category: 'exterior',
-  },
-  {
-    src: '/Photos/Copy of P2874-RCC-INT-PRAYER HALL-05_03.png',
-    title: 'Main Prayer Hall – Daylight',
-    subtitle: 'Natural light floods the sanctuary through geometric windows',
-    alt: 'Prayer hall sanctuary flooded with natural daylight',
-    category: 'sanctuary',
-  },
-  {
-    src: '/Photos/Copy of P2874-RCC-INT-YOUTH CENTER-19_03.png',
-    title: 'Youth Center & Lounge',
-    subtitle: 'A modern space designed for teens and young adults to connect',
-    alt: 'Modern youth center lounge with contemporary furniture',
-    category: 'youth-community',
-  },
-  {
-    src: '/Photos/Copy of P2874-RCC-INT-CAFE-07_02.png',
-    title: 'Community Cafe',
-    subtitle: 'Comfortable gathering space for conversation and connection',
-    alt: 'Community cafe with seating areas',
-    category: 'youth-community',
-  },
-  {
-    src: '/Photos/Copy of P2874-RCC-EXT-12_05.png',
-    title: 'Evening Campus View',
-    subtitle: 'The full campus comes alive with warm lighting at dusk',
-    alt: 'Evening rendering of the full campus',
-    category: 'exterior',
-  },
-  {
-    src: '/Photos/Copy of P2874-RCC-INT-GYM-01_03.png',
-    title: 'Recreation & Gymnasium',
-    subtitle: 'Full-size gym for basketball, sports, and community wellness',
-    alt: 'Full gymnasium with basketball court',
-    category: 'youth-community',
-  },
-  {
-    src: '/Photos/Copy of P2874-RCC-INT-EVENT HALL-10_03.png',
-    title: 'Multi-Purpose Hall',
-    subtitle: 'Flexible space for community events and celebrations',
-    alt: 'Multi-purpose event hall',
-    category: 'youth-community',
-  },
-  {
-    src: '/Photos/Copy of P2874-RCC-EXT-09_05.png',
-    title: 'Campus Street View',
-    subtitle: 'The architectural vision as visitors approach from the street',
-    alt: 'Street-level view of the new campus',
-    category: 'exterior',
-  },
-]
 
 const categoryLabels: Record<GalleryCategory | 'all', string> = {
   all: 'All Spaces',
@@ -103,8 +36,8 @@ export default function GallerySection() {
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
 
-  // Filter images by category
-  const visibleImages = activeCategory === 'all' 
+  // Filter images by category from the curated galleryImages array
+  const visibleImages: Photo[] = activeCategory === 'all' 
     ? galleryImages 
     : galleryImages.filter(img => img.category === activeCategory)
 
@@ -305,7 +238,7 @@ export default function GallerySection() {
                     {image.title}
                   </h3>
                   <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                    {image.subtitle}
+                    {image.alt}
                   </p>
                 </div>
               </div>
@@ -371,11 +304,8 @@ export default function GallerySection() {
             />
             {/* Image Info Overlay */}
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 sm:p-6">
-              <p className="text-white text-lg sm:text-2xl font-bold mb-1">
+              <p className="text-white text-lg sm:text-2xl font-bold mb-2">
                 {visibleImages[selectedImage].title}
-              </p>
-              <p className="text-white/80 text-sm sm:text-base mb-2">
-                {visibleImages[selectedImage].subtitle}
               </p>
               <p className="text-white/60 text-xs sm:text-sm">
                 {selectedImage + 1} of {visibleImages.length} • <span className="hidden sm:inline">Use arrow keys to navigate</span><span className="sm:hidden">Tap arrows or swipe</span>

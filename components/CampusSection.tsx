@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import Image from 'next/image'
-import { sectionImages, exteriorPhotos, getAltText } from '@/lib/imageMap'
+import { sectionImages } from '@/lib/imageMap'
 
 /**
  * Campus Section - Introduction to the New RCM Campus
@@ -16,7 +16,7 @@ import { sectionImages, exteriorPhotos, getAltText } from '@/lib/imageMap'
  */
 
 const mainCampusImage = sectionImages.campus.main
-const secondaryCampusImage = exteriorPhotos[3] ?? sectionImages.campus.secondary
+const secondaryCampusImage = sectionImages.campus.secondary
 
 export default function CampusSection() {
   const ref = useRef(null)
@@ -81,7 +81,7 @@ export default function CampusSection() {
               <div className="aspect-[4/3] relative bg-gray-100">
                 <Image
                   src={mainCampusImage.src}
-                  alt={getAltText.exterior(mainCampusImage.name)}
+                  alt={mainCampusImage.alt}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -93,7 +93,7 @@ export default function CampusSection() {
             <div className="absolute -bottom-5 -left-5 lg:-bottom-6 lg:-left-6 w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl border-4 border-white hidden sm:block">
               <Image
                 src={secondaryCampusImage.src}
-                alt={getAltText.exterior(secondaryCampusImage.name)}
+                alt={secondaryCampusImage.alt}
                 fill
                 className="object-cover"
                 sizes="144px"

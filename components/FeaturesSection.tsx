@@ -5,30 +5,19 @@ import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import Image from 'next/image'
 import { Home, GraduationCap, Users, Sparkles } from 'lucide-react'
-import { sectionImages, getAltText } from '@/lib/imageMap'
+import { sectionImages } from '@/lib/imageMap'
 
 /**
  * Campus Life / Features Section - "More Than a Mosque"
  * 
  * This is the PRIMARY section explaining the campus buildings/spaces.
- * Combines visual tiles with key features from each building.
- * 
- * Image assignments:
- * - Masjid & Sanctuary: INT-PRAYER-HALL or INT-MAIN-HALL
- * - Youth Center: INT-YOUTH-CENTER-19 (Youth Center)
- * - Family Hub: INT-CAFE-07 (Cafe space)
+ * Uses curated images with descriptive titles and alt text.
  */
-
-// Get images from the image map for each feature card
-const sanctuaryImage = sectionImages.campusLife.pavilion // Main Hall
-const youthImage = sectionImages.campusLife.youth
-const familyImage = sectionImages.campusLife.community
 
 const features = [
   {
     icon: Home,
-    image: sanctuaryImage.src,
-    alt: getAltText.interior(sanctuaryImage.subCategory),
+    image: sectionImages.campusLife.sanctuary,
     badge: 'Worship',
     badgeColor: 'bg-rcm-green-100 text-rcm-green-700',
     title: 'Masjid & Sanctuary',
@@ -41,8 +30,7 @@ const features = [
   },
   {
     icon: GraduationCap,
-    image: youthImage.src,
-    alt: getAltText.interior(youthImage.subCategory),
+    image: sectionImages.campusLife.youth,
     badge: 'Youth',
     badgeColor: 'bg-rcm-teal-100 text-rcm-teal-700',
     title: 'Youth Center',
@@ -55,8 +43,7 @@ const features = [
   },
   {
     icon: Users,
-    image: familyImage.src,
-    alt: getAltText.interior(familyImage.subCategory),
+    image: sectionImages.campusLife.family,
     badge: 'Family',
     badgeColor: 'bg-rcm-gold-100 text-rcm-gold-700',
     title: 'Family Hub',
@@ -105,8 +92,8 @@ export default function FeaturesSection() {
                 {/* Image */}
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
-                    src={feature.image}
-                    alt={feature.alt}
+                    src={feature.image.src}
+                    alt={feature.image.alt}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

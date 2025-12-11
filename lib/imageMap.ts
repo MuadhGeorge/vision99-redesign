@@ -1,139 +1,220 @@
 /**
- * Image Map for Beyond Walls / Vision99 Site
+ * Curated Image Map for Beyond Walls Site
  * 
- * This module catalogs all photos in /public/Photos and categorizes them
- * by filename patterns for use across different sections of the site.
- * 
- * Categories:
- * - Exterior (EXT): Hero, Campus sections
- * - Interior (INT): Campus Life, Program cards
- * - Gallery: All images for the gallery section
+ * This module defines the canonical images and their descriptive text
+ * for use across all sections of the homepage.
  */
 
 export type Photo = {
   src: string;
   name: string;
-  category: 'exterior' | 'interior' | 'other';
-  subCategory?: string;
+  category: 'exterior' | 'sanctuary' | 'youth-community' | 'support';
+  title: string;
+  alt: string;
 };
 
-// All photos from /public/Photos (auto-generated from folder scan)
-export const allPhotos: Photo[] = [
-  // Exterior Images (10 total)
-  { src: "/Photos/Copy of P2874-RCC-EXT-01_05.png", name: "EXT-01", category: "exterior" },
-  { src: "/Photos/Copy of P2874-RCC-EXT-02_05.png", name: "EXT-02", category: "exterior" },
-  { src: "/Photos/Copy of P2874-RCC-EXT-04_05.png", name: "EXT-04", category: "exterior" },
-  { src: "/Photos/Copy of P2874-RCC-EXT-07_05.png", name: "EXT-07", category: "exterior" },
-  { src: "/Photos/Copy of P2874-RCC-EXT-08_05.png", name: "EXT-08", category: "exterior" },
-  { src: "/Photos/Copy of P2874-RCC-EXT-09_05.png", name: "EXT-09", category: "exterior" },
-  { src: "/Photos/Copy of P2874-RCC-EXT-10_05.png", name: "EXT-10", category: "exterior" },
-  { src: "/Photos/Copy of P2874-RCC-EXT-11_05.png", name: "EXT-11", category: "exterior" },
-  { src: "/Photos/Copy of P2874-RCC-EXT-12_05.png", name: "EXT-12", category: "exterior" },
-  { src: "/Photos/Copy of P2874-RCC-EXT-14_05.png", name: "EXT-14", category: "exterior" },
-  
-  // Interior Images (18 total)
-  { src: "/Photos/Copy of P2874-RCC-INT-CAFE-07_02.png", name: "INT-CAFE-07", category: "interior", subCategory: "cafe" },
-  { src: "/Photos/Copy of P2874-RCC-INT-CAFE-08_02.png", name: "INT-CAFE-08", category: "interior", subCategory: "cafe" },
-  { src: "/Photos/Copy of P2874-RCC-INT-EVENT HALL-10_03.png", name: "INT-EVENT-HALL-10", category: "interior", subCategory: "event-hall" },
-  { src: "/Photos/Copy of P2874-RCC-INT-GYM-01_03.png", name: "INT-GYM-01", category: "interior", subCategory: "gym" },
-  { src: "/Photos/Copy of P2874-RCC-INT-GYM-17_03.png", name: "INT-GYM-17", category: "interior", subCategory: "gym" },
-  { src: "/Photos/Copy of P2874-RCC-INT-GYM-18_03.png", name: "INT-GYM-18", category: "interior", subCategory: "gym" },
-  { src: "/Photos/Copy of P2874-RCC-INT-MAIN HALL-02_03.png", name: "INT-MAIN-HALL-02", category: "interior", subCategory: "main-hall" },
-  { src: "/Photos/Copy of P2874-RCC-INT-OFFICE-16_03.png", name: "INT-OFFICE-16", category: "interior", subCategory: "office" },
-  { src: "/Photos/Copy of P2874-RCC-INT-PRAYER HALL-05_03.png", name: "INT-PRAYER-HALL-05", category: "interior", subCategory: "prayer-hall" },
-  { src: "/Photos/Copy of P2874-RCC-INT-PRAYER HALL-06_03.png", name: "INT-PRAYER-HALL-06", category: "interior", subCategory: "prayer-hall" },
-  { src: "/Photos/Copy of P2874-RCC-INT-PRAYER HALL-13_03.png", name: "INT-PRAYER-HALL-13", category: "interior", subCategory: "prayer-hall" },
-  { src: "/Photos/Copy of P2874-RCC-INT-PRAYER HALL-14_03.png", name: "INT-PRAYER-HALL-14", category: "interior", subCategory: "prayer-hall" },
-  { src: "/Photos/Copy of P2874-RCC-INT-PRAYER HALL-15_03.png", name: "INT-PRAYER-HALL-15", category: "interior", subCategory: "prayer-hall" },
-  { src: "/Photos/Copy of P2874-RCC-INT-SHOE HALL-03_03.png", name: "INT-SHOE-HALL-03", category: "interior", subCategory: "shoe-hall" },
-  { src: "/Photos/Copy of P2874-RCC-INT-SHOE HALL-04_03.png", name: "INT-SHOE-HALL-04", category: "interior", subCategory: "shoe-hall" },
-  { src: "/Photos/Copy of P2874-RCC-INT-TODDLER MOMMY-20_03.png", name: "INT-TODDLER-MOMMY-20", category: "interior", subCategory: "toddler" },
-  { src: "/Photos/Copy of P2874-RCC-INT-WADU-11_03.png", name: "INT-WADU-11", category: "interior", subCategory: "wudu" },
-  { src: "/Photos/Copy of P2874-RCC-INT-YOUTH CENTER-19_03.png", name: "INT-YOUTH-CENTER-19", category: "interior", subCategory: "youth" },
+/**
+ * CURATED IMAGE SET
+ * Organized by theme with canonical titles and alt text
+ */
+
+// EXTERIOR & CAMPUS
+export const exteriorPhotos: Photo[] = [
+  {
+    src: "/Photos/Copy of P2874-RCC-EXT-01_05.png",
+    name: "EXT-01",
+    category: "exterior",
+    title: "Campus Aerial & Entry Plaza",
+    alt: "Aerial view of the new Roswell Community Masjid campus showing entry plaza and landscaping",
+  },
+  {
+    src: "/Photos/Copy of P2874-RCC-EXT-02_05.png",
+    name: "EXT-02",
+    category: "exterior",
+    title: "Exterior view of the sanctuary building with central courtyard",
+    alt: "Exterior view of the sanctuary building with central courtyard",
+  },
+  {
+    src: "/Photos/Copy of P2874-RCC-EXT-07_05.png",
+    name: "EXT-07",
+    category: "exterior",
+    title: "Sanctuary & Courtyard",
+    alt: "Sanctuary building exterior showing courtyard and architectural details",
+  },
+  {
+    src: "/Photos/Copy of P2874-RCC-EXT-09_05.png",
+    name: "EXT-09",
+    category: "exterior",
+    title: "Campus from Street Approach",
+    alt: "Street-level view of the new RCM campus as visitors approach",
+  },
+  {
+    src: "/Photos/Copy of P2874-RCC-EXT-12_05.png",
+    name: "EXT-12",
+    category: "exterior",
+    title: "Evening View of Full Campus",
+    alt: "Evening rendering showing the full campus with warm lighting",
+  },
 ];
 
-// Categorized arrays for easy access
-export const exteriorPhotos = allPhotos.filter(p => p.category === 'exterior');
-export const interiorPhotos = allPhotos.filter(p => p.category === 'interior');
+// SANCTUARY & PRAYER
+export const sanctuaryPhotos: Photo[] = [
+  {
+    src: "/Photos/Copy of P2874-RCC-INT-PRAYER HALL-05_03.png",
+    name: "INT-PRAYER-HALL-05",
+    category: "sanctuary",
+    title: "Main Prayer Hall – Daylight",
+    alt: "Prayer hall sanctuary flooded with natural daylight through geometric windows",
+  },
+  {
+    src: "/Photos/Copy of P2874-RCC-INT-PRAYER HALL-13_03.png",
+    name: "INT-PRAYER-HALL-13",
+    category: "sanctuary",
+    title: "Prayer Hall – View from Rear",
+    alt: "Prayer hall sanctuary viewed from the rear showing full space and mihrab",
+  },
+  {
+    src: "/Photos/Copy of P2874-RCC-INT-PRAYER HALL-06_03.png",
+    name: "INT-PRAYER-HALL-06",
+    category: "sanctuary",
+    title: "Prayer Hall – Side View",
+    alt: "Prayer hall sanctuary side perspective with natural lighting",
+  },
+];
 
-// Hero candidates: Exterior shots work best for hero
-export const heroCandidates = exteriorPhotos.length > 0 ? exteriorPhotos : allPhotos;
+// YOUTH & COMMUNITY
+export const youthCommunityPhotos: Photo[] = [
+  {
+    src: "/Photos/Copy of P2874-RCC-INT-YOUTH CENTER-19_03.png",
+    name: "INT-YOUTH-CENTER-19",
+    category: "youth-community",
+    title: "Youth Center & Lounge",
+    alt: "Modern youth center lounge designed for teens and young adults",
+  },
+  {
+    src: "/Photos/Copy of P2874-RCC-INT-CAFE-07_02.png",
+    name: "INT-CAFE-07",
+    category: "youth-community",
+    title: "Community Cafe & Social Space",
+    alt: "Community cafe with comfortable seating for gathering and conversation",
+  },
+  {
+    src: "/Photos/Copy of P2874-RCC-INT-EVENT HALL-10_03.png",
+    name: "INT-EVENT-HALL-10",
+    category: "youth-community",
+    title: "Multi-Purpose Hall & Events",
+    alt: "Flexible multi-purpose event hall for community gatherings and celebrations",
+  },
+  {
+    src: "/Photos/Copy of P2874-RCC-INT-GYM-01_03.png",
+    name: "INT-GYM-01",
+    category: "youth-community",
+    title: "Recreation & Gymnasium",
+    alt: "Full-size gymnasium for basketball, sports, and recreational activities",
+  },
+  {
+    src: "/Photos/Copy of P2874-RCC-INT-TODDLER MOMMY-20_03.png",
+    name: "INT-TODDLER-MOMMY-20",
+    category: "youth-community",
+    title: "Family & Toddler Lounge",
+    alt: "Welcoming space designed for mothers and young children",
+  },
+];
 
-// Campus section candidates: Different exterior shots
-export const campusCandidates = exteriorPhotos.length > 1 ? exteriorPhotos : allPhotos;
+// SUPPORT SPACES
+export const supportPhotos: Photo[] = [
+  {
+    src: "/Photos/Copy of P2874-RCC-INT-MAIN HALL-02_03.png",
+    name: "INT-MAIN-HALL-02",
+    category: "support",
+    title: "Entry & Welcome Hall",
+    alt: "Grand entrance hall welcoming visitors to the new campus",
+  },
+  {
+    src: "/Photos/Copy of P2874-RCC-INT-WADU-11_03.png",
+    name: "INT-WADU-11",
+    category: "support",
+    title: "Wudu & Preparation Area",
+    alt: "Modern wudu facilities with natural materials and good lighting",
+  },
+  {
+    src: "/Photos/Copy of P2874-RCC-INT-OFFICE-16_03.png",
+    name: "INT-OFFICE-16",
+    category: "support",
+    title: "Administrative Offices",
+    alt: "Professional administrative offices for campus management",
+  },
+];
 
-// Interior by sub-category for Campus Life cards
-export const cafePhotos = allPhotos.filter(p => p.subCategory === 'cafe');
-export const gymPhotos = allPhotos.filter(p => p.subCategory === 'gym');
-export const prayerHallPhotos = allPhotos.filter(p => p.subCategory === 'prayer-hall');
-export const youthPhotos = allPhotos.filter(p => p.subCategory === 'youth');
-export const eventHallPhotos = allPhotos.filter(p => p.subCategory === 'event-hall');
-export const toddlerPhotos = allPhotos.filter(p => p.subCategory === 'toddler');
-export const mainHallPhotos = allPhotos.filter(p => p.subCategory === 'main-hall');
-
-// Gallery: All photos for the gallery section
-export const galleryPhotos = allPhotos;
+// All photos combined
+export const allPhotos: Photo[] = [
+  ...exteriorPhotos,
+  ...sanctuaryPhotos,
+  ...youthCommunityPhotos,
+  ...supportPhotos,
+];
 
 /**
- * Specific image selections for each section
- * These are the recommended images based on filename analysis
+ * Section-specific image assignments
+ * These define which images to use for each section of the homepage
  */
 export const sectionImages = {
-  // Hero: Main exterior shot
-  hero: heroCandidates[0],
+  // Hero: Campus aerial for impactful first impression
+  hero: exteriorPhotos[0], // Campus Aerial & Entry Plaza
+  heroSecondary: exteriorPhotos[1], // Sanctuary exterior
   
-  // Campus section: Different exterior angle
+  // Campus section: Different exterior angles
   campus: {
-    main: campusCandidates[1] ?? campusCandidates[0],
-    secondary: campusCandidates[2] ?? campusCandidates[0],
+    main: exteriorPhotos[1], // Sanctuary exterior
+    secondary: exteriorPhotos[2], // Sanctuary & Courtyard
   },
   
-  // Campus Life / Features cards
+  // "More Than a Mosque" / Campus Life cards
   campusLife: {
-    // Youth & Family: Use youth center or toddler image
-    youth: youthPhotos[0] ?? toddlerPhotos[0] ?? interiorPhotos[0],
-    // Community Gathering: Use cafe or event hall
-    community: cafePhotos[0] ?? eventHallPhotos[0] ?? interiorPhotos[1],
-    // Pavilion / Prayer: Use main hall or prayer hall
-    pavilion: mainHallPhotos[0] ?? prayerHallPhotos[0] ?? interiorPhotos[2],
+    sanctuary: sanctuaryPhotos[0], // Main Prayer Hall - Daylight
+    youth: youthCommunityPhotos[0], // Youth Center & Lounge
+    family: youthCommunityPhotos[4], // Family & Toddler Lounge
+    community: youthCommunityPhotos[1], // Community Cafe
+    multipurpose: youthCommunityPhotos[2], // Multi-Purpose Hall
+    gym: youthCommunityPhotos[3], // Recreation & Gymnasium
   },
   
-  // Building cards in Campus section
+  // Building cards (if used separately)
   buildings: {
-    // Masjid & Sanctuary: Prayer hall images
-    masjid: prayerHallPhotos[0] ?? interiorPhotos[0],
-    // Youth Center: Youth or gym images
-    youthCenter: youthPhotos[0] ?? gymPhotos[0] ?? interiorPhotos[1],
-    // Family Hub: Cafe, event hall, or toddler images
-    familyHub: eventHallPhotos[0] ?? cafePhotos[0] ?? toddlerPhotos[0] ?? interiorPhotos[2],
+    masjid: sanctuaryPhotos[0], // Main Prayer Hall
+    youthCenter: youthCommunityPhotos[0], // Youth Center
+    familyHub: youthCommunityPhotos[4], // Family & Toddler Lounge
+  },
+  
+  // Support spaces
+  support: {
+    entry: supportPhotos[0], // Entry & Welcome Hall
+    wudu: supportPhotos[1], // Wudu & Preparation Area
+    offices: supportPhotos[2], // Administrative Offices
   },
 };
 
 /**
- * Alt text generators for accessible image descriptions
+ * Gallery images for the Ramp-style slider
+ * Mixed selection from all categories for a complete campus story
  */
-export const getAltText = {
-  exterior: (name: string) => `Exterior rendering of the new Roswell Community Masjid campus - ${name}`,
-  interior: (subCategory?: string) => {
-    switch (subCategory) {
-      case 'cafe': return 'Interior cafe and community gathering space in the new RCM campus';
-      case 'gym': return 'Gymnasium and recreation facility in the new RCM campus';
-      case 'prayer-hall': return 'Prayer hall sanctuary in the new RCM campus';
-      case 'youth': return 'Youth center space designed for teens and young adults';
-      case 'event-hall': return 'Multi-purpose event hall for community gatherings';
-      case 'toddler': return 'Family-friendly space for mothers and toddlers';
-      case 'main-hall': return 'Main entrance and gathering hall of the new campus';
-      case 'wudu': return 'Wudu (ablution) facilities in the new campus';
-      case 'shoe-hall': return 'Welcoming entrance area with shoe storage';
-      case 'office': return 'Administrative offices in the new RCM campus';
-      default: return 'Interior view of the new Roswell Community Masjid campus';
-    }
-  },
-  gallery: (photo: Photo) => {
-    if (photo.category === 'exterior') {
-      return `Exterior rendering of the new RCM campus`;
-    }
-    return getAltText.interior(photo.subCategory);
-  },
-};
-
+export const galleryImages: Photo[] = [
+  // Exterior (3 images)
+  exteriorPhotos[0], // Campus Aerial
+  exteriorPhotos[3], // Campus from Street
+  exteriorPhotos[4], // Evening View
+  
+  // Sanctuary (2 images)
+  sanctuaryPhotos[0], // Main Prayer Hall - Daylight
+  sanctuaryPhotos[1], // Prayer Hall - View from Rear
+  
+  // Youth & Community (4 images)
+  youthCommunityPhotos[0], // Youth Center & Lounge
+  youthCommunityPhotos[1], // Community Cafe
+  youthCommunityPhotos[2], // Multi-Purpose Hall
+  youthCommunityPhotos[3], // Recreation & Gymnasium
+  
+  // Support (2 images)
+  supportPhotos[0], // Entry & Welcome Hall
+  supportPhotos[1], // Wudu & Preparation Area
+];
