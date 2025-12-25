@@ -12,19 +12,19 @@ import { useContact } from './ContactContext'
 
 const donationTiers = [
   {
-    name: 'Founders Circle',
-    amount: '$25,000+',
-    description: 'Legacy-level giving that creates lasting impact. Shape the future with naming opportunities and become a permanent part of this historic masjid.',
-    features: ['Permanent naming opportunities', 'Lifetime legacy recognition', 'Private campaign briefings', 'Exclusive founding member events', 'Personalized impact reports'],
+    name: 'Legacy Builder',
+    amount: '$250,000+',
+    description: 'Securing the future of RCM through strategic vision and major support. Establish a lasting foundation for generations to come.',
+    features: ['Permanent naming opportunities', 'Strategic high-level advocacy', 'Influence on long-term growth', 'Exclusive organizational briefings', 'Personalized impact reporting', 'Eternal Reward from Allah (SWT)'],
     cta: 'Become a Legacy Builder',
     popular: false,
     isFounders: true,
   },
   {
-    name: 'Community Builders',
-    amount: 'Any Amount',
-    description: 'Every contribution—whether one-time or monthly—helps build this sanctuary. Join thousands of supporters making this vision a reality.',
-    features: ['Tax-deductible receipt', 'Regular project updates', 'Name on community wall', 'Invitation to special events', 'Monthly giving options available'],
+    name: 'Community Builder',
+    amount: 'Consistent Service',
+    description: 'Deepening the roots of our sanctuary through active engagement. Be the heartbeat of our mission and daily community impact.',
+    features: ['Active grassroots mobilization', 'Event hosting and coordination', 'Social media and network growth', 'Direct volunteer leadership', 'Public recognition on community wall', 'Eternal Reward from Allah (SWT)'],
     cta: 'Become a Community Builder',
     popular: false,
     isFounders: false,

@@ -5,7 +5,6 @@ import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { 
   Zap, 
-  Droplets, 
   Recycle, 
   Users, 
   Sun,
@@ -13,7 +12,9 @@ import {
   Heart,
   TreePine,
   Leaf,
-  ArrowRight
+  ArrowRight,
+  MapPin,
+  Sprout
 } from 'lucide-react'
 import { CountUpOnView, FadeInText } from './CountUpOnView'
 import { staggerContainer, staggerItem } from './animations'
@@ -48,20 +49,21 @@ const metrics: Metric[] = [
     color: 'green',
   },
   {
-    icon: Droplets,
-    value: '<1/3',
-    // Non-numeric, will use FadeInText
-    label: 'Municipal Water Use',
-    detail: 'vs Typical Building',
+    icon: MapPin,
+    value: '50%',
+    numericValue: 50,
+    suffix: '%',
+    label: 'Materials Sourced Locally',
+    detail: 'Within Georgia / locally sourced',
     color: 'teal',
   },
   {
     icon: Recycle,
-    value: '80%',
-    numericValue: 80,
+    value: '100%',
+    numericValue: 100,
     suffix: '%',
-    label: 'Construction Waste',
-    detail: 'Diverted from Landfills',
+    label: 'Waste Diverted from Landfills',
+    detail: '0 lbs sent to landfill',
     color: 'green',
   },
   {
@@ -84,8 +86,8 @@ const metrics: Metric[] = [
   },
   {
     icon: TreePine,
-    value: '100%',
-    numericValue: 100,
+    value: '90%',
+    numericValue: 90,
     suffix: '%',
     label: 'Red List Free',
     detail: 'No Toxic Materials',
@@ -99,6 +101,15 @@ const metrics: Metric[] = [
     label: 'Community Access',
     detail: 'Designed for All',
     color: 'gold',
+  },
+  {
+    icon: Sprout,
+    value: '10%',
+    numericValue: 10,
+    suffix: '%',
+    label: 'Land Dedicated to Agriculture',
+    detail: 'On-site productive landscape',
+    color: 'green',
   },
 ]
 
