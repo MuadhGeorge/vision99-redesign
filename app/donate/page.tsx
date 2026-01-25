@@ -6,14 +6,17 @@ import { User, Building2, Briefcase, ArrowRight } from 'lucide-react'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 
+const MOHID_DONATION_LINK = 'https://mohid.co/go/jK92YAo'
+
 const donorTypes = [
   {
     id: 'individual',
     title: 'Individual',
     description: 'I am donating as an individual or family',
     icon: User,
-    href: '/#donate',
+    href: MOHID_DONATION_LINK,
     color: 'from-rcm-green-500 to-rcm-teal-500',
+    external: true,
   },
   {
     id: 'organization',
@@ -22,6 +25,7 @@ const donorTypes = [
     icon: Building2,
     href: '/donate/partner',
     color: 'from-rcm-gold-500 to-rcm-gold-600',
+    external: false,
   },
   {
     id: 'institution',
@@ -30,6 +34,7 @@ const donorTypes = [
     icon: Briefcase,
     href: '/donate/partner',
     color: 'from-rcm-teal-600 to-rcm-green-700',
+    external: false,
   },
 ]
 
@@ -58,17 +63,9 @@ export default function DonateLanding() {
 
           {/* Selection Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
-            {donorTypes.map((type, index) => (
-              <motion.div
-                key={type.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <Link
-                  href={type.href}
-                  className="group relative bg-white rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-transparent overflow-hidden text-left min-h-[280px] flex flex-col hover:-translate-y-2"
-                >
+            {donorTypes.map((type, index) => {
+              const cardContent = (
+                <>
                   {/* Gradient Background on Hover */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${type.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
                   
@@ -90,13 +87,42 @@ export default function DonateLanding() {
                   {/* Arrow Icon */}
                   <div className="relative flex items-center justify-end mt-6">
                     <div className="flex items-center gap-2 text-rcm-green-600 font-semibold text-sm group-hover:gap-4 transition-all duration-300">
-                      <span>Continue</span>
+                      <span>{type.external ? 'Donate Now' : 'Continue'}</span>
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                     </div>
                   </div>
-                </Link>
-              </motion.div>
-            ))}
+                </>
+              )
+
+              const cardClassName = "group relative bg-white rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-transparent overflow-hidden text-left min-h-[280px] flex flex-col hover:-translate-y-2"
+
+              return (
+                <motion.div
+                  key={type.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  {type.external ? (
+                    <a
+                      href={type.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cardClassName}
+                    >
+                      {cardContent}
+                    </a>
+                  ) : (
+                    <Link
+                      href={type.href}
+                      className={cardClassName}
+                    >
+                      {cardContent}
+                    </Link>
+                  )}
+                </motion.div>
+              )
+            })}
           </div>
 
           {/* Help Text */}
