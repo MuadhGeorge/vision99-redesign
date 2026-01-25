@@ -2,7 +2,7 @@
 
 import { useState, FormEvent } from 'react'
 import { motion } from 'framer-motion'
-import { Building2, Mail, Phone, CheckCircle, ArrowLeft } from 'lucide-react'
+import { Building2, Mail, Phone, CheckCircle, ArrowLeft, AlertCircle, X } from 'lucide-react'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { CONTACT } from '@/lib/constants'
@@ -20,16 +20,34 @@ export default function PartnerPage() {
     message: '',
   })
 
+  const [submitError, setSubmitError] = useState<string | null>(null)
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitError(null)
     
-    // Simulate form submission
-    // In production, this would send to your backend/email service
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    setIsSubmitted(true)
-    setIsSubmitting(false)
+    try {
+      const response = await fetch('/api/partnership', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+      
+      const data = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to submit inquiry')
+      }
+      
+      setIsSubmitted(true)
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Something went wrong. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -86,6 +104,25 @@ export default function PartnerPage() {
               {!isSubmitted ? (
                 <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100">
                   <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">Partnership Inquiry Form</h2>
+                  
+                  {/* Error Banner */}
+                  {submitError && (
+                    <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
+                      <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                      <div className="flex-grow">
+                        <p className="text-sm font-medium text-red-800">Failed to submit inquiry</p>
+                        <p className="text-sm text-red-600">{submitError}</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setSubmitError(null)}
+                        className="p-1 hover:bg-red-100 rounded transition-colors"
+                        aria-label="Dismiss error"
+                      >
+                        <X className="w-4 h-4 text-red-500" />
+                      </button>
+                    </div>
+                  )}
                   
                   <div className="space-y-5">
                     {/* Organization Name */}

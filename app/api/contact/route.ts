@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { Resend } from 'resend'
 import { config } from '@/lib/config'
+
+// Initialize Resend with API key
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
 interface ContactFormData {
   fullName: string
@@ -44,11 +48,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Build email content
-    const emailContent = {
-      to: config.contactEmail,
-      from: body.email,
-      subject: `Contact Form: New Message from ${body.fullName}`,
-      text: `
+    const subject = `Contact Form: New Message from ${body.fullName}`
+    const text = `
 New Contact Form Submission
 ============================
 
@@ -61,8 +62,9 @@ ${body.message}
 
 ============================
 This message was sent from the Beyond Walls website contact form.
-      `.trim(),
-      html: `
+    `.trim()
+    
+    const html = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,29 +105,44 @@ This message was sent from the Beyond Walls website contact form.
   </div>
 </body>
 </html>
-      `.trim(),
+    `.trim()
+
+    // Check if Resend is configured
+    if (!resend) {
+      console.error('RESEND_API_KEY is not configured')
+      // Log the submission for debugging
+      console.log('=== Contact Form Submission (Email not sent - no API key) ===')
+      console.log('To:', config.contactEmail)
+      console.log('From:', body.email)
+      console.log('Subject:', subject)
+      console.log('Message:', body.message)
+      console.log('==============================')
+      
+      return NextResponse.json(
+        { error: 'Email service not configured. Please contact us directly at info@roswellmasjid.org' },
+        { status: 500 }
+      )
     }
 
-    // For now, we'll log the email content and simulate success
-    // In production, integrate with your email service (SendGrid, Resend, Nodemailer, etc.)
-    console.log('=== Contact Form Submission ===')
-    console.log('To:', emailContent.to)
-    console.log('From:', emailContent.from)
-    console.log('Subject:', emailContent.subject)
-    console.log('Message:', body.message)
-    console.log('==============================')
+    // Send email using Resend
+    const { data, error } = await resend.emails.send({
+      from: 'Beyond Walls <onboarding@resend.dev>', // Use your verified domain in production
+      to: config.contactEmail,
+      replyTo: body.email,
+      subject: subject,
+      text: text,
+      html: html,
+    })
 
-    // TODO: Uncomment and configure your email service
-    // Example with Resend:
-    // const resend = new Resend(process.env.RESEND_API_KEY)
-    // await resend.emails.send({
-    //   from: 'Beyond Walls <noreply@roswellmasjid.org>',
-    //   to: emailContent.to,
-    //   replyTo: emailContent.from,
-    //   subject: emailContent.subject,
-    //   text: emailContent.text,
-    //   html: emailContent.html,
-    // })
+    if (error) {
+      console.error('Resend error:', error)
+      return NextResponse.json(
+        { error: 'Failed to send email. Please try again.' },
+        { status: 500 }
+      )
+    }
+
+    console.log('Email sent successfully:', data?.id)
 
     // Return success
     return NextResponse.json({
