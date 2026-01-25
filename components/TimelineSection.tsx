@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useMemo } from 'react'
+import Link from 'next/link'
 import { 
   FileText, 
   Users, 
@@ -276,10 +277,10 @@ export default function TimelineSection() {
               We&apos;re in the <strong className="text-rcm-gold-600">Capital Campaign</strong> phase. 
               Your support today directly shapes what opens in 2027. Join our founding community.
             </p>
-            <a href="#donate" className="btn-gold group inline-flex">
+            <Link href="/donate" className="btn-gold group inline-flex">
               Join the Founders Circle
               <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
+            </Link>
           </div>
         </motion.div>
       </div>

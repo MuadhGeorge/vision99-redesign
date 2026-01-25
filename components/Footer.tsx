@@ -10,7 +10,7 @@ const quickLinks = [
   { name: 'Spaces', href: '#features' },
   { name: 'Gallery', href: '#gallery' },
   { name: 'Timeline', href: '#timeline' },
-  { name: 'Donate', href: '#donate' },
+  { name: 'Donate', href: '/donate' },
 ]
 
 

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import { ArrowRight, Building2, Leaf, Sun, Calendar } from 'lucide-react'
 import { sectionImages } from '@/lib/imageMap'
 
@@ -58,7 +59,7 @@ export default function HeroSection() {
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-[1.1] mb-4 sm:mb-6">
               <span className="text-rcm-green-700">Beyond Walls:</span>
               <br />
-              <span className="text-gray-800">Building the World&apos;s First Living Building Challenge Masjid</span>
+              <span className="text-gray-800">Building the World&apos;s First Living Building Certified Masjid</span>
             </h1>
             
             <p className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-700 mb-6 sm:mb-8 italic">
@@ -66,10 +67,10 @@ export default function HeroSection() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-10">
-              <a href="#donate" className="btn-primary group">
+              <Link href="/donate" className="btn-primary group">
                 Support the Project
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
+              </Link>
               <a href="#vision" className="btn-secondary">
                 Learn the Vision
               </a>
