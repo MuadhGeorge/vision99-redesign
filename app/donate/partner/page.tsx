@@ -264,8 +264,8 @@ export default function PartnerPage() {
                     <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
                       <Phone className="w-5 h-5" />
                     </div>
-                    <div>
-                      <p className="text-xs text-rcm-green-200">Phone</p>
+                    <div className="min-w-0">
+                      <p className="text-xs text-rcm-green-200">Phone:</p>
                       <p className="font-semibold group-hover:underline">{strategic_partner.phone}</p>
                     </div>
                   </a>
@@ -278,8 +278,8 @@ export default function PartnerPage() {
                     <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
                       <Mail className="w-5 h-5" />
                     </div>
-                    <div>
-                      <p className="text-xs text-rcm-green-200">Email</p>
+                    <div className="min-w-0 overflow-hidden">
+                      <p className="text-xs text-rcm-green-200">Email:</p>
                       <p className="font-semibold group-hover:underline break-all">{strategic_partner.email}</p>
                     </div>
                   </a>

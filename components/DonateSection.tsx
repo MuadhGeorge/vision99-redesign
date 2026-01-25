@@ -5,10 +5,14 @@ import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { 
   Shield,
-  CheckCircle
+  CheckCircle,
+  ArrowRight,
+  Heart
 } from 'lucide-react'
 import { staggerContainer, staggerItem } from './animations'
 import { useContact } from './ContactContext'
+
+const MOHID_DONATION_LINK = 'https://mohid.co/go/jK92YAo'
 
 const donationTiers = [
   {
@@ -44,7 +48,7 @@ export default function DonateSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10 sm:mb-16"
+          className="text-center mb-10 sm:mb-12"
         >
           <span className="inline-block text-xs sm:text-sm font-semibold uppercase tracking-wider text-rcm-gold-400 mb-3 sm:mb-4">
             Support the Vision
@@ -52,10 +56,27 @@ export default function DonateSection() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
             Two Ways to Build This Legacy
           </h2>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-rcm-green-200 max-w-3xl mx-auto px-2">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-rcm-green-200 max-w-3xl mx-auto px-2 mb-8">
             Whether you&apos;re called to legacy-level leadership or community-level support, 
             your contribution shapes the future of this sanctuary.
           </p>
+          
+          {/* Primary Donate Now Button */}
+          <motion.a
+            href={MOHID_DONATION_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-flex items-center gap-3 px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-rcm-gold-500 to-rcm-gold-600 text-gray-900 font-bold text-lg sm:text-xl rounded-xl shadow-2xl hover:shadow-rcm-gold-500/50 transition-all duration-300 group"
+          >
+            <Heart className="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform" />
+            Donate Now
+            <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
+          </motion.a>
         </motion.div>
 
         {/* Donation Tiers - Two Equal Cards */}
@@ -125,11 +146,32 @@ export default function DonateSection() {
           ))}
         </motion.div>
 
-        {/* Financial Integrity Promise */}
+        {/* Bottom Donate Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.5 }}
+          className="text-center mb-10 sm:mb-12"
+        >
+          <motion.a
+            href={MOHID_DONATION_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-flex items-center gap-3 px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-rcm-gold-500 to-rcm-gold-600 text-gray-900 font-bold text-lg sm:text-xl rounded-xl shadow-2xl hover:shadow-rcm-gold-500/50 transition-all duration-300 group"
+          >
+            <Heart className="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform" />
+            Donate Now
+            <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
+          </motion.a>
+        </motion.div>
+
+        {/* Financial Integrity Promise */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.6 }}
           className="bg-rcm-green-800/40 border border-rcm-green-700/50 rounded-xl sm:rounded-2xl p-5 sm:p-6 text-center"
         >
           <div className="flex items-center justify-center gap-2 mb-3">
