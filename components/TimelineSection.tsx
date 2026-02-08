@@ -54,9 +54,9 @@ const timelinePhases = [
   {
     icon: HardHat,
     title: 'Construction',
-    displayDate: 'January 2026',
+    displayDate: 'March 2026',
     // Start of construction
-    targetDate: new Date('2026-01-01'),
+    targetDate: new Date('2026-03-01'),
     description: 'Breaking ground on the future. Transforming vision into reality.',
     highlights: ['Horizontal work', 'Vertical construction', 'Systems installation'],
   },

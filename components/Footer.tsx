@@ -84,7 +84,7 @@ export default function Footer() {
                   <li className="flex items-start gap-2.5">
                     <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-rcm-green-500 flex-shrink-0 mt-0.5" />
                     <span className="text-sm sm:text-base text-gray-400">
-                      Roswell, Georgia
+                      11370 Crabapple Rd, Roswell, Ga 30075
                     </span>
                   </li>
                   <li className="flex items-start gap-2.5">
